@@ -9,6 +9,11 @@ module Dry
         klass.instance_variable_set(:@__cache__, Concurrent::Map.new)
       end
 
+      def inherited(klass)
+        super
+        klass.instance_variable_set(:@__cache__, @__cache__)
+      end
+
       def cache
         @__cache__
       end
