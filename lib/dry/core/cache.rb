@@ -11,7 +11,7 @@ module Dry
 
       def inherited(klass)
         super
-        klass.instance_variable_set(:@__cache__, @__cache__)
+        klass.instance_variable_set(:@__cache__, cache)
       end
 
       def cache
