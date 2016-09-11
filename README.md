@@ -1,6 +1,6 @@
 # Dry::Core
 
-A collection of small modules used in dry-rb ecosystem.
+A collection of small modules used in the dry-rb ecosystem.
 
 ## Installation
 
