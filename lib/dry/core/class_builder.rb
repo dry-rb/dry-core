@@ -26,7 +26,6 @@ module Dry
         klass.singleton_class.class_eval do
           define_method(:name) { name }
           alias_method :inspect, :name
-          alias_method :to_str, :name
           alias_method :to_s, :name
         end
 
