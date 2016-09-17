@@ -54,5 +54,7 @@ RSpec.describe Dry::Core::Constants do
     expect(subject.empty_opts).to eql({})
 
     expect(subject.undefined).to be Dry::Core::Constants::Undefined
+    expect(subject.undefined.to_s).to eql('Undefined')
+    expect(subject.undefined.inspect).to eql('Undefined')
   end
 end
