@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Nikita Shilnikov']
   spec.email         = ['fg@flashgordon.ru']
 
-  spec.summary       = %q{A toolset of small support modules used throughout the dry-rb ecosystem.}
+  spec.summary       = 'A toolset of small support modules used throughout the dry-rb ecosystem.'
   spec.description   = spec.summary
   spec.homepage      = 'https://github.com/dry-rb/dry-code'
   spec.license       = 'MIT'

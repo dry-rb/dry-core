@@ -1,6 +1,8 @@
-require "dry/core/version"
+require 'dry/core/version'
 
+# :nodoc:
 module Dry
+  # :nodoc:
   module Core
   end
 end

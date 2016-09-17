@@ -65,7 +65,7 @@ module Dry
         def message(msg)
           <<-MSG
             #{msg}
-            #{caller.detect { |l| l !~ /(lib\/dry\/core)|(gems)/ }}
+            #{caller.detect { |l| l !~ %r{(lib/dry/core)|(gems)} }}
           MSG
         end
 

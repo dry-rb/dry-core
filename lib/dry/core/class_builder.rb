@@ -5,7 +5,7 @@ module Dry
       attr_reader :name
       attr_reader :parent
 
-      def initialize(name: , parent: Object)
+      def initialize(name:, parent: Object)
         @name = name
         @parent = parent
       end

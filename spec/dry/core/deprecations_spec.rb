@@ -32,10 +32,10 @@ RSpec.describe Dry::Core::Deprecations do
 
   shared_examples_for 'an entity with deprecated methods' do
     it 'deprecates method that is to be removed' do
-      res = subject.hello("world")
+      res = subject.hello('world')
 
-      expect(res).to eql("hello world")
-      expect(output).to match %r{\[spec\] Test(\.|#)hello is deprecated and will be removed}
+      expect(res).to eql('hello world')
+      expect(output).to match /\[spec\] Test(\.|#)hello is deprecated and will be removed/
       expect(output).to include('is no more')
     end
 
@@ -43,7 +43,7 @@ RSpec.describe Dry::Core::Deprecations do
       res = subject.logging('foo')
 
       expect(res).to eql('log: foo')
-      expect(output).to match %r{\[spec\] Test(\.|#)logging is deprecated and will be removed}
+      expect(output).to match /\[spec\] Test(\.|#)logging is deprecated and will be removed/
     end
   end
 
@@ -53,7 +53,7 @@ RSpec.describe Dry::Core::Deprecations do
         extend Dry::Core::Deprecations
 
         def self.name
-          "Test"
+          'Test'
         end
 
         def self.log(msg)
@@ -63,7 +63,7 @@ RSpec.describe Dry::Core::Deprecations do
         def self.hello(word)
           "hello #{word}"
         end
-        deprecate_class_method :hello, message: "is no more"
+        deprecate_class_method :hello, message: 'is no more'
 
         def self.logging(msg)
           "logging: #{msg}"
@@ -83,7 +83,7 @@ RSpec.describe Dry::Core::Deprecations do
         extend Dry::Core::Deprecations
 
         def self.name
-          "Test"
+          'Test'
         end
 
         def log(msg)
@@ -93,7 +93,7 @@ RSpec.describe Dry::Core::Deprecations do
         def hello(word)
           "hello #{word}"
         end
-        deprecate :hello, message: "is no more"
+        deprecate :hello, message: 'is no more'
 
         def logging(msg)
           "logging: #{msg}"
