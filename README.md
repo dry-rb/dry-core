@@ -1,4 +1,17 @@
-# Dry::Core
+[gitter]: https://gitter.im/dry-rb/chat
+[gem]: https://rubygems.org/gems/dry-core
+[travis]: https://travis-ci.org/dry-rb/dry-core
+[code_climate]: https://codeclimate.com/github/dry-rb/dry-core
+[inch]: http://inch-ci.org/github/dry-rb/dry-core
+
+# dry-core
+
+[![Gem Version](https://img.shields.io/gem/v/dry-core.svg)][gem]
+[![Build Status](https://img.shields.io/travis/dry-rb/dry-core.svg)][travis]
+[![Code Climate](https://img.shields.io/codeclimate/github/dry-rb/dry-core.svg)][code_climate]
+[![Test Coverage](https://img.shields.io/codeclimate/coverage/github/dry-rb/dry-core.svg)][code_climate]
+[![API Documentation Coverage](http://inch-ci.org/github/dry-rb/dry-core.svg)][inch]
+![No monkey-patches](https://img.shields.io/badge/monkey--patches-0-brightgreen.svg)
 
 A collection of small modules used in the dry-rb ecosystem.
 
