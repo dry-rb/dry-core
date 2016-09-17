@@ -25,3 +25,7 @@ Style/FileName:
 Lint/AmbiguousRegexpLiteral:
   Exclude:
     - 'spec/**/*'
+
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'
