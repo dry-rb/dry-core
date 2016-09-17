@@ -1,11 +1,22 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'dry/core'
 require 'rspec/version'
+
+if RUBY_ENGINE == 'ruby'
+  require 'codeclimate-test-reporter'
+  CodeClimate::TestReporter.start
+
+  require 'simplecov'
+  SimpleCov.start do
+    add_filter '/spec/'
+  end
+end
 
 begin
   require 'byebug'
 rescue LoadError
 end
+
+require 'dry/core'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
