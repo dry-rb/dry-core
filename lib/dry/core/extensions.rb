@@ -34,6 +34,14 @@ module Dry
         @__available_extensions__[name] = block
       end
 
+      # Whether an extension is available
+      #
+      # @param [Symbol] name extension name
+      # @return [Boolean] Extension availability
+      def available_extension?(name)
+        @__available_extensions__.key?(name)
+      end
+
       # Enables specified extensions. Already enabled extensions remain untouched
       #
       # @param [Array<Symbol>] extensions list of extension names
