@@ -35,7 +35,7 @@ RSpec.describe Dry::Core::Deprecations do
       res = subject.hello('world')
 
       expect(res).to eql('hello world')
-      expect(output).to match /\[spec\] Test(\.|#)hello is deprecated and will be removed/
+      expect(output).to match(/\[spec\] Test(\.|#)hello is deprecated and will be removed/)
       expect(output).to include('is no more')
     end
 
@@ -43,7 +43,7 @@ RSpec.describe Dry::Core::Deprecations do
       res = subject.logging('foo')
 
       expect(res).to eql('log: foo')
-      expect(output).to match /\[spec\] Test(\.|#)logging is deprecated and will be removed/
+      expect(output).to match(/\[spec\] Test(\.|#)logging is deprecated and will be removed/)
     end
   end
 
