@@ -1,1 +1,1 @@
-require 'dry-core'
+require 'dry/core'
