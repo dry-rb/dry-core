@@ -29,16 +29,17 @@ module Dry
         # Prints a warning
         #
         # @param [String] msg Warning string
-        def warn(msg)
-          logger.warn(msg.gsub(/^\s+/, ''))
+        def warn(msg, tag: nil)
+          tagged = "[#{tag || 'deprecated'}] #{msg.gsub(/^\s+/, '')}"
+          logger.warn(tagged)
         end
 
         # Wraps arguments with a standard message format and prints a warning
         #
         # @param [Object] name what is deprecated
         # @param [String] msg additional message usually containing upgrade instructions
-        def announce(name, msg)
-          warn(deprecation_message(name, msg))
+        def announce(name, msg, tag: nil)
+          warn(deprecation_message(name, msg), tag: tag)
         end
 
         # @api private
@@ -72,83 +73,116 @@ module Dry
         # Returns the logger used for printing warnings.
         # You can provide your own with .set_logger!
         #
-        # @param [String, Symbol] tag optional prefix for messages
         # @param [IO] output output stream
         #
         # @return [Logger]
-        def logger(tag = nil, output = nil)
+        def logger(output = nil)
           if defined?(@logger)
             @logger
           else
-            set_logger!(output: output, tag: tag)
+            set_logger!(output)
           end
         end
 
         # Sets a custom logger. This is a global settings.
         #
         # @option [IO] output output stream for messages
-        # @option [String, Symbol] tag optional prefix
-        #
-        # TODO: Add support for per-module loggers so that at least
-        #       tag option won't conflict.
-        def set_logger!(output: nil, tag: nil)
+        def set_logger!(output = nil)
           @logger = Logger.new(output || $stdout)
-          @logger.formatter = proc { |_severity, _datetime, _progname, msg|
-            "[#{tag || 'deprecated'}] #{msg}\n"
-          }
+          @logger.formatter = proc { |_severity, _datetime, _progname, msg| "#{msg}\n" }
           @logger
         end
-      end
 
-      # Mark instance method as deprecated
-      #
-      # @param [Symbol] old_name deprecated method
-      # @param [Symbol] new_name replacement (not required)
-      # @option [String] message optional deprecation message
-      def deprecate(old_name, new_name = nil, message: nil)
-        full_msg = Deprecations.deprecated_method_message(
-          "#{self.name}##{old_name}",
-          new_name ? "#{self.name}##{new_name}" : nil,
-          message
-        )
-
-        if new_name
-          undef_method old_name
-          define_method(old_name) do |*args, &block|
-            Deprecations.warn(full_msg)
-            __send__(new_name, *args, &block)
-          end
-        else
-          aliased_name = :"#{old_name}_without_deprecation"
-          alias_method aliased_name, old_name
-          private aliased_name
-          undef_method old_name
-          define_method(old_name) do |*args, &block|
-            Deprecations.warn(full_msg)
-            __send__(aliased_name, *args, &block)
-          end
+        def [](tag)
+          Tagged.new(tag)
         end
       end
 
-      # Mark class-level method as deprecated
-      #
-      # @param [Symbol] old_name deprecated method
-      # @param [Symbol] new_name replacement (not required)
-      # @option [String] message optional deprecation message
-      def deprecate_class_method(old_name, new_name = nil, message: nil)
-        full_msg = Deprecations.deprecated_method_message(
-          "#{self.name}.#{old_name}",
-          new_name ? "#{self.name}.#{new_name}" : nil,
-          message
-        )
+      # @api private
+      class Tagged < Module
+        def initialize(tag)
+          @tag = tag
+        end
 
-        meth = new_name ? method(new_name) : method(old_name)
+        def extended(base)
+          base.extend Interface
+          base.deprecation_tag @tag
+        end
+      end
 
-        singleton_class.instance_exec do
-          undef_method old_name
-          define_method(old_name) do |*args, &block|
-            Deprecations.warn(full_msg)
-            meth.call(*args, &block)
+      module Interface
+        # Sets/gets deprecation tag
+        #
+        # @option [String,Symbol] tag tag
+        def deprecation_tag(tag = nil)
+          if defined?(@deprecation_tag)
+            @deprecation_tag
+          else
+            @deprecation_tag = tag
+          end
+        end
+
+        # Issue a tagged warning message
+        #
+        # @param [String] msg warning message
+        def warn(msg)
+          Deprecations.warn(msg, tag: deprecation_tag)
+        end
+
+        # Mark instance method as deprecated
+        #
+        # @param [Symbol] old_name deprecated method
+        # @param [Symbol] new_name replacement (not required)
+        # @option [String] message optional deprecation message
+        def deprecate(old_name, new_name = nil, message: nil)
+          full_msg = Deprecations.deprecated_method_message(
+            "#{self.name}##{old_name}",
+            new_name ? "#{self.name}##{new_name}" : nil,
+            message
+          )
+          mod = self
+
+          if new_name
+            undef_method old_name
+
+            define_method(old_name) do |*args, &block|
+              mod.warn(full_msg)
+              __send__(new_name, *args, &block)
+            end
+          else
+            aliased_name = :"#{old_name}_without_deprecation"
+            alias_method aliased_name, old_name
+            private aliased_name
+            undef_method old_name
+
+            define_method(old_name) do |*args, &block|
+              mod.warn(full_msg)
+              __send__(aliased_name, *args, &block)
+            end
+          end
+        end
+
+        # Mark class-level method as deprecated
+        #
+        # @param [Symbol] old_name deprecated method
+        # @param [Symbol] new_name replacement (not required)
+        # @option [String] message optional deprecation message
+        def deprecate_class_method(old_name, new_name = nil, message: nil)
+          full_msg = Deprecations.deprecated_method_message(
+            "#{self.name}.#{old_name}",
+            new_name ? "#{self.name}.#{new_name}" : nil,
+            message
+          )
+
+          meth = new_name ? method(new_name) : method(old_name)
+
+          singleton_class.instance_exec do
+            undef_method old_name
+
+            define_method(old_name) do |*args, &block|
+              warn(full_msg)
+              meth.call(*args, &block)
+            end
           end
         end
       end
