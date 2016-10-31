@@ -7,7 +7,7 @@ RSpec.describe Dry::Core::Deprecations do
   end
 
   before do
-    Dry::Core::Deprecations.set_logger!(output: log_file, tag: 'spec')
+    Dry::Core::Deprecations.set_logger!(log_file)
   end
 
   let(:output) do
@@ -18,13 +18,18 @@ RSpec.describe Dry::Core::Deprecations do
   describe '.warn' do
     it 'logs a warning message' do
       Dry::Core::Deprecations.warn('hello world')
+      expect(output).to include('[deprecated] hello world')
+    end
+
+    it 'logs a tagged message' do
+      Dry::Core::Deprecations.warn('hello world', tag: :spec)
       expect(output).to include('[spec] hello world')
     end
   end
 
   describe '.announce' do
     it 'warns about a deprecated method' do
-      Dry::Core::Deprecations.announce(:foo, 'hello world')
+      Dry::Core::Deprecations.announce(:foo, 'hello world', tag: :spec)
       expect(output).to include('[spec] foo is deprecated and will be removed')
       expect(output).to include('hello world')
     end
@@ -50,7 +55,7 @@ RSpec.describe Dry::Core::Deprecations do
   describe '.deprecate_class_method' do
     subject(:klass) do
       Class.new do
-        extend Dry::Core::Deprecations
+        extend Dry::Core::Deprecations[:spec]
 
         def self.name
           'Test'
@@ -80,7 +85,7 @@ RSpec.describe Dry::Core::Deprecations do
   describe '.deprecate' do
     subject(:klass) do
       Class.new do
-        extend Dry::Core::Deprecations
+        extend Dry::Core::Deprecations[:spec]
 
         def self.name
           'Test'
@@ -104,6 +109,21 @@ RSpec.describe Dry::Core::Deprecations do
 
     it_behaves_like 'an entity with deprecated methods' do
       subject { klass.new }
+    end
+  end
+
+  describe '.[]' do
+    subject(:klass) do
+      Class.new do
+        extend Dry::Core::Deprecations[:spec]
+      end
+    end
+
+    describe '.warn' do
+      it 'logs a tagged message' do
+        klass.warn('hello')
+        expect(output).to include('[spec] hello')
+      end
     end
   end
 end
