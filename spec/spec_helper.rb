@@ -1,10 +1,7 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'rspec/version'
 
-if RUBY_ENGINE == 'ruby'
-  require 'codeclimate-test-reporter'
-  CodeClimate::TestReporter.start
-
+if RUBY_ENGINE == 'ruby' && ENV['CI'] == 'true'
   require 'simplecov'
   SimpleCov.start do
     add_filter '/spec/'
