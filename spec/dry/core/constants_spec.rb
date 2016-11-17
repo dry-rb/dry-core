@@ -57,4 +57,22 @@ RSpec.describe Dry::Core::Constants do
     expect(subject.undefined.to_s).to eql('Undefined')
     expect(subject.undefined.inspect).to eql('Undefined')
   end
+
+  describe 'nested' do
+    before do
+      class ClassWithConstants
+        class Nested
+          def empty_array
+            EMPTY_ARRAY
+          end
+        end
+      end
+    end
+
+    subject { ClassWithConstants::Nested.new }
+
+    example 'constants available in lexical scope' do
+      expect(subject.empty_array).to be Dry::Core::Constants::EMPTY_ARRAY
+    end
+  end
 end

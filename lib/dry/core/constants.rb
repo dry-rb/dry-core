@@ -44,6 +44,14 @@ module Dry
           'Undefined'
         end
       end.freeze
+
+      def self.included(base)
+        super
+
+        constants.each do |const_name|
+          base.const_set(const_name, const_get(const_name))
+        end
+      end
     end
   end
 end
