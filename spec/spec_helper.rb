@@ -1,12 +1,12 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'rspec/version'
-
-if RUBY_ENGINE == 'ruby' && ENV['CI'] == 'true'
-  require 'simplecov'
+if ENV['COVERAGE'] == 'true' && RUBY_ENGINE == 'ruby' && RUBY_VERSION == '2.3.1'
+  require "simplecov"
   SimpleCov.start do
     add_filter '/spec/'
   end
 end
+
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'rspec/version'
 
 begin
   require 'byebug'
