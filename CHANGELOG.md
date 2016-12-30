@@ -1,3 +1,11 @@
+# v0.2.3 2016-12-30
+
+### Fixed
+
+* Fix warnings on using uninitialized class attributes (flash-gordon)
+
+[Compare v0.2.2...v0.2.3](https://github.com/dry-rb/dry-core/compare/v0.2.2...v0.2.3)
+
 # v0.2.2 2016-12-30
 
 ### Added
