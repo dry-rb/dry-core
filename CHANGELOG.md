@@ -3,6 +3,7 @@
 ### Added
 
 * `ClassAttributes` which provides `defines` method for defining get-or-set methods (flash-gordon)
+* `Constants` are now available in nested scopes (flash-gordon)
 
 [Compare v0.2.0...v0.2.1](https://github.com/dry-rb/dry-core/compare/v0.2.0...v0.2.1)
 
