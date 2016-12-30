@@ -36,7 +36,11 @@ module Dry
               ivar = "@#{name}"
 
               if value == Undefined
-                defined?(ivar) && instance_variable_get(ivar)
+                if instance_variable_defined?(ivar)
+                  instance_variable_get(ivar)
+                else
+                  nil
+                end
               else
                 instance_variable_set(ivar, value)
               end
