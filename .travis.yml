@@ -1,30 +1,27 @@
 language: ruby
 dist: trusty
-sudo: false
+sudo: required
 cache: bundler
-rvm:
-  - 2.4.0
-  - 2.3.3
-  - 2.2.6
-  - 2.1.10
-  - jruby-9.1.5.0
-  - ruby-head
-  - rbx-3
+bundler_args: --without benchmarks tools
 after_success:
-  # Send coverage report from the job #1 == current MRI release
-  - '[ "${TRAVIS_JOB_NUMBER#*.}" = "1" ] && [ "$TRAVIS_BRANCH" = "master" ] && bundle exec codeclimate-test-reporter'
-before_install: gem update bundler
+  - '[ -d coverage ] && bundle exec codeclimate-test-reporter'
+script:
+  - bundle exec rake
+rvm:
+  - 2.1
+  - 2.2
+  - 2.3
+  - jruby-9.1.5.0
+  - rbx-3
+env:
+  global:
+    - COVERAGE=true
+    - JRUBY_OPTS='--dev -J-Xmx1024M'
 matrix:
   allow_failures:
-    - rvm: ruby-head
     - rvm: rbx-3
 notifications:
-  email:
-    recipients:
-      - fg@flashgordon.ru
-    on_success: change
-    on_failure: always
-    on_start: false     # default: false
+  email: false
   webhooks:
     urls:
       - https://webhooks.gitter.im/e/19098b4253a72c9796db
