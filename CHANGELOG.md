@@ -1,3 +1,11 @@
+# v0.2.4 2017-01-26
+
+### Fixed
+
+* Do not require deprecated method to be defined (flash-gordon)
+
+[Compare v0.2.3...v0.2.4](https://github.com/dry-rb/dry-core/compare/v0.2.2...v0.2.3)
+
 # v0.2.3 2016-12-30
 
 ### Fixed
