@@ -50,6 +50,13 @@ RSpec.describe Dry::Core::Deprecations do
       expect(res).to eql('log: foo')
       expect(output).to match(/\[spec\] Test(\.|#)logging is deprecated and will be removed/)
     end
+
+    it 'does not require deprecated method to be defined' do
+      res = subject.missing('bar')
+
+      expect(res).to eql('log: bar')
+      expect(output).to match(/\[spec\] Test(\.|#)missing is deprecated and will be removed/)
+    end
   end
 
   describe '.deprecate_class_method' do
@@ -74,6 +81,8 @@ RSpec.describe Dry::Core::Deprecations do
           "logging: #{msg}"
         end
         deprecate_class_method :logging, :log
+
+        deprecate_class_method :missing, :log
       end
     end
 
@@ -104,6 +113,8 @@ RSpec.describe Dry::Core::Deprecations do
           "logging: #{msg}"
         end
         deprecate :logging, :log
+
+        deprecate :missing, :log
       end
     end
 

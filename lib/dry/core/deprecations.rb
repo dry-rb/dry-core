@@ -143,7 +143,7 @@ module Dry
           mod = self
 
           if new_name
-            undef_method old_name
+            undef_method old_name if method_defined?(old_name)
 
             define_method(old_name) do |*args, &block|
               mod.warn(full_msg)
@@ -177,7 +177,7 @@ module Dry
           meth = new_name ? method(new_name) : method(old_name)
 
           singleton_class.instance_exec do
-            undef_method old_name
+            undef_method old_name if method_defined?(old_name)
 
             define_method(old_name) do |*args, &block|
               warn(full_msg)
