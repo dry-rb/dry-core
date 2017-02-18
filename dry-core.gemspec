@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'A toolset of small support modules used throughout the dry-rb ecosystem.'
   spec.description   = spec.summary
-  spec.homepage      = 'https://github.com/dry-rb/dry-code'
+  spec.homepage      = 'https://github.com/dry-rb/dry-core'
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
