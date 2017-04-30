@@ -48,8 +48,9 @@ module Dry
           end
 
           define_method(:inherited) do |klass|
-            super(klass)
             args.each { |name| klass.public_send(name, send(name)) }
+
+            super(klass)
           end
         end
 

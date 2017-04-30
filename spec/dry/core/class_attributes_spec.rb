@@ -44,4 +44,28 @@ RSpec.describe 'Class Macros' do
   it 'allows overwriting of inherited values' do
     expect(OtherClass.two).to eq('two')
   end
+
+  it 'copies values from the parent before running hooks' do
+    subclass_value = nil
+
+    module_with_hook = Module.new do
+      define_method(:inherited) do |klass|
+        super(klass)
+
+        subclass_value = klass.one
+      end
+    end
+
+    base_class = Class.new do
+      extend Dry::Core::ClassAttributes
+      extend module_with_hook
+
+      defines :one
+      one 1
+    end
+
+    Class.new(base_class)
+
+    expect(subclass_value).to be 1
+  end
 end
