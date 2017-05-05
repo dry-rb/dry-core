@@ -2,7 +2,7 @@
 
 ### Changed
 
-* Class attributes are initialized _before_ running the `inherited` hook. It's slightly more convenient behavior and it's very unlikely anyone will be affected by this, but techinically this is a breaking change (flash-gordon)
+* Class attributes are initialized _before_ running the `inherited` hook. It's slightly more convenient behavior and it's very unlikely anyone will be affected by this, but technically this is a breaking change (flash-gordon)
 
 [Compare v0.2.4...v0.3.0](https://github.com/dry-rb/dry-core/compare/v0.2.4...v0.3.0)
 
