@@ -21,6 +21,12 @@ end
 
 require 'dry/core'
 
+module Test
+  def self.remove_constants
+    constants.each(&method(:remove_const))
+  end
+end
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   if RSpec::Version::STRING >= '4.0.0'
@@ -35,6 +41,10 @@ RSpec.configure do |config|
     end
 
     config.shared_context_metadata_behavior = :apply_to_host_groups
+  end
+
+  config.after do
+    Test.remove_constants
   end
 
   # This allows you to limit a spec run to individual examples or groups
