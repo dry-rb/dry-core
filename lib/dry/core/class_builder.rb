@@ -2,6 +2,8 @@ module Dry
   module Core
     # Class for generating more classes
     class ClassBuilder
+      ParentClassMismatch = Class.new(TypeError)
+
       attr_reader :name
       attr_reader :parent
       attr_reader :namespace
@@ -14,11 +16,20 @@ module Dry
 
       # Generate a class based on options
       #
-      # @example
+      # @example Create anonymous class
       #   builder = Dry::Core::ClassBuilder.new(name: 'MyClass')
       #
       #   klass = builder.call
       #   klass.name # => "MyClass"
+      #
+      # @example Create named class
+      #   builder = Dry::Core::ClassBuilder.new(name: 'User', namespace: Entities)
+      #
+      #   klass = builder.call
+      #   klass.name # => "Entities::User"
+      #   klass.superclass.name # => "Entities::User"
+      #   Entities::User # => "Entities::User"
+      #   klass.superclass == Entities::User # => true
       #
       # @return [Class]
       def call
@@ -34,17 +45,6 @@ module Dry
       end
 
       private
-
-      # @api private
-      def create_base(namespace, name, parent)
-        if namespace.const_defined?(name)
-          namespace.const_get(name)
-        else
-          klass = Class.new(parent || Object)
-          namespace.const_set(name, klass)
-          klass
-        end
-      end
 
       # @api private
       def create_anonymous
@@ -77,6 +77,23 @@ module Dry
         end
 
         klass
+      end
+
+      # @api private
+      def create_base(namespace, name, parent)
+        if namespace.const_defined?(name)
+          existing = namespace.const_get(name)
+
+          unless existing <= parent
+            raise ParentClassMismatch, "#{ existing.name } must be a subclass of #{ parent.name }"
+          end
+
+          existing
+        else
+          klass = Class.new(parent || Object)
+          namespace.const_set(name, klass)
+          klass
+        end
       end
     end
   end

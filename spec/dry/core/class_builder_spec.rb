@@ -42,14 +42,6 @@ RSpec.describe Dry::Core::ClassBuilder do
     end
 
     context 'namespaced' do
-      context 'with parent' do
-        let(:parent) { Class.new }
-
-        let(:options) do
-          { name: 'User', parent: parent }
-        end
-      end
-
       context 'without parent' do
         let(:options) do
           { name: 'User', namespace: Test }
@@ -59,6 +51,45 @@ RSpec.describe Dry::Core::ClassBuilder do
           expect(klass).to be_instance_of(Class)
           expect(klass.name).to eql('Test::User')
           expect(klass.superclass).to be(Test::User)
+        end
+      end
+
+      context 'with parent' do
+        let(:parent) do
+          Test::Parent = Class.new
+        end
+
+        let(:options) do
+          { name: 'User', parent: parent, namespace: Test }
+        end
+
+        it 'creates a class with the given parent' do
+          expect(klass).to be_instance_of(Class)
+          expect(klass.name).to eql('Test::User')
+          expect(klass.superclass).to be(Test::User)
+          expect(klass.superclass.superclass).to be(Test::Parent)
+        end
+      end
+
+      context 'with mismatched parent class' do
+        before do
+          Test::InvalidParent = Class.new
+          Test::User = Class.new(Test::InvalidParent)
+        end
+
+        let(:parent) do
+          Test::Parent = Class.new
+        end
+
+        let(:options) do
+          { name: 'User', namespace: Test, parent: parent }
+        end
+
+        it 'raises meaningful error on mismatched parent class' do
+          expect { klass }.to raise_error(
+                                Dry::Core::ClassBuilder::ParentClassMismatch,
+                                "Test::User must be a subclass of Test::Parent"
+                              )
         end
       end
     end
