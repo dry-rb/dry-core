@@ -1,3 +1,11 @@
+# v0.3.1 to-be-released
+
+### Added
+
+* Support for building classes within an existing namespace (flash-gordon)
+
+[Compare v0.3.0...master](https://github.com/dry-rb/dry-core/compare/v0.3.0...master)
+
 # v0.3.0 2017-05-05
 
 ### Changed
