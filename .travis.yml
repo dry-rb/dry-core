@@ -9,18 +9,14 @@ script:
   - bundle exec rake
 rvm:
   - 2.1.10
-  - 2.2.6
-  - 2.3.3
+  - 2.2.7
+  - 2.3.4
   - 2.4.1
-  - jruby-9.1.8.0
-  - rbx-3
+  - jruby-9.1.9.0
 env:
   global:
     - COVERAGE=true
     - JRUBY_OPTS='--dev -J-Xmx1024M'
-matrix:
-  allow_failures:
-    - rvm: rbx-3
 notifications:
   email: false
   webhooks:
