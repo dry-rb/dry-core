@@ -2,7 +2,7 @@ require 'set'
 
 module Dry
   module Core
-    # Allows to define extensions that can be later enabled by the user.
+    # Define extensions that can be later enabled by the user.
     #
     # @example
     #
