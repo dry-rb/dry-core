@@ -84,7 +84,7 @@ module Dry
           end
         end
 
-        # Sets a custom logger. This is a global settings.
+        # Sets a custom logger. This is a global setting.
         #
         # @option [IO] output output stream for messages
         def set_logger!(output = nil)
