@@ -81,7 +81,7 @@ module Dry
 
       # @api private
       def create_base(namespace, name, parent)
-        if namespace.const_defined?(name)
+        if namespace.const_defined?(name, false)
           existing = namespace.const_get(name)
 
           unless existing <= parent

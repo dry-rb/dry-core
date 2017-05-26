@@ -92,6 +92,22 @@ RSpec.describe Dry::Core::ClassBuilder do
                               )
         end
       end
+
+      context 'with parent inherited from object' do
+        let(:parent) do
+          Test::Parent = Class.new
+        end
+
+        let(:options) do
+          { name: 'File', namespace: Test, parent: parent }
+        end
+
+        it 'does not search for parent class through inheritance' do
+          expect(klass.name).to eql('Test::File')
+          expect(klass.superclass).to be(Test::File)
+          expect(Test::File).not_to be(::File)
+        end
+      end
     end
   end
 end
