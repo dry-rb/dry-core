@@ -8,7 +8,7 @@ module Dry
     module ClassAttributes
       include Constants
 
-      # Specify what attirubtes a class will use
+      # Specify what attributes a class will use
       #
       # @example
       #   class MyClass
