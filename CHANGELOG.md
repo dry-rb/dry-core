@@ -1,3 +1,9 @@
+# v0.3.2 2017-08-31
+
+### Added
+
+* Accept an existing logger object in `Dry::Core::Deprecations.set_logger!` (flash-gordon)
+
 # v0.3.1 2017-05-27
 
 ### Added

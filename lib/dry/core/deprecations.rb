@@ -86,11 +86,24 @@ module Dry
 
         # Sets a custom logger. This is a global setting.
         #
-        # @option [IO] output output stream for messages
+        # @overload set_logger!(output)
+        #   @param [IO] output Stream for messages
+        #
+        # @overload set_logger!
+        #   Stream messages to stdout
+        #
+        # @overload set_logger!(logger)
+        #   @param [#warn] logger
+        #
+        # @api public
         def set_logger!(output = nil)
-          @logger = Logger.new(output || $stdout)
-          @logger.formatter = proc { |_severity, _datetime, _progname, msg| "#{msg}\n" }
-          @logger
+          if output.respond_to?(:warn)
+            @logger = output
+          else
+            @logger = Logger.new(output || $stdout).tap do |logger|
+              logger.formatter = proc { |_, _, _, msg| "#{ msg }\n" }
+            end
+          end
         end
 
         def [](tag)

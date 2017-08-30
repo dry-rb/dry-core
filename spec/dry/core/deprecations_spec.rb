@@ -137,4 +137,27 @@ RSpec.describe Dry::Core::Deprecations do
       end
     end
   end
+
+  describe '.set_logger!' do
+    let(:logger) do
+      Class.new {
+        attr_reader :messages
+
+        def initialize
+          @messages = []
+        end
+
+        def warn(message)
+          messages << message
+        end
+      }.new
+    end
+
+    it 'accepts preconfigured logger' do
+      Dry::Core::Deprecations.set_logger!(logger)
+      Dry::Core::Deprecations.warn("Don't!")
+
+      expect(logger.messages).to eql(%w([deprecated]\ Don't!))
+    end
+  end
 end
