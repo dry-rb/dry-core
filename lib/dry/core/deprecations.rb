@@ -25,6 +25,8 @@ module Dry
     #
     # @api public
     module Deprecations
+      STACK = -> { caller.find { |l| l !~ %r{(lib/dry/core)|(gems)} } }
+
       class << self
         # Prints a warning
         #
@@ -45,8 +47,8 @@ module Dry
         # @api private
         def deprecation_message(name, msg)
           <<-MSG
-            #{name} is deprecated and will be removed in the next major version
-            #{message(msg)}
+            #{ name } is deprecated and will be removed in the next major version
+            #{ msg }
           MSG
         end
 
@@ -60,14 +62,6 @@ module Dry
           else
             deprecation_message(old, msg)
           end
-        end
-
-        # @api private
-        def message(msg)
-          <<-MSG
-            #{msg}
-            #{caller.detect { |l| l !~ %r{(lib/dry/core)|(gems)} }}
-          MSG
         end
 
         # Returns the logger used for printing warnings.
@@ -159,7 +153,7 @@ module Dry
             undef_method old_name if method_defined?(old_name)
 
             define_method(old_name) do |*args, &block|
-              mod.warn(full_msg)
+              mod.warn("#{ full_msg }\n#{ STACK.() }")
               __send__(new_name, *args, &block)
             end
           else
@@ -169,7 +163,7 @@ module Dry
             undef_method old_name
 
             define_method(old_name) do |*args, &block|
-              mod.warn(full_msg)
+              mod.warn("#{ full_msg }\n#{ STACK.() }")
               __send__(aliased_name, *args, &block)
             end
           end
@@ -193,7 +187,7 @@ module Dry
             undef_method old_name if method_defined?(old_name)
 
             define_method(old_name) do |*args, &block|
-              warn(full_msg)
+              warn("#{ full_msg }\n#{ STACK.() }")
               meth.call(*args, &block)
             end
           end
