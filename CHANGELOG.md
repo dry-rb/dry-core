@@ -1,3 +1,11 @@
+# v0.3.3 2017-08-31
+
+### Fixed
+
+* The Deprecations module now shows the right caller line (flash-gordon)
+
+[Compare v0.3.2...v0.3.3](https://github.com/dry-rb/dry-core/compare/v0.3.2...v0.3.3)
+
 # v0.3.2 2017-08-31
 
 ### Added
