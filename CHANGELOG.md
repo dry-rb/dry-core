@@ -4,6 +4,8 @@
 
 * Accept an existing logger object in `Dry::Core::Deprecations.set_logger!` (flash-gordon)
 
+[Compare v0.3.1...v0.3.2](https://github.com/dry-rb/dry-core/compare/v0.3.1...v0.3.2)
+
 # v0.3.1 2017-05-27
 
 ### Added
