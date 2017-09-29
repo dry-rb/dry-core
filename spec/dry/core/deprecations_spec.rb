@@ -10,7 +10,7 @@ RSpec.describe Dry::Core::Deprecations do
     Dry::Core::Deprecations.set_logger!(log_file)
   end
 
-  let(:output) do
+  let(:log_output) do
     log_file.close
     log_file.open.read
   end
@@ -18,20 +18,20 @@ RSpec.describe Dry::Core::Deprecations do
   describe '.warn' do
     it 'logs a warning message' do
       Dry::Core::Deprecations.warn('hello world')
-      expect(output).to include('[deprecated] hello world')
+      expect(log_output).to include('[deprecated] hello world')
     end
 
     it 'logs a tagged message' do
       Dry::Core::Deprecations.warn('hello world', tag: :spec)
-      expect(output).to include('[spec] hello world')
+      expect(log_output).to include('[spec] hello world')
     end
   end
 
   describe '.announce' do
     it 'warns about a deprecated method' do
       Dry::Core::Deprecations.announce(:foo, 'hello world', tag: :spec)
-      expect(output).to include('[spec] foo is deprecated and will be removed')
-      expect(output).to include('hello world')
+      expect(log_output).to include('[spec] foo is deprecated and will be removed')
+      expect(log_output).to include('hello world')
     end
   end
 
@@ -40,22 +40,22 @@ RSpec.describe Dry::Core::Deprecations do
       res = subject.hello('world')
 
       expect(res).to eql('hello world')
-      expect(output).to match(/\[spec\] Test(\.|#)hello is deprecated and will be removed/)
-      expect(output).to include('is no more')
+      expect(log_output).to match(/\[spec\] Test(\.|#)hello is deprecated and will be removed/)
+      expect(log_output).to include('is no more')
     end
 
     it 'deprecates a method in favor of another' do
       res = subject.logging('foo')
 
       expect(res).to eql('log: foo')
-      expect(output).to match(/\[spec\] Test(\.|#)logging is deprecated and will be removed/)
+      expect(log_output).to match(/\[spec\] Test(\.|#)logging is deprecated and will be removed/)
     end
 
     it 'does not require deprecated method to be defined' do
       res = subject.missing('bar')
 
       expect(res).to eql('log: bar')
-      expect(output).to match(/\[spec\] Test(\.|#)missing is deprecated and will be removed/)
+      expect(log_output).to match(/\[spec\] Test(\.|#)missing is deprecated and will be removed/)
     end
   end
 
@@ -133,7 +133,7 @@ RSpec.describe Dry::Core::Deprecations do
     describe '.warn' do
       it 'logs a tagged message' do
         klass.warn('hello')
-        expect(output).to include('[spec] hello')
+        expect(log_output).to include('[spec] hello')
       end
     end
   end
