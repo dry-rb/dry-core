@@ -90,11 +90,11 @@ module Dry
         #   @param [#warn] logger
         #
         # @api public
-        def set_logger!(output = nil)
+        def set_logger!(output = $stderr)
           if output.respond_to?(:warn)
             @logger = output
           else
-            @logger = Logger.new(output || $stdout).tap do |logger|
+            @logger = Logger.new(output).tap do |logger|
               logger.formatter = proc { |_, _, _, msg| "#{ msg }\n" }
             end
           end
