@@ -65,10 +65,6 @@ RSpec.configure do |config|
   # Use the documentation formatter for detailed output
   config.default_formatter = 'doc' if config.files_to_run.one?
 
-  # Print the n slowest examples and example groups at the
-  # end of the spec run
-  config.profile_examples = 3
-
   config.order = :random
 
   Kernel.srand config.seed
