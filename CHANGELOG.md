@@ -1,3 +1,11 @@
+# v0.3.4 to-be-released
+
+### Fixed
+
+* `Deprecations` output is set to `$stderr` by default now (solnic)
+
+[Compare v0.3.3...v0.3.4](https://github.com/dry-rb/dry-core/compare/v0.3.3...v0.3.4)
+
 # v0.3.3 2017-08-31
 
 ### Fixed
