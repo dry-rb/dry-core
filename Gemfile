@@ -8,7 +8,6 @@ group :test do
   else
     gem 'activesupport', '~> 4.2'
   end
-
   gem 'inflecto', '~> 0.0', '>= 0.0.2'
   gem 'codeclimate-test-reporter', require: false
   gem 'simplecov', require: false
