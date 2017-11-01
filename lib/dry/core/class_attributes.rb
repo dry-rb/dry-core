@@ -24,7 +24,7 @@ module Dry
       #   class MyClass
       #     extend Dry::Core::ClassAttributes
       #
-      #     defines :one, :two, type: Dry::Types::Int
+      #     defines :one, :two, type: Dry::Types['strict.int']
       #
       #     one 1
       #     two 2
@@ -39,7 +39,7 @@ module Dry
       #
       #   OtherClass.one # => 1
       #   OtherClass.two # => 3
-      def defines(*args, type: Dry::Types::Any)
+      def defines(*args, type: Dry::Types['any'])
         mod = Module.new do
           args.each do |name|
             define_method(name) do |value = Undefined|
