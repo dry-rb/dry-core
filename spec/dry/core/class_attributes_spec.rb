@@ -39,35 +39,54 @@ RSpec.describe 'Class Macros' do
   end
 
   context 'type option' do
-    before do
+    let(:klass) do
       module Test
-        class Types
-          include Dry::Types.module
-        end
-
         class NewClass
           extend Dry::Core::ClassAttributes
-
-          defines :one, type: Test::Types::String
-
-          one '1'
         end
       end
+
+      Test::NewClass
     end
-    it 'allows to pass type option' do
-      expect(Test::NewClass.one).to eq '1'
+
+    context 'using classes' do
+      before do
+        klass.defines :one, type: String
+      end
+
+      it 'allows to pass type option' do
+        klass.one '1'
+        expect(Test::NewClass.one).to eq '1'
+      end
+
+      it 'raises InvalidClassAttributeValue when invalid value is pass' do
+        expect{
+          klass.one 1
+        }.to raise_error(Dry::Core::InvalidClassAttributeValue)
+      end
     end
 
-    it 'raises InvalidClassAttributeValue when invalid value is pass' do
-      expect{
-        class InvalidNewClass
-          extend Dry::Core::ClassAttributes
-
-          defines :one, type: Test::Types::String
-
-          one 1
+    context 'using dry-types' do
+      before do
+        module Test
+          class Types
+            include Dry::Types.module
+          end
         end
-      }.to raise_error(Dry::Core::InvalidClassAttributeValue)
+
+        klass.defines :one, type: Test::Types::String
+      end
+
+      it 'allows to pass type option' do
+        klass.one '1'
+        expect(Test::NewClass.one).to eq '1'
+      end
+
+      it 'raises InvalidClassAttributeValue when invalid value is pass' do
+        expect{
+          klass.one 1
+        }.to raise_error(Dry::Core::InvalidClassAttributeValue)
+      end
     end
   end
 

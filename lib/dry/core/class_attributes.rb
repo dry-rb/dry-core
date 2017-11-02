@@ -1,6 +1,5 @@
 require 'dry/core/constants'
 require 'dry/core/errors'
-require 'dry-types'
 
 module Dry
   module Core
@@ -21,25 +20,36 @@ module Dry
       #    hello 'world'
       #  end
       #
-      #   class MyClass
-      #     extend Dry::Core::ClassAttributes
+      # @example with inheritance and type checking
       #
-      #     defines :one, :two, type: Dry::Types['strict.int']
+      #  class MyClass
+      #    extend Dry::Core::ClassAttributes
       #
-      #     one 1
-      #     two 2
-      #   end
+      #    defines :one, :two, type: Integer
       #
-      #   class OtherClass < MyClass
-      #     two 3
-      #   end
+      #    one 1
+      #    two 2
+      #  end
       #
-      #   MyClass.one # => 1
-      #   MyClass.two # => 2
+      #  class OtherClass < MyClass
+      #    two 3
+      #  end
       #
-      #   OtherClass.one # => 1
-      #   OtherClass.two # => 3
-      def defines(*args, type: Dry::Types['any'])
+      #  MyClass.one # => 1
+      #  MyClass.two # => 2
+      #
+      #  OtherClass.one # => 1
+      #  OtherClass.two # => 3
+      #
+      # @example with dry-types
+      #
+      #  class Foo
+      #    extend Dry::Core::ClassAttributes
+      #
+      #    defines :one, :two, type: Dry::Types['strict.int']
+      #  end
+      #
+      def defines(*args, type: Object)
         mod = Module.new do
           args.each do |name|
             define_method(name) do |value = Undefined|
@@ -52,7 +62,7 @@ module Dry
                   nil
                 end
               else
-                raise InvalidClassAttributeValue unless type.valid?(value)
+                raise InvalidClassAttributeValue unless type === value
 
                 instance_variable_set(ivar, value)
               end
