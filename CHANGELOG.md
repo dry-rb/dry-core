@@ -1,3 +1,20 @@
+# v0.4.0 2017-11-02
+
+### Added
+
+* Added the `:type` option to class attributes, you can now restrict attribute values with a type. You can either use plain ruby types (`Integer`, `String`, etc) or `dry-types` (GustavoCaso)
+
+  ```ruby
+    class Foo
+      extend Dry::Core::ClassAttributes
+
+      defines :ruby_attr, type: Integer
+      defines :dry_attr, type: Dry::Types['strict.int']
+    end
+  ```
+
+[Compare v0.3.4...v0.4.0](https://github.com/dry-rb/dry-core/compare/v0.3.4...v0.4.0)
+
 # v0.3.4 2017-09-29
 
 ### Fixed
