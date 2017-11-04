@@ -1,3 +1,11 @@
+# v0.4.1 2017-11-04
+
+### Changed
+
+* Improved error message on invalid attribute value (GustavoCaso)
+
+[Compare v0.4.0...v0.4.1](https://github.com/dry-rb/dry-core/compare/v0.4.0...v0.4.1)
+
 # v0.4.0 2017-11-02
 
 ### Added
