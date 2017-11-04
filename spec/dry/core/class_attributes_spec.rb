@@ -62,7 +62,10 @@ RSpec.describe 'Class Macros' do
       it 'raises InvalidClassAttributeValue when invalid value is pass' do
         expect{
           klass.one 1
-        }.to raise_error(Dry::Core::InvalidClassAttributeValue)
+        }.to raise_error(
+          Dry::Core::InvalidClassAttributeValue,
+          'Value: 1 is invalid for class attribute: one'
+        )
       end
     end
 

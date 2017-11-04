@@ -62,7 +62,7 @@ module Dry
                   nil
                 end
               else
-                raise InvalidClassAttributeValue unless type === value
+                raise InvalidClassAttributeValue.new(name, value) unless type === value
 
                 instance_variable_set(ivar, value)
               end
