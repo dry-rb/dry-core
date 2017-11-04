@@ -64,7 +64,7 @@ RSpec.describe 'Class Macros' do
           klass.one 1
         }.to raise_error(
           Dry::Core::InvalidClassAttributeValue,
-          'Value: 1 is invalid for class attribute: one'
+          'Value 1 is invalid for class attribute :one'
         )
       end
     end

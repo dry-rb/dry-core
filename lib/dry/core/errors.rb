@@ -1,9 +1,9 @@
 module Dry
   module Core
-    InvalidClassAttributeValue = Class.new(StandardError) do
+    class InvalidClassAttributeValue < StandardError
       def initialize(name, value)
         super(
-          "Value: #{value} is invalid for class attribute: #{name}"
+          "Value #{value.inspect} is invalid for class attribute #{name.inspect}"
         )
       end
     end
