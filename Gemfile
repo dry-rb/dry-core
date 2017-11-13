@@ -12,6 +12,7 @@ group :test do
   gem 'codeclimate-test-reporter', require: false
   gem 'simplecov', require: false
   gem 'dry-types'
+  gem 'dry-inflector', git: 'https://github.com/dry-rb/dry-inflector', branch: 'master'
 end
 
 group :tools do

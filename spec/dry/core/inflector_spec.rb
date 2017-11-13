@@ -22,12 +22,14 @@ RSpec.describe Dry::Core::Inflector do
       expect(api.demodulize('Task::User')).to eql('User')
     end
 
-    it 'constantizes' do
-      expect(api.constantize('String')).to be String
-    end
-
     it 'classifies' do
       expect(api.classify('task_user/name')).to eql('TaskUser::Name')
+    end
+  end
+
+  shared_examples 'an inflector with constantize' do
+    it 'constantizes' do
+      expect(api.constantize('String')).to be String
     end
   end
 
@@ -67,6 +69,7 @@ RSpec.describe Dry::Core::Inflector do
     end
 
     it_behaves_like 'an inflector'
+    it_behaves_like 'an inflector with constantize'
   end
 
   context 'with Inflecto' do
@@ -76,6 +79,19 @@ RSpec.describe Dry::Core::Inflector do
 
     it 'is Inflecto' do
       expect(api.inflector).to be(::Inflecto)
+    end
+
+    it_behaves_like 'an inflector'
+    it_behaves_like 'an inflector with constantize'
+  end
+
+  context 'with Dry::Inflector' do
+    before do
+      api.select_backend(:dry_inflector)
+    end
+
+    it 'is Dry::Inflector' do
+      expect(api.inflector).to be_a(Dry::Inflector)
     end
 
     it_behaves_like 'an inflector'

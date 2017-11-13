@@ -8,6 +8,10 @@ module Dry
           'active_support/inflector',
           proc { ::ActiveSupport::Inflector }
         ],
+        dry_inflector: [
+          'dry/inflector',
+          proc { Dry::Inflector.new }
+        ],
         inflecto: [
           'inflecto',
           proc { ::Inflecto }
