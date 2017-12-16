@@ -16,6 +16,7 @@ group :test do
 end
 
 group :tools do
-  gem 'byebug', platform: :mri
+  gem 'pry-byebug', platform: :mri
+  gem 'pry', platform: :jruby
   gem 'rubocop'
 end

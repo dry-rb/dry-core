@@ -124,4 +124,24 @@ RSpec.describe 'Class Macros' do
 
     expect(subclass_value).to be 1
   end
+
+  it 'works with private setters/getters and inheritance' do
+    base_class = Class.new do
+      extend Dry::Core::ClassAttributes
+
+      defines :one
+      class << self; private :one; end
+      one 1
+    end
+
+    spec = self
+
+    child = Class.new(base_class) do |child|
+      spec.instance_exec { expect(child.send(:one)).to spec.eql(1) }
+
+      one "one"
+    end
+
+    expect(child.send(:one)).to eql("one")
+  end
 end

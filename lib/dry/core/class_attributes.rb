@@ -70,7 +70,7 @@ module Dry
           end
 
           define_method(:inherited) do |klass|
-            args.each { |name| klass.public_send(name, send(name)) }
+            args.each { |name| klass.send(name, send(name)) }
 
             super(klass)
           end

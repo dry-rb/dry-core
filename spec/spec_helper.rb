@@ -15,7 +15,8 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'rspec/version'
 
 begin
-  require 'byebug'
+  require 'pry'
+  require 'pry-byebug'
 rescue LoadError
 end
 
