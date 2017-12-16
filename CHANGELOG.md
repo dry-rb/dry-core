@@ -1,3 +1,11 @@
+# v0.4.2 2017-12-16
+
+### Fixed
+
+* Class attributes now support private setters/getters (flash-gordon)
+
+[Compare v0.4.1...v0.4.2](https://github.com/dry-rb/dry-core/compare/v0.4.1...v0.4.2)
+
 # v0.4.1 2017-11-04
 
 ### Changed
