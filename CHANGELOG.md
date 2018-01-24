@@ -1,3 +1,11 @@
+# v0.4.3 to-be-released
+
+### Added
+
+* `Dry::Core::DescendantsTracker` which is a maintained version of the [`descendants_tracker`](https://github.com/dkubb/descendants_tracker) gem (flash-gordon)
+
+[Compare v0.4.2...v0.4.3](https://github.com/dry-rb/dry-core/compare/v0.4.2...master)
+
 # v0.4.2 2017-12-16
 
 ### Fixed
