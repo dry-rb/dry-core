@@ -123,6 +123,32 @@ RSpec.describe Dry::Core::Deprecations do
     end
   end
 
+  describe '.deprecate_constant' do
+    before do
+      module Test
+        extend Dry::Core::Deprecations[:spec]
+
+        Obsolete = :no_more
+
+        deprecate_constant(:Obsolete)
+
+        Deprecated = :fix
+
+        deprecate_constant(:Deprecated, message: 'Shiny New')
+      end
+    end
+
+    it 'deprecates a constant in favor of another' do
+      expect(Test::Obsolete).to be(:no_more)
+      expect(log_output).to match(/\[spec\] Test::Obsolete is deprecated and will be removed/)
+    end
+
+    it 'can have an optional messaage' do
+      expect(Test::Deprecated).to be(:fix)
+      expect(log_output).to match(/Shiny New/)
+    end
+  end
+
   describe '.[]' do
     subject(:klass) do
       Class.new do

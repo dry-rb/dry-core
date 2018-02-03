@@ -53,7 +53,7 @@ module Dry
         end
 
         # @api private
-        def deprecated_method_message(old, new = nil, msg = nil)
+        def deprecated_name_message(old, new = nil, msg = nil)
           if new
             deprecation_message(old, <<-MSG)
               Please use #{new} instead.
@@ -142,7 +142,7 @@ module Dry
         # @param [Symbol] new_name replacement (not required)
         # @option [String] message optional deprecation message
         def deprecate(old_name, new_name = nil, message: nil)
-          full_msg = Deprecations.deprecated_method_message(
+          full_msg = Deprecations.deprecated_name_message(
             "#{self.name}##{old_name}",
             new_name ? "#{self.name}##{new_name}" : nil,
             message
@@ -175,7 +175,7 @@ module Dry
         # @param [Symbol] new_name replacement (not required)
         # @option [String] message optional deprecation message
         def deprecate_class_method(old_name, new_name = nil, message: nil)
-          full_msg = Deprecations.deprecated_method_message(
+          full_msg = Deprecations.deprecated_name_message(
             "#{self.name}.#{old_name}",
             new_name ? "#{self.name}.#{new_name}" : nil,
             message
@@ -191,6 +191,32 @@ module Dry
               meth.call(*args, &block)
             end
           end
+        end
+
+        # Mark a constant as deprecated
+        # @param [Symbol] constant_name constant name to be deprecated
+        # @option [String] message optional deprecation message
+        def deprecate_constant(constant_name, message: nil)
+          value = const_get(constant_name)
+          remove_const(constant_name)
+
+          full_msg = Deprecations.deprecated_name_message(
+            "#{self.name}::#{constant_name}",
+            message
+          )
+
+          mod = Module.new do
+            define_method(:const_missing) do |missing|
+              if missing == constant_name
+                warn("#{ full_msg }\n#{ STACK.() }")
+                value
+              else
+                super(missing)
+              end
+            end
+          end
+
+          extend(mod)
         end
       end
     end
