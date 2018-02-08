@@ -54,8 +54,6 @@ RSpec.describe Dry::Core::Constants do
     expect(subject.empty_opts).to eql({})
 
     expect(subject.undefined).to be Dry::Core::Constants::Undefined
-    expect(subject.undefined.to_s).to eql('Undefined')
-    expect(subject.undefined.inspect).to eql('Undefined')
   end
 
   describe 'nested' do
@@ -73,6 +71,36 @@ RSpec.describe Dry::Core::Constants do
 
     example 'constants available in lexical scope' do
       expect(subject.empty_array).to be Dry::Core::Constants::EMPTY_ARRAY
+    end
+  end
+
+  describe 'Undefined' do
+    subject { Dry::Core::Constants::Undefined }
+
+    describe '.inspect' do
+      it 'returns "Undefined"' do
+        expect(subject.inspect).to eql('Undefined')
+      end
+    end
+
+    describe '.to_s' do
+      it 'returns "Undefined"' do
+        expect(subject.to_s).to eql('Undefined')
+      end
+    end
+
+    describe '.default' do
+      it "returns the first arg if it's not Undefined" do
+        expect(subject.default(:first, :second)).to eql(:first)
+      end
+
+      it 'returns the second arg if the first one is Undefined' do
+        expect(subject.default(subject, :second)).to eql(:second)
+      end
+
+      it 'yields a block' do
+        expect(subject.default(subject) { :second }).to eql(:second)
+      end
     end
   end
 end

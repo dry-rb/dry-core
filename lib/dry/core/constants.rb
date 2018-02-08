@@ -43,6 +43,26 @@ module Dry
         def undefined.inspect
           'Undefined'
         end
+
+        # Pick a value, if the first argument is not Undefined, return it back,
+        # otherwise return the second arg or yield the block.
+        #
+        # @example
+        #  def method(val = Undefined)
+        #    1 + Undefined.default(val, 2)
+        #  end
+        #
+        def undefined.default(x, y = self)
+          if x.equal?(self)
+            if y.equal?(self)
+              yield
+            else
+              y
+            end
+          else
+            x
+          end
+        end
       end.freeze
 
       def self.included(base)
