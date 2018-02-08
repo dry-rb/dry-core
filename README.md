@@ -8,8 +8,8 @@
 
 [![Gem Version](https://img.shields.io/gem/v/dry-core.svg)][gem]
 [![Build Status](https://img.shields.io/travis/dry-rb/dry-core.svg)][travis]
-[![Code Climate](https://img.shields.io/codeclimate/github/dry-rb/dry-core.svg)][code_climate]
-[![Test Coverage](https://img.shields.io/codeclimate/coverage/github/dry-rb/dry-core.svg)][code_climate]
+[![Code Climate](https://api.codeclimate.com/v1/badges/eebb0e969814744231e4/maintainability)][code_climate]
+[![Test Coverage](https://api.codeclimate.com/v1/badges/eebb0e969814744231e4/test_coverage)][code_climate]
 [![API Documentation Coverage](http://inch-ci.org/github/dry-rb/dry-core.svg)][inch]
 ![No monkey-patches](https://img.shields.io/badge/monkey--patches-0-brightgreen.svg)
 
