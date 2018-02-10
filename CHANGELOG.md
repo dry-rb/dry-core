@@ -1,11 +1,11 @@
-# v0.4.4 to-be-released
+# v0.4.4 2018-02-10
 
 ### Added
 
 * `deprecate_constant` overrides `Module#deprecate_constant` and issues a labeled message on accessing a deprecated constant (flash-gordon)
 * `Undefined.default` which accepts two arguments and returns the first if it's not `Undefiend`; otherwise, returns the second one or yields a block (flash-gordon)
 
-[Compare v0.4.3...master](https://github.com/dry-rb/dry-core/compare/v0.4.3...master)
+[Compare v0.4.3...v0.4.4](https://github.com/dry-rb/dry-core/compare/v0.4.3...v0.4.4)
 
 # v0.4.3 2018-02-03
 
