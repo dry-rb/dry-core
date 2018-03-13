@@ -1,7 +1,7 @@
 module Dry
   module Core
     module Memoizable
-      MEMOIZED_HASH = {}
+      MEMOIZED_HASH = {}.freeze
 
       module ClassInterface
         # @api private
