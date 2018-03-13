@@ -4,7 +4,6 @@ module Dry
       MEMOIZED_HASH = {}.freeze
 
       module ClassInterface
-        # @api private
         def memoize(*names)
           prepend(Memoizer.new(self, names))
         end
