@@ -23,5 +23,6 @@ RSpec.describe Dry::Core::Memoizable, '.memoize' do
 
   it 'memoizes method return value with an arg' do
     expect(object.bar(:a)).to be(object.bar(:a))
+    expect(object.bar(:b)).to be(object.bar(:b))
   end
 end
