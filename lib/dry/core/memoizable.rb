@@ -43,11 +43,12 @@ module Dry
 
             if meth.parameters.size > 0
               define_method(name) do |*args|
-                __memoized__[:"#{name}_#{args.hash}"] ||= super(*args)
+                key = :"#{name}_#{args.hash}"
+                __memoized__.fetch(key) { __memoized__[key] = super(*args) }
               end
             else
               define_method(name) do
-                __memoized__[name] ||= super()
+                __memoized__.fetch(name) { __memoized__[name] = super() }
               end
             end
           end

@@ -5,6 +5,12 @@ RSpec.describe Dry::Core::Memoizable, '.memoize' do
     Class.new do
       include Dry::Core::Memoizable
 
+      attr_reader :falsey_call_count
+
+      def initialize
+        @falsey_call_count = 0
+      end
+
       def foo
         ['a', 'ab', 'abc'].max
       end
@@ -14,6 +20,12 @@ RSpec.describe Dry::Core::Memoizable, '.memoize' do
         { a: '1', b: '2' }
       end
       memoize :bar
+
+      def falsey
+        @falsey_call_count += 1
+        false
+      end
+      memoize :falsey
     end.new
   end
 
@@ -24,5 +36,10 @@ RSpec.describe Dry::Core::Memoizable, '.memoize' do
   it 'memoizes method return value with an arg' do
     expect(object.bar(:a)).to be(object.bar(:a))
     expect(object.bar(:b)).to be(object.bar(:b))
+  end
+
+  it 'memoizes falsey values' do
+    expect(object.falsey).to be(object.falsey)
+    expect(object.falsey_call_count).to eq 1
   end
 end
