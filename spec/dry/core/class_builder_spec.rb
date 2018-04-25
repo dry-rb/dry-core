@@ -108,6 +108,34 @@ RSpec.describe Dry::Core::ClassBuilder do
           expect(Test::File).not_to be(::File)
         end
       end
+
+      context 'autoloaded constant' do
+        before do
+          Test.module_eval do
+            autoload :Project, File.join(__dir__, "../../fixtures/project")
+          end
+        end
+
+        after do
+          Test.module_eval do
+            remove_const(:Project)
+          end
+        end
+
+        let(:parent) do
+          Test::Parent = Class.new
+        end
+
+        let(:options) do
+          { name: 'Project', namespace: Test, parent: parent }
+        end
+
+        it 'autoloads the specified class' do
+          expect(klass.name).to eq('Test::Project')
+          expect(klass.superclass).to be(Test::Project)
+          expect(klass.instance_methods).to include(:to_model)
+        end
+      end
     end
   end
 end

@@ -81,6 +81,11 @@ module Dry
 
       # @api private
       def create_base(namespace, name, parent)
+        begin
+          namespace.const_get(name)
+        rescue NameError
+        end
+
         if namespace.const_defined?(name, false)
           existing = namespace.const_get(name)
 
