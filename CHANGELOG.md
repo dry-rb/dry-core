@@ -1,10 +1,16 @@
+# v0.4.6 2018-05-15
+
+* Trigger constant autoloading in the class builder (radar)
+
+[Compare v0.4.5...v0.4.6](https://github.com/dry-rb/dry-core/compare/v0.4.5...v0.4.6)
+
 # v0.4.5 2018-03-14
 
 ### Added
 
 * `Dry::Core::Memoizable`, which provides a `memoize` macro for memoizing results of instance methods (timriley)
 
-[Compare v0.4.5...v0.4.5](https://github.com/dry-rb/dry-core/compare/v0.4.4...v0.4.5)
+[Compare v0.4.4...v0.4.5](https://github.com/dry-rb/dry-core/compare/v0.4.4...v0.4.5)
 
 # v0.4.4 2018-02-10
 
