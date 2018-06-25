@@ -70,7 +70,7 @@ module Dry
         # @param [IO] output output stream
         #
         # @return [Logger]
-        def logger(output = nil)
+        def logger(output = $stderr)
           if defined?(@logger)
             @logger
           else

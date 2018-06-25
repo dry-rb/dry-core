@@ -186,4 +186,43 @@ RSpec.describe Dry::Core::Deprecations do
       expect(logger.messages).to eql(%w([deprecated]\ Don't!))
     end
   end
+
+  describe '.logger' do
+    let(:stderr) do
+      Class.new {
+        attr_reader :messages
+
+        def initialize
+          @messages = []
+        end
+
+        def write(message)
+          messages << message
+        end
+
+        def close
+          messages.freeze
+        end
+      }.new
+    end
+
+    around do |ex|
+      $stderr = stderr
+      ex.run
+      $stderr = STDERR
+    end
+
+    before do
+      module Dry::Core::Deprecations
+        remove_instance_variable :@logger
+      end
+    end
+
+    let(:default_logger) { Dry::Core::Deprecations.logger }
+
+    it 'sets $stderr as a default stream' do
+      default_logger.warn('Test')
+      expect(stderr.messages).not_to be_empty
+    end
+  end
 end
