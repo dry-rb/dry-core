@@ -1,4 +1,14 @@
+# v0.4.7 2018-06-25
+
+### Fixed
+
+* Fix default logger for deprecations, it now uses `$stderr` by default, as it should (flash-gordon)
+
+[Compare v0.4.6...v0.4.7](https://github.com/dry-rb/dry-core/compare/v0.4.6...v0.4.7)
+
 # v0.4.6 2018-05-15
+
+### Changed
 
 * Trigger constant autoloading in the class builder (radar)
 
