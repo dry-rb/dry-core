@@ -7,11 +7,14 @@ RSpec.describe 'Class Macros' do
       class MyClass
         extend Dry::Core::ClassAttributes
 
-        defines :one, :two, :three
+        defines :one, :two, :three, :say_hello
 
         one 1
         two 2
         three 3
+        say_hello do
+          'hello world'
+        end
       end
 
       class OtherClass < Test::MyClass
@@ -32,6 +35,10 @@ RSpec.describe 'Class Macros' do
     expect(Test::MyClass.one).to eq(1)
     expect(Test::MyClass.two).to eq(2)
     expect(Test::MyClass.three).to eq(3)
+  end
+
+  it 'allows storing blocks' do
+    expect(Test::MyClass.say_hello.call).to eq('hello world')
   end
 
   it 'allows overwriting of inherited values with nil' do

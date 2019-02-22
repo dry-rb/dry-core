@@ -49,11 +49,26 @@ module Dry
       #    defines :one, :two, type: Dry::Types['strict.int']
       #  end
       #
+      # @example with blocks
+      #
+      #  class Foo
+      #    extend Dry::Core::ClassAttributes
+      #
+      #    defines :say_hello
+      #    say_hello do
+      #     'hello world'
+      #    end
+      #  end
+      #
+      # Foo.say_hello.call #=> 'hello world'
+      #
       def defines(*args, type: Object)
         mod = Module.new do
           args.each do |name|
-            define_method(name) do |value = Undefined|
+            define_method(name) do |value = Undefined, &blk|
               ivar = "@#{name}"
+
+              value = blk if blk
 
               if value == Undefined
                 if instance_variable_defined?(ivar)
