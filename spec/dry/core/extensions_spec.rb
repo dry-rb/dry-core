@@ -4,6 +4,10 @@ RSpec.describe Dry::Core::Extensions do
   subject do
     Class.new do
       extend Dry::Core::Extensions
+
+      def self.define_foo
+        define_method(:foo) {}
+      end
     end
   end
 
@@ -18,6 +22,30 @@ RSpec.describe Dry::Core::Extensions do
 
     expect(foo).to be true
     expect(bar).to be true
+  end
+
+  it 'allows extending with instance methods' do
+    subject.register_extension(:foo) { def foo; end }
+
+    subject.load_extensions(:foo)
+
+    expect(subject.new).to respond_to :foo
+  end
+
+  it 'allows extending with class methods' do
+    subject.register_extension(:foo) { def self.foo; end }
+
+    subject.load_extensions(:foo)
+
+    expect(subject).to respond_to :foo
+  end
+
+  it 'allows extending with execution of class methods' do
+    subject.register_extension(:foo) { define_foo }
+
+    subject.load_extensions(:foo)
+
+    expect(subject.new).to respond_to :foo
   end
 
   it 'swallows double loading' do

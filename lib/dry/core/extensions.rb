@@ -51,7 +51,7 @@ module Dry
             raise ArgumentError, "Unknown extension: #{ext.inspect}"
           end
           unless @__loaded_extensions__.include?(ext)
-            block.call
+            module_eval(&block)
             @__loaded_extensions__ << ext
           end
         end
