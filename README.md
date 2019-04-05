@@ -3,8 +3,9 @@
 [travis]: https://travis-ci.org/dry-rb/dry-core
 [code_climate]: https://codeclimate.com/github/dry-rb/dry-core
 [inch]: http://inch-ci.org/github/dry-rb/dry-core
+[chat]: https://dry-rb.zulipchat.com
 
-# dry-core
+# dry-core [![Join the chat at https://dry-rb.zulipchat.com](https://img.shields.io/badge/dry--rb-join%20chat-%23346b7a.svg)][chat]
 
 [![Gem Version](https://img.shields.io/gem/v/dry-core.svg)][gem]
 [![Build Status](https://img.shields.io/travis/dry-rb/dry-core.svg)][travis]
