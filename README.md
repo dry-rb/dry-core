@@ -16,6 +16,20 @@
 
 A collection of small modules used in the dry-rb ecosystem.
 
+## Links
+
+* [User docs](https://dry-rb.org/gems/dry-core)
+* [API docs](http://rubydoc.info/gems/dry-schema)
+
+## Supported Ruby versions
+
+This library officially supports following Ruby versions:
+
+* MRI >= `2.4`
+* jruby >= `9.2`
+
+It **should** work on MRI `2.3.x` too, but there's no official support for this version.
+
 ## Installation
 
 Add this line to your application's Gemfile:
