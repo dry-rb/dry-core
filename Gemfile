@@ -18,5 +18,4 @@ end
 group :tools do
   gem 'pry-byebug', platform: :mri
   gem 'pry', platform: :jruby
-  gem 'rubocop'
 end
