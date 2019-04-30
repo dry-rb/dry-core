@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Dry
   module Core
     # Helper module providing thin interface around an inflection backend.

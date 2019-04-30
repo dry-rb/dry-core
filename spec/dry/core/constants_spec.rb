@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dry/core/constants'
 
 RSpec.describe Dry::Core::Constants do

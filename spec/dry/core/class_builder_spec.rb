@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dry/core/class_builder'
 
 RSpec.describe Dry::Core::ClassBuilder do

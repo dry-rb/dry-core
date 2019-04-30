@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dry/core/memoizable'
 
 RSpec.describe Dry::Core::Memoizable, '.memoize' do
