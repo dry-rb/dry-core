@@ -8,3 +8,4 @@
 /spec/reports/
 /tmp/
 spec/examples.txt
+.rubocop.yml
