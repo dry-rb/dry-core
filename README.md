@@ -19,7 +19,7 @@ A collection of small modules used in the dry-rb ecosystem.
 ## Links
 
 * [User docs](https://dry-rb.org/gems/dry-core)
-* [API docs](http://rubydoc.info/gems/dry-schema)
+* [API docs](http://rubydoc.info/gems/dry-core)
 
 ## Supported Ruby versions
 
