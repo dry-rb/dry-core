@@ -11,8 +11,8 @@ group :test do
   gem 'inflecto', '~> 0.0', '>= 0.0.2'
   gem 'codeclimate-test-reporter', require: false
   gem 'simplecov', require: false
-  gem 'dry-types'
-  gem 'dry-inflector', git: 'https://github.com/dry-rb/dry-inflector', branch: 'master'
+  gem 'dry-types', '~> 1.0'
+  gem 'dry-inflector'
 end
 
 group :tools do
