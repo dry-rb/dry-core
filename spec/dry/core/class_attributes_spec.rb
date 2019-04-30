@@ -75,7 +75,7 @@ RSpec.describe 'Class Macros' do
       before do
         module Test
           class Types
-            include Dry::Types.module
+            include Dry::Types()
           end
         end
 
