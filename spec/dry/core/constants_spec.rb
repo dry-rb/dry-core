@@ -104,5 +104,12 @@ RSpec.describe Dry::Core::Constants do
         expect(subject.default(subject) { :second }).to eql(:second)
       end
     end
+
+    describe '.map' do
+      it 'maps non-undefined value' do
+        expect(subject.map('foo', &:to_sym)).to be(:foo)
+        expect(subject.map(subject, &:to_sym)).to be(subject)
+      end
+    end
   end
 end

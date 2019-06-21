@@ -50,19 +50,34 @@ module Dry
         # otherwise return the second arg or yield the block.
         #
         # @example
-        #  def method(val = Undefined)
-        #    1 + Undefined.default(val, 2)
-        #  end
+        #   def method(val = Undefined)
+        #     1 + Undefined.default(val, 2)
+        #   end
         #
         def undefined.default(x, y = self)
-          if x.equal?(self)
-            if y.equal?(self)
+          if equal?(x)
+            if equal?(y)
               yield
             else
               y
             end
           else
             x
+          end
+        end
+
+        # Map a non-undefined value
+        #
+        # @example
+        #   def add_five(val = Undefined)
+        #     Undefined.map(val) { |x| x + 5 }
+        #   end
+        #
+        def undefined.map(value)
+          if equal?(value)
+            self
+          else
+            yield(value)
           end
         end
       end.freeze
