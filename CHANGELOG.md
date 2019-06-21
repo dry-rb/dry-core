@@ -1,3 +1,18 @@
+# to-be-released
+
+### Added
+
+* `Undefined.map` for mapping non-undefined values (flash-gordon):
+
+```ruby
+something = 1
+Undefined.map(something) { |v| v + 1 } # => 2
+something = Undefined
+Undefined.map(something) { |v| v + 1 } # => Undefined
+```
+
+[Compare v0.4.7...master](https://github.com/dry-rb/dry-core/compare/v0.4.7...master)
+
 # v0.4.7 2018-06-25
 
 ### Fixed
