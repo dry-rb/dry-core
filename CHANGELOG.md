@@ -1,8 +1,8 @@
-# to-be-released
+# v0.4.8 2019-06-23
 
 ### Added
 
-* `Undefined.map` for mapping non-undefined values (flash-gordon):
+- `Undefined.map` for mapping non-undefined values (flash-gordon):
 
 ```ruby
 something = 1
@@ -11,13 +11,13 @@ something = Undefined
 Undefined.map(something) { |v| v + 1 } # => Undefined
 ```
 
-[Compare v0.4.7...master](https://github.com/dry-rb/dry-core/compare/v0.4.7...master)
+[Compare v0.4.7...v0.4.8](https://github.com/dry-rb/dry-core/compare/v0.4.7...v0.4.8)
 
 # v0.4.7 2018-06-25
 
 ### Fixed
 
-* Fix default logger for deprecations, it now uses `$stderr` by default, as it should (flash-gordon)
+- Fix default logger for deprecations, it now uses `$stderr` by default, as it should (flash-gordon)
 
 [Compare v0.4.6...v0.4.7](https://github.com/dry-rb/dry-core/compare/v0.4.6...v0.4.7)
 
@@ -25,7 +25,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Changed
 
-* Trigger constant autoloading in the class builder (radar)
+- Trigger constant autoloading in the class builder (radar)
 
 [Compare v0.4.5...v0.4.6](https://github.com/dry-rb/dry-core/compare/v0.4.5...v0.4.6)
 
@@ -33,7 +33,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Added
 
-* `Dry::Core::Memoizable`, which provides a `memoize` macro for memoizing results of instance methods (timriley)
+- `Dry::Core::Memoizable`, which provides a `memoize` macro for memoizing results of instance methods (timriley)
 
 [Compare v0.4.4...v0.4.5](https://github.com/dry-rb/dry-core/compare/v0.4.4...v0.4.5)
 
@@ -41,8 +41,8 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Added
 
-* `deprecate_constant` overrides `Module#deprecate_constant` and issues a labeled message on accessing a deprecated constant (flash-gordon)
-* `Undefined.default` which accepts two arguments and returns the first if it's not `Undefined`; otherwise, returns the second one or yields a block (flash-gordon)
+- `deprecate_constant` overrides `Module#deprecate_constant` and issues a labeled message on accessing a deprecated constant (flash-gordon)
+- `Undefined.default` which accepts two arguments and returns the first if it's not `Undefined`; otherwise, returns the second one or yields a block (flash-gordon)
 
 [Compare v0.4.3...v0.4.4](https://github.com/dry-rb/dry-core/compare/v0.4.3...v0.4.4)
 
@@ -50,7 +50,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Added
 
-* `Dry::Core::DescendantsTracker` which is a maintained version of the [`descendants_tracker`](https://github.com/dkubb/descendants_tracker) gem (flash-gordon)
+- `Dry::Core::DescendantsTracker` which is a maintained version of the [`descendants_tracker`](https://github.com/dkubb/descendants_tracker) gem (flash-gordon)
 
 [Compare v0.4.2...v0.4.3](https://github.com/dry-rb/dry-core/compare/v0.4.2...0.4.3)
 
@@ -58,7 +58,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Fixed
 
-* Class attributes now support private setters/getters (flash-gordon)
+- Class attributes now support private setters/getters (flash-gordon)
 
 [Compare v0.4.1...v0.4.2](https://github.com/dry-rb/dry-core/compare/v0.4.1...v0.4.2)
 
@@ -66,7 +66,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Changed
 
-* Improved error message on invalid attribute value (GustavoCaso)
+- Improved error message on invalid attribute value (GustavoCaso)
 
 [Compare v0.4.0...v0.4.1](https://github.com/dry-rb/dry-core/compare/v0.4.0...v0.4.1)
 
@@ -74,7 +74,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Added
 
-* Added the `:type` option to class attributes, you can now restrict attribute values with a type. You can either use plain ruby types (`Integer`, `String`, etc) or `dry-types` (GustavoCaso)
+- Added the `:type` option to class attributes, you can now restrict attribute values with a type. You can either use plain ruby types (`Integer`, `String`, etc) or `dry-types` (GustavoCaso)
 
   ```ruby
     class Foo
@@ -91,7 +91,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Fixed
 
-* `Deprecations` output is set to `$stderr` by default now (solnic)
+- `Deprecations` output is set to `$stderr` by default now (solnic)
 
 [Compare v0.3.3...v0.3.4](https://github.com/dry-rb/dry-core/compare/v0.3.3...v0.3.4)
 
@@ -99,7 +99,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Fixed
 
-* The Deprecations module now shows the right caller line (flash-gordon)
+- The Deprecations module now shows the right caller line (flash-gordon)
 
 [Compare v0.3.2...v0.3.3](https://github.com/dry-rb/dry-core/compare/v0.3.2...v0.3.3)
 
@@ -107,7 +107,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Added
 
-* Accept an existing logger object in `Dry::Core::Deprecations.set_logger!` (flash-gordon)
+- Accept an existing logger object in `Dry::Core::Deprecations.set_logger!` (flash-gordon)
 
 [Compare v0.3.1...v0.3.2](https://github.com/dry-rb/dry-core/compare/v0.3.1...v0.3.2)
 
@@ -115,7 +115,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Added
 
-* Support for building classes within an existing namespace (flash-gordon)
+- Support for building classes within an existing namespace (flash-gordon)
 
 [Compare v0.3.0...v0.3.1](https://github.com/dry-rb/dry-core/compare/v0.3.0...v0.3.1)
 
@@ -123,7 +123,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Changed
 
-* Class attributes are initialized _before_ running the `inherited` hook. It's slightly more convenient behavior and it's very unlikely anyone will be affected by this, but technically this is a breaking change (flash-gordon)
+- Class attributes are initialized _before_ running the `inherited` hook. It's slightly more convenient behavior and it's very unlikely anyone will be affected by this, but technically this is a breaking change (flash-gordon)
 
 [Compare v0.2.4...v0.3.0](https://github.com/dry-rb/dry-core/compare/v0.2.4...v0.3.0)
 
@@ -131,7 +131,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Fixed
 
-* Do not require deprecated method to be defined (flash-gordon)
+- Do not require deprecated method to be defined (flash-gordon)
 
 [Compare v0.2.3...v0.2.4](https://github.com/dry-rb/dry-core/compare/v0.2.3...v0.2.4)
 
@@ -139,7 +139,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Fixed
 
-* Fix warnings on using uninitialized class attributes (flash-gordon)
+- Fix warnings on using uninitialized class attributes (flash-gordon)
 
 [Compare v0.2.2...v0.2.3](https://github.com/dry-rb/dry-core/compare/v0.2.2...v0.2.3)
 
@@ -147,7 +147,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Added
 
-* `ClassAttributes` which provides `defines` method for defining get-or-set methods (flash-gordon)
+- `ClassAttributes` which provides `defines` method for defining get-or-set methods (flash-gordon)
 
 [Compare v0.2.1...v0.2.2](https://github.com/dry-rb/dry-core/compare/v0.2.1...v0.2.2)
 
@@ -155,7 +155,7 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 ### Added
 
-* `Constants` are now available in nested scopes (flash-gordon)
+- `Constants` are now available in nested scopes (flash-gordon)
 
 [Compare v0.2.0...v0.2.1](https://github.com/dry-rb/dry-core/compare/v0.2.0...v0.2.1)
 
