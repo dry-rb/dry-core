@@ -9,3 +9,4 @@
 /tmp/
 spec/examples.txt
 .rubocop.yml
+/sorbet/

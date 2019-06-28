@@ -2,6 +2,9 @@ source 'https://rubygems.org'
 
 gemspec
 
+gem 'sorbet', group: :development
+gem 'sorbet-runtime'
+
 group :test do
   if RUBY_VERSION >= '2.4'
     gem 'activesupport'
