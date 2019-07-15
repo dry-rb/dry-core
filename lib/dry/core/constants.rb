@@ -80,6 +80,16 @@ module Dry
             yield(value)
           end
         end
+
+        # @api public
+        def undefined.dup
+          self
+        end
+
+        # @api public
+        def undefined.clone
+          self
+        end
       end.freeze
 
       def self.included(base)
