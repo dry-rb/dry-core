@@ -77,7 +77,7 @@ RSpec.describe Dry::Core::Constants do
   end
 
   describe 'Undefined' do
-    subject { Dry::Core::Constants::Undefined }
+    subject(:undefined) { Dry::Core::Constants::Undefined }
 
     describe '.inspect' do
       it 'returns "Undefined"' do
@@ -110,6 +110,18 @@ RSpec.describe Dry::Core::Constants do
         expect(subject.map('foo', &:to_sym)).to be(:foo)
         expect(subject.map(subject, &:to_sym)).to be(subject)
       end
+    end
+
+    describe '.dup' do
+      subject { undefined.dup }
+
+      it { is_expected.to be(undefined) }
+    end
+
+    describe '.clone' do
+      subject { undefined.clone }
+
+      it { is_expected.to be(undefined) }
     end
   end
 end
