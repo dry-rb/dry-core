@@ -44,4 +44,12 @@ RSpec.describe Dry::Core::Memoizable, '.memoize' do
     expect(object.falsey).to be(object.falsey)
     expect(object.falsey_call_count).to eq 1
   end
+
+  context 'frozen object' do
+    before { object.freeze }
+
+    it 'works' do
+      expect(object.foo).to be(object.foo)
+    end
+  end
 end
