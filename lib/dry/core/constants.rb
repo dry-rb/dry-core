@@ -8,6 +8,7 @@ module Dry
     #
     # @example Just include this module to your class or module
     #   class Foo
+    #     include Dry::Core::Constants
     #     def call(value = EMPTY_ARRAY)
     #        value.map(&:to_s)
     #     end
