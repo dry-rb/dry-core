@@ -39,10 +39,15 @@ module Dry
       #     end
       #   end
       Undefined = Object.new.tap do |undefined|
+        # @api private
+        Self = -> { Undefined }
+
+        # @api public
         def undefined.to_s
           'Undefined'
         end
 
+        # @api public
         def undefined.inspect
           'Undefined'
         end
@@ -94,8 +99,7 @@ module Dry
 
         # @api public
         def undefined.coalesce(*args)
-          args.each { |x| return x if !equal?(x) }
-          self
+          args.find(Self) { |x| !equal?(x) }
         end
       end.freeze
 
