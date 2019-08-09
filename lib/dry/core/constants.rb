@@ -91,6 +91,12 @@ module Dry
         def undefined.clone
           self
         end
+
+        # @api public
+        def undefined.coalesce(*args)
+          args.each { |x| return x if !equal?(x) }
+          self
+        end
       end.freeze
 
       def self.included(base)
