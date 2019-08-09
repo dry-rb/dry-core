@@ -123,5 +123,18 @@ RSpec.describe Dry::Core::Constants do
 
       it { is_expected.to be(undefined) }
     end
+
+    describe '.coalesce' do
+      it 'returns first non-undefined value in a list' do
+        expect(undefined.coalesce(1, 2)).to be(1)
+        expect(undefined.coalesce(undefined, 1, 2)).to be(1)
+        expect(undefined.coalesce(undefined, undefined, 1, 2)).to be(1)
+        expect(undefined.coalesce(undefined, undefined)).to be(undefined)
+        expect(undefined.coalesce(nil)).to be(nil)
+        expect(undefined.coalesce(undefined, nil)).to be(nil)
+        expect(undefined.coalesce(undefined, nil, false)).to be(nil)
+        expect(undefined.coalesce(undefined, false, nil)).to be(false)
+      end
+    end
   end
 end
