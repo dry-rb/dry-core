@@ -1,3 +1,18 @@
+# v0.4.9
+
+### Added
+
+- `Undefined.coalesce` takes a variable number of arguments and returns the first non-`Undefined` value (flash-gordon)
+  ```ruby
+  Undefined.coalesce(Undefined, Undefined, :foo) # => :foo
+  ```
+
+### Fixed
+
+- `Undefined.{dup,clone}` returns `Undefined` back, `Undefined` is a singleton (flash-gordon)
+
+[Compare v0.4.8...v0.4.9](https://github.com/dry-rb/dry-core/compare/v0.4.8...v0.4.9)
+
 # v0.4.8 2019-06-23
 
 ### Added
