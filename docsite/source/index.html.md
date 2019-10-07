@@ -17,9 +17,9 @@ sections:
 
 ## Features
 
-- [docs::cache](Cache) - allows you to cache call results that are solely determined by arguments
-- [docs::class-attributes](Class Attributes)
-- [docs::class-builder](Class Builder)
-- [docs::constants](Constants) - a list of constants you can use to avoid memory allocations or identity checks.
-- [docs::deprecations](Deprecations)
-- [docs::extensions](Extensions)
+- [Cache](docs::cache) - allows you to cache call results that are solely determined by arguments.
+- [Class Attributes](docs::classes/class-attributes)
+- [Class Builder](docs::classes/class-builder)
+- [Constants](docs::constants) - a list of constants you can use to avoid memory allocations or identity checks.
+- [Deprecations](docs::deprecations)
+- [Extensions](docs::extensions)
