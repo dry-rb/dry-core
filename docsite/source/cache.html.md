@@ -28,4 +28,3 @@ end
 
 Beware Proc instance hashes are not equal, i.e. `-> { 1 }.hash != -> { 1 }.hash`.
 This means you shouldn't pass Procs in args unless you're sure they are always the same instances, otherwise you introduce a memory leak
-
