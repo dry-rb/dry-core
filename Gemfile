@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gemspec
 
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+
 group :test do
   if RUBY_VERSION >= '2.4'
     gem 'activesupport'
@@ -18,4 +20,5 @@ end
 group :tools do
   gem 'pry-byebug', platform: :mri
   gem 'pry', platform: :jruby
+  gem 'ossy', github: 'solnic/ossy', branch: 'master'
 end
