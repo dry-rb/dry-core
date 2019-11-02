@@ -23,16 +23,16 @@ module Dry
       # An empty list of options
       EMPTY_OPTS = {}.freeze
       # An empty set
-      EMPTY_SET = Set.new.freeze
+      EMPTY_SET = ::Set.new.freeze
       # An empty string
       EMPTY_STRING = ''.freeze
 
       # A special value you can use as a default to know if no arguments
-      # were passed to you method
+      # were passed to the method
       #
       # @example
       #   def method(value = Undefined)
-      #     if value == Undefined
+      #     if Undefined.equal?(value)
       #       puts 'no args'
       #     else
       #       puts value
