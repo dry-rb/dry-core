@@ -1,6 +1,6 @@
 [gitter]: https://gitter.im/dry-rb/chat
 [gem]: https://rubygems.org/gems/dry-core
-[travis]: https://travis-ci.org/dry-rb/dry-core
+[ci]: https://github.com/dry-rb/dry-core/actions?query=workflow%3Aci
 [code_climate]: https://codeclimate.com/github/dry-rb/dry-core
 [inch]: http://inch-ci.org/github/dry-rb/dry-core
 [chat]: https://dry-rb.zulipchat.com
@@ -8,7 +8,7 @@
 # dry-core [![Join the chat at https://dry-rb.zulipchat.com](https://img.shields.io/badge/dry--rb-join%20chat-%23346b7a.svg)][chat]
 
 [![Gem Version](https://img.shields.io/gem/v/dry-core.svg)][gem]
-[![Build Status](https://img.shields.io/travis/dry-rb/dry-core.svg)][travis]
+[![Build Status](https://github.com/dry-rb/dry-core/workflows/ci/badge.svg)][ci]
 [![Code Climate](https://api.codeclimate.com/v1/badges/eebb0e969814744231e4/maintainability)][code_climate]
 [![Test Coverage](https://api.codeclimate.com/v1/badges/eebb0e969814744231e4/test_coverage)][code_climate]
 [![API Documentation Coverage](http://inch-ci.org/github/dry-rb/dry-core.svg)][inch]
@@ -18,15 +18,15 @@ A collection of small modules used in the dry-rb ecosystem.
 
 ## Links
 
-* [User docs](https://dry-rb.org/gems/dry-core)
-* [API docs](http://rubydoc.info/gems/dry-core)
+- [User docs](https://dry-rb.org/gems/dry-core)
+- [API docs](http://rubydoc.info/gems/dry-core)
 
 ## Supported Ruby versions
 
 This library officially supports following Ruby versions:
 
-* MRI >= `2.4`
-* jruby >= `9.2`
+- MRI >= `2.4`
+- jruby >= `9.2`
 
 It **should** work on MRI `2.3.x` too, but there's no official support for this version.
 
@@ -55,7 +55,6 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/dry-rb/dry-core.
-
 
 ## License
 
