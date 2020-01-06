@@ -89,9 +89,9 @@ RSpec.describe Dry::Core::ClassBuilder do
 
         it 'raises meaningful error on mismatched parent class' do
           expect { klass }.to raise_error(
-                                Dry::Core::ClassBuilder::ParentClassMismatch,
-                                "Test::User must be a subclass of Test::Parent"
-                              )
+            Dry::Core::ClassBuilder::ParentClassMismatch,
+            "Test::User must be a subclass of Test::Parent"
+          )
         end
       end
 

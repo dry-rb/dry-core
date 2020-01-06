@@ -49,6 +49,7 @@ module Dry
         if name && !BACKENDS.key?(name)
           raise NameError, "Invalid inflector library selection: '#{name}'"
         end
+
         @inflector = name ? realize_backend(*BACKENDS[name]) : detect_backend
       end
 

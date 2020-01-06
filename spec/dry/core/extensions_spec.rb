@@ -40,7 +40,7 @@ RSpec.describe Dry::Core::Extensions do
   end
 
   it 'allows to query if an extension is available' do
-    subject.register_extension(:foo) { }
+    subject.register_extension(:foo) {}
     expect(subject.available_extension?(:foo)).to be true
     expect(subject.available_extension?(:bar)).to be false
   end

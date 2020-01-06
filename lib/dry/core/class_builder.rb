@@ -92,7 +92,7 @@ module Dry
           existing = namespace.const_get(name)
 
           unless existing <= parent
-            raise ParentClassMismatch, "#{ existing.name } must be a subclass of #{ parent.name }"
+            raise ParentClassMismatch, "#{existing.name} must be a subclass of #{parent.name}"
           end
 
           existing

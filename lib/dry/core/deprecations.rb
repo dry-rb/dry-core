@@ -49,8 +49,8 @@ module Dry
         # @api private
         def deprecation_message(name, msg)
           <<-MSG
-            #{ name } is deprecated and will be removed in the next major version
-            #{ msg }
+            #{name} is deprecated and will be removed in the next major version
+            #{msg}
           MSG
         end
 
@@ -97,7 +97,7 @@ module Dry
             @logger = output
           else
             @logger = Logger.new(output).tap do |logger|
-              logger.formatter = proc { |_, _, _, msg| "#{ msg }\n" }
+              logger.formatter = proc { |_, _, _, msg| "#{msg}\n" }
             end
           end
         end
@@ -155,7 +155,7 @@ module Dry
             undef_method old_name if method_defined?(old_name)
 
             define_method(old_name) do |*args, &block|
-              mod.warn("#{ full_msg }\n#{ STACK.() }")
+              mod.warn("#{full_msg}\n#{STACK.()}")
               __send__(new_name, *args, &block)
             end
           else
@@ -165,7 +165,7 @@ module Dry
             undef_method old_name
 
             define_method(old_name) do |*args, &block|
-              mod.warn("#{ full_msg }\n#{ STACK.() }")
+              mod.warn("#{full_msg}\n#{STACK.()}")
               __send__(aliased_name, *args, &block)
             end
           end
@@ -189,7 +189,7 @@ module Dry
             undef_method old_name if method_defined?(old_name)
 
             define_method(old_name) do |*args, &block|
-              warn("#{ full_msg }\n#{ STACK.() }")
+              warn("#{full_msg}\n#{STACK.()}")
               meth.call(*args, &block)
             end
           end
@@ -210,7 +210,7 @@ module Dry
           mod = Module.new do
             define_method(:const_missing) do |missing|
               if missing == constant_name
-                warn("#{ full_msg }\n#{ STACK.() }")
+                warn("#{full_msg}\n#{STACK.()}")
                 value
               else
                 super(missing)
