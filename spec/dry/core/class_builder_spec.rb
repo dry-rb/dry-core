@@ -90,7 +90,7 @@ RSpec.describe Dry::Core::ClassBuilder do
         it 'raises meaningful error on mismatched parent class' do
           expect { klass }.to raise_error(
             Dry::Core::ClassBuilder::ParentClassMismatch,
-            "Test::User must be a subclass of Test::Parent"
+            'Test::User must be a subclass of Test::Parent'
           )
         end
       end
@@ -114,7 +114,7 @@ RSpec.describe Dry::Core::ClassBuilder do
       context 'autoloaded constant' do
         before do
           Test.module_eval do
-            autoload :Project, File.join(__dir__, "../../fixtures/project")
+            autoload :Project, File.join(__dir__, '../../fixtures/project')
           end
         end
 

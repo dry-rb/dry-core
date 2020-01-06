@@ -141,9 +141,9 @@ RSpec.describe 'Class Macros' do
     child = Class.new(base_class) do |chld|
       spec.instance_exec { expect(chld.send(:one)).to spec.eql(1) }
 
-      one "one"
+      one 'one'
     end
 
-    expect(child.send(:one)).to eql("one")
+    expect(child.send(:one)).to eql('one')
   end
 end
