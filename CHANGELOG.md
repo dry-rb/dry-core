@@ -5,9 +5,9 @@
 
 - `Undefined.coalesce` takes a variable number of arguments and returns the first non-`Undefined` value (flash-gordon)
 
-```ruby
-Undefined.coalesce(Undefined, Undefined, :foo) # => :foo
-```
+  ```ruby
+  Undefined.coalesce(Undefined, Undefined, :foo) # => :foo
+  ```
 
 ### Fixed
 
@@ -23,13 +23,13 @@ Undefined.coalesce(Undefined, Undefined, :foo) # => :foo
 
 - `Undefined.map` for mapping non-undefined values (flash-gordon)
 
-```ruby
-something = 1
-Undefined.map(something) { |v| v + 1 } # => 2
+  ```ruby
+  something = 1
+  Undefined.map(something) { |v| v + 1 } # => 2
 
-something = Undefined
-Undefined.map(something) { |v| v + 1 } # => Undefined
-```
+  something = Undefined
+  Undefined.map(something) { |v| v + 1 } # => Undefined
+  ```
 
 
 [Compare v0.4.7...v0.4.8](https://github.com/dry-rb/dry-core/compare/v0.4.7...v0.4.8)
@@ -110,14 +110,14 @@ Undefined.map(something) { |v| v + 1 } # => Undefined
 
 - Added the `:type` option to class attributes, you can now restrict attribute values with a type. You can either use plain ruby types (`Integer`, `String`, etc) or `dry-types` (GustavoCaso)
 
-```ruby
+  ```ruby
   class Foo
     extend Dry::Core::ClassAttributes
 
     defines :ruby_attr, type: Integer
     defines :dry_attr, type: Dry::Types['strict.int']
   end
-```
+  ```
 
 
 [Compare v0.3.4...v0.4.0](https://github.com/dry-rb/dry-core/compare/v0.3.4...v0.4.0)
