@@ -12,15 +12,15 @@
     (flash-gordon)"
 - version: 0.4.8
   date: '2019-06-23'
-  added:
-  - "`Undefined.map` for mapping non-undefined values (flash-gordon):"
-  - "```ruby"
-  - something = 1
-  - 'Undefined.map(something) { |v| v + 1 } # => 2'
-  - something = Undefined
-  - 'Undefined.map(something) { |v| v + 1 } # => Undefined'
-  - "```"
-  summary: 'Undefined.map(something) { |v| v + 1 } # => Undefined'
+  added:|-
+    `Undefined.map` for mapping non-undefined values (flash-gordon):"
+    
+    ```ruby"
+      something = 1
+      Undefined.map(something) { |v| v + 1 } # => 2
+      something = Undefined
+      Undefined.map(something) { |v| v + 1 } # => Undefined
+    ```
 - version: 0.4.7
   date: '2018-06-25'
   fixed:
