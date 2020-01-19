@@ -12,9 +12,9 @@
     (flash-gordon)"
 - version: 0.4.8
   date: '2019-06-23'
-  added:|-
-    `Undefined.map` for mapping non-undefined values (flash-gordon):"
-    
+  added: |-
+    `Undefined.map` for mapping non-undefined values (flash-gordon):
+
     ```ruby"
       something = 1
       Undefined.map(something) { |v| v + 1 } # => 2
