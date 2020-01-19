@@ -17,7 +17,7 @@ module Dry
     #     def old_api; end
     #     def new_api; end
     #
-    #     deprecate_method :old_api, :new_api, "old_api is no-no"
+    #     deprecate :old_api, :new_api, message: "old_api is no-no"
     #   end
     #
     # @example You also can use this module for your custom messages
