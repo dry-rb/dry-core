@@ -72,8 +72,6 @@ module Dry
           remove_const(name)
           const_set(name, klass)
 
-          const_get(name).name if RUBY_VERSION < '2.4'
-
           remove_const(name)
           const_set(name, base)
         end
