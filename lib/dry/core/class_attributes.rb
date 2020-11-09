@@ -65,12 +65,12 @@ module Dry
                 end
               else
                 if type.is_a?(Dry::Types::Type)
-                  instance_variable_set(ivar, type.call(value) { raise InvalidClassAttributeValue.new(name, value) })
+                  value = type.call(value) { raise InvalidClassAttributeValue.new(name, value) }
                 else
                   raise InvalidClassAttributeValue.new(name, value) unless type === value
-
-                  instance_variable_set(ivar, value)
                 end
+
+                instance_variable_set(ivar, value)
               end
             end
           end
