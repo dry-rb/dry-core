@@ -93,6 +93,28 @@ RSpec.describe 'Class Macros' do
         }.to raise_error(Dry::Core::InvalidClassAttributeValue)
       end
     end
+
+    context 'using coercible dry-types' do
+      before do
+        module Test
+          class Types
+            include Dry::Types()
+          end
+        end
+
+        klass.defines :one, type: Test::Types::Coercible::String
+      end
+
+      it 'allows to pass type option' do
+        klass.one '1'
+        expect(Test::NewClass.one).to eq '1'
+      end
+
+      it 'coerces value based on type option' do
+        klass.one 1
+        expect(Test::NewClass.one).to eq '1'
+      end
+    end
   end
 
   it 'allows inheritance of values' do
