@@ -51,7 +51,23 @@ module Dry
       #    defines :one, :two, type: Dry::Types['strict.int']
       #  end
       #
-      def defines(*args, type: Object)
+      # @example with coercion using Proc
+      #
+      #  class Bar
+      #    extend Dry::Core::ClassAttributes
+      #
+      #    defines :one, coerce: proc { |value| value.to_s }
+      #  end
+      #
+      # @example with coercion using dry-types
+      #
+      #  class Bar
+      #    extend Dry::Core::ClassAttributes
+      #
+      #    defines :one, coerce: Dry::Types['coercible.string']
+      #  end
+      #
+      def defines(*args, type: Object, coerce: Undefined)
         mod = Module.new do
           args.each do |name|
             define_method(name) do |value = Undefined|
@@ -65,6 +81,12 @@ module Dry
                 end
               else
                 raise InvalidClassAttributeValue.new(name, value) unless type === value
+
+                if coerce != Undefined
+                  raise InvalidCoerceOption.new(name) unless coerce.respond_to?(:call)
+
+                  value = coerce.call(value)
+                end
 
                 instance_variable_set(ivar, value)
               end

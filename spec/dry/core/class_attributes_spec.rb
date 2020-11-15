@@ -95,6 +95,61 @@ RSpec.describe 'Class Macros' do
     end
   end
 
+  context 'coerce option' do
+    let(:klass) do
+      module Test
+        class NewClass
+          extend Dry::Core::ClassAttributes
+        end
+      end
+
+      Test::NewClass
+    end
+
+    context 'using procs' do
+      before do
+        klass.defines :one, coerce: proc(&:to_s)
+      end
+
+      it 'converts value' do
+        klass.one 1
+        expect(Test::NewClass.one).to eq '1'
+      end
+    end
+
+    context 'using dry-types' do
+      before do
+        module Test
+          class Types
+            include Dry::Types()
+          end
+        end
+
+        klass.defines :one, coerce: Test::Types::Coercible::String
+      end
+
+      it 'converts value' do
+        klass.one 1
+        expect(Test::NewClass.one).to eq '1'
+      end
+    end
+
+    context 'using non-callable coerce option' do
+      before do
+        klass.defines :one, coerce: String
+      end
+
+      it 'raises InvalidCoerceOption' do
+        expect {
+          klass.one 1
+        }.to raise_error(
+          Dry::Core::InvalidCoerceOption,
+          'Coerce option for :one class attribute is not callable'
+        )
+      end
+    end
+  end
+
   it 'allows inheritance of values' do
     expect(Test::OtherClass.one).to eq(1)
   end
