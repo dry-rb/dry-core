@@ -67,7 +67,9 @@ module Dry
       #    defines :one, coerce: Dry::Types['coercible.string']
       #  end
       #
-      def defines(*args, type: Object, coerce: Undefined)
+      def defines(*args, type: Object, coerce: proc(&:itself))
+        raise InvalidCoerceOption.new(args[0]) unless coerce.respond_to?(:call)
+
         mod = Module.new do
           args.each do |name|
             define_method(name) do |value = Undefined|
@@ -82,13 +84,7 @@ module Dry
               else
                 raise InvalidClassAttributeValue.new(name, value) unless type === value
 
-                if coerce != Undefined
-                  raise InvalidCoerceOption.new(name) unless coerce.respond_to?(:call)
-
-                  value = coerce.call(value)
-                end
-
-                instance_variable_set(ivar, value)
+                instance_variable_set(ivar, coerce.call(value))
               end
             end
           end
