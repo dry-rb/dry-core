@@ -9,13 +9,5 @@ module Dry
         )
       end
     end
-
-    class InvalidCoerceOption < StandardError
-      def initialize(name)
-        super(
-          "Coerce option for #{name.inspect} class attribute is not callable"
-        )
-      end
-    end
   end
 end

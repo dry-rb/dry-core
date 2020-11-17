@@ -139,8 +139,8 @@ RSpec.describe 'Class Macros' do
         expect {
           klass.defines :one, coerce: String
         }.to raise_error(
-          Dry::Core::InvalidCoerceOption,
-          "Coerce option for :one class attribute is not callable"
+          ArgumentError,
+          "Non-callable coerce option: String"
         )
       end
     end
