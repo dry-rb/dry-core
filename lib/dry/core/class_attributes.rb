@@ -68,7 +68,9 @@ module Dry
       #  end
       #
       def defines(*args, type: Object, coerce: proc(&:itself))
-        raise ArgumentError, "Non-callable coerce option: #{coerce.inspect}" unless coerce.respond_to?(:call)
+        unless coerce.respond_to?(:call)
+          raise ArgumentError, "Non-callable coerce option: #{coerce.inspect}"
+        end
 
         mod = Module.new do
           args.each do |name|
