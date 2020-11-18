@@ -11,6 +11,8 @@ module Dry
     module ClassAttributes
       include Constants
 
+      DEFAULT_COERCE = -> x { x }
+
       # Specify what attributes a class will use
       #
       # @example
@@ -67,26 +69,26 @@ module Dry
       #    defines :one, coerce: Dry::Types['coercible.string']
       #  end
       #
-      def defines(*args, type: Object, coerce: proc(&:itself))
+      def defines(*args, type: ::Object, coerce: DEFAULT_COERCE)
         unless coerce.respond_to?(:call)
-          raise ArgumentError, "Non-callable coerce option: #{coerce.inspect}"
+          raise ::ArgumentError, "Non-callable coerce option: #{coerce.inspect}"
         end
 
-        mod = Module.new do
+        mod = ::Module.new do
           args.each do |name|
-            define_method(name) do |value = Undefined|
-              ivar = "@#{name}"
+            ivar = :"@#{name}"
 
-              if value == Undefined
+            define_method(name) do |value = Undefined|
+              if Undefined.equal?(value)
                 if instance_variable_defined?(ivar)
                   instance_variable_get(ivar)
                 else
                   nil
                 end
-              else
-                raise InvalidClassAttributeValue.new(name, value) unless type === value
-
+              elsif type === value
                 instance_variable_set(ivar, coerce.call(value))
+              else
+                raise InvalidClassAttributeValue.new(name, value)
               end
             end
           end
