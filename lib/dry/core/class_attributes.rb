@@ -69,7 +69,7 @@ module Dry
       #    defines :one, coerce: Dry::Types['coercible.string']
       #  end
       #
-      def defines(*args, type: ::Object, coerce: DEFAULT_COERCE)
+      def defines(*args, type: ::Object, coerce: IDENTITY)
         unless coerce.respond_to?(:call)
           raise ::ArgumentError, "Non-callable coerce option: #{coerce.inspect}"
         end

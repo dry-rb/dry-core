@@ -26,6 +26,8 @@ module Dry
       EMPTY_SET = ::Set.new.freeze
       # An empty string
       EMPTY_STRING = ''.freeze
+      # Identity function
+      IDENTITY = (-> x { x }).freeze
 
       # A special value you can use as a default to know if no arguments
       # were passed to the method
