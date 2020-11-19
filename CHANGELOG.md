@@ -8,12 +8,12 @@
 class Builder
   extend Dry::Core::ClassAttributes
 
-  option :nodes, coerce: -> value { Integer(value) }
+  defines :nodes, coerce: -> value { Integer(value) }
 end
 ```
 `:coerce` works with any callable as well as types from dry-types
 ```ruby
-option :nodes, coerce: Dry::Types['coercible.integer']
+defines :nodes, coerce: Dry::Types['coercible.integer']
 ```
 - `Constants::IDENTITY` which is the identity function (flash-gordon)
 
