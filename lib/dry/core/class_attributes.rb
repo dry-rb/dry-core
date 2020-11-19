@@ -11,8 +11,6 @@ module Dry
     module ClassAttributes
       include Constants
 
-      DEFAULT_COERCE = -> x { x }
-
       # Specify what attributes a class will use
       #
       # @example
