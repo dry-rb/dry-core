@@ -1,3 +1,25 @@
+## 0.4.10 2020-11-19
+
+
+### Added
+
+- `ClassAttributes.defines` gets a new option for coercing values (tallica)
+```ruby
+class Builder
+  extend Dry::Core::ClassAttributes
+
+  option :nodes, coerce: -> value { Integer(value) }
+end
+```
+`:coerce` works with any callable as well as types from dry-types
+```ruby
+option :nodes, coerce: Dry::Types['coercible.integer']
+```
+- `Constants::IDENTITY` which is the identity function (flash-gordon)
+
+
+[Compare v0.4.9...v0.4.10](https://github.com/dry-rb/dry-core/compare/v0.4.9...v0.4.10)
+
 ## 0.4.9 2019-08-09
 
 
