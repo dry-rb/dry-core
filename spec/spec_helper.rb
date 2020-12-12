@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require_relative 'support/coverage'
+require_relative "support/coverage"
 
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'rspec/version'
+$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+require "rspec/version"
 
 begin
-  require 'pry'
-  require 'pry-byebug'
+  require "pry"
+  require "pry-byebug"
 rescue LoadError
 end
 
-require 'dry/core'
+require "dry/core"
 
 module Test
   def self.remove_constants
@@ -21,8 +21,8 @@ end
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-  if RSpec::Version::STRING >= '4.0.0'
-    raise 'This condition block can be safely removed'
+  if RSpec::Version::STRING >= "4.0.0"
+    raise "This condition block can be safely removed"
   else
     config.expect_with :rspec do |expectations|
       expectations.include_chain_clauses_in_custom_matcher_descriptions = true
@@ -48,14 +48,14 @@ RSpec.configure do |config|
 
   # Allows RSpec to persist some state between runs in order to support
   # the `--only-failures` and `--next-failure` CLI options.
-  config.example_status_persistence_file_path = 'spec/examples.txt'
+  config.example_status_persistence_file_path = "spec/examples.txt"
 
   config.disable_monkey_patching!
 
   config.warnings = true
 
   # Use the documentation formatter for detailed output
-  config.default_formatter = 'doc' if config.files_to_run.one?
+  config.default_formatter = "doc" if config.files_to_run.one?
 
   config.order = :random
 
