@@ -2,6 +2,6 @@
 
 Test::Project = Class.new(Test::Parent) do
   def to_model
-    'Project'
+    "Project"
   end
 end
