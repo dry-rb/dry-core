@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'dry/core/constants'
+require "dry/core/constants"
 
 RSpec.describe Dry::Core::Constants do
   before do
@@ -39,7 +39,7 @@ RSpec.describe Dry::Core::Constants do
 
   subject { ClassWithConstants.new }
 
-  it 'makes constants available in your class' do
+  it "makes constants available in your class" do
     expect(subject.empty_array).to be Dry::Core::Constants::EMPTY_ARRAY
     expect(subject.empty_array).to eql([])
 
@@ -50,7 +50,7 @@ RSpec.describe Dry::Core::Constants do
     expect(subject.empty_set).to eql(Set.new)
 
     expect(subject.empty_string).to be Dry::Core::Constants::EMPTY_STRING
-    expect(subject.empty_string).to eql('')
+    expect(subject.empty_string).to eql("")
 
     expect(subject.empty_opts).to be Dry::Core::Constants::EMPTY_OPTS
     expect(subject.empty_opts).to eql({})
@@ -58,7 +58,7 @@ RSpec.describe Dry::Core::Constants do
     expect(subject.undefined).to be Dry::Core::Constants::Undefined
   end
 
-  describe 'nested' do
+  describe "nested" do
     before do
       class ClassWithConstants
         class Nested
@@ -71,61 +71,61 @@ RSpec.describe Dry::Core::Constants do
 
     subject { ClassWithConstants::Nested.new }
 
-    example 'constants available in lexical scope' do
+    example "constants available in lexical scope" do
       expect(subject.empty_array).to be Dry::Core::Constants::EMPTY_ARRAY
     end
   end
 
-  describe 'Undefined' do
+  describe "Undefined" do
     subject(:undefined) { Dry::Core::Constants::Undefined }
 
-    describe '.inspect' do
+    describe ".inspect" do
       it 'returns "Undefined"' do
-        expect(subject.inspect).to eql('Undefined')
+        expect(subject.inspect).to eql("Undefined")
       end
     end
 
-    describe '.to_s' do
+    describe ".to_s" do
       it 'returns "Undefined"' do
-        expect(subject.to_s).to eql('Undefined')
+        expect(subject.to_s).to eql("Undefined")
       end
     end
 
-    describe '.default' do
+    describe ".default" do
       it "returns the first arg if it's not Undefined" do
         expect(subject.default(:first, :second)).to eql(:first)
       end
 
-      it 'returns the second arg if the first one is Undefined' do
+      it "returns the second arg if the first one is Undefined" do
         expect(subject.default(subject, :second)).to eql(:second)
       end
 
-      it 'yields a block' do
+      it "yields a block" do
         expect(subject.default(subject) { :second }).to eql(:second)
       end
     end
 
-    describe '.map' do
-      it 'maps non-undefined value' do
-        expect(subject.map('foo', &:to_sym)).to be(:foo)
+    describe ".map" do
+      it "maps non-undefined value" do
+        expect(subject.map("foo", &:to_sym)).to be(:foo)
         expect(subject.map(subject, &:to_sym)).to be(subject)
       end
     end
 
-    describe '.dup' do
+    describe ".dup" do
       subject { undefined.dup }
 
       it { is_expected.to be(undefined) }
     end
 
-    describe '.clone' do
+    describe ".clone" do
       subject { undefined.clone }
 
       it { is_expected.to be(undefined) }
     end
 
-    describe '.coalesce' do
-      it 'returns first non-undefined value in a list' do
+    describe ".coalesce" do
+      it "returns first non-undefined value in a list" do
         expect(undefined.coalesce(1, 2)).to be(1)
         expect(undefined.coalesce(undefined, 1, 2)).to be(1)
         expect(undefined.coalesce(undefined, undefined, 1, 2)).to be(1)

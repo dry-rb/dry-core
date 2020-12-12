@@ -7,15 +7,15 @@ module Dry
       # List of supported backends
       BACKENDS = {
         activesupport: [
-          'active_support/inflector',
+          "active_support/inflector",
           proc { ::ActiveSupport::Inflector }
         ],
         dry_inflector: [
-          'dry/inflector',
+          "dry/inflector",
           proc { Dry::Inflector.new }
         ],
         inflecto: [
-          'inflecto',
+          "inflecto",
           proc { ::Inflecto }
         ]
       }.freeze
@@ -38,8 +38,8 @@ module Dry
         BACKENDS.inject(nil) do |backend, (_, (path, factory))|
           backend || realize_backend(path, factory)
         end || raise(LoadError,
-                     'No inflector library could be found: '\
-                     'please install either the `inflecto` or `activesupport` gem.')
+                     "No inflector library could be found: "\
+                     "please install either the `inflecto` or `activesupport` gem.")
       end
 
       # Set preferred backend

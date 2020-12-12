@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'dry/core/descendants_tracker'
+require "dry/core/descendants_tracker"
 
 RSpec.describe Dry::Core::DescendantsTracker do
   before do
@@ -17,7 +17,7 @@ RSpec.describe Dry::Core::DescendantsTracker do
     end
   end
 
-  it 'tracks descendants' do
+  it "tracks descendants" do
     expect(Test::Parent.descendants).to eql([Test::Grandchild, Test::Child])
   end
 end

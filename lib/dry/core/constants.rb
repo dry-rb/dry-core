@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'set'
+require "set"
 
 module Dry
   module Core
@@ -25,7 +25,7 @@ module Dry
       # An empty set
       EMPTY_SET = ::Set.new.freeze
       # An empty string
-      EMPTY_STRING = ''.freeze
+      EMPTY_STRING = "".freeze
       # Identity function
       IDENTITY = (-> x { x }).freeze
 
@@ -46,12 +46,12 @@ module Dry
 
         # @api public
         def undefined.to_s
-          'Undefined'
+          "Undefined"
         end
 
         # @api public
         def undefined.inspect
-          'Undefined'
+          "Undefined"
         end
 
         # Pick a value, if the first argument is not Undefined, return it back,

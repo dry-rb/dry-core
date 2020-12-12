@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'concurrent/map'
+require "concurrent/map"
 
 module Dry
   module Core

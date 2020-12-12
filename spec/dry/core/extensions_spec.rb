@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'dry/core/extensions'
+require "dry/core/extensions"
 
 RSpec.describe Dry::Core::Extensions do
   subject do
@@ -9,7 +9,7 @@ RSpec.describe Dry::Core::Extensions do
     end
   end
 
-  it 'allows to register and load extensions' do
+  it "allows to register and load extensions" do
     foo = false
     bar = false
 
@@ -22,7 +22,7 @@ RSpec.describe Dry::Core::Extensions do
     expect(bar).to be true
   end
 
-  it 'swallows double loading' do
+  it "swallows double loading" do
     cnt = 0
 
     subject.register_extension(:foo) { cnt += 1 }
@@ -32,14 +32,14 @@ RSpec.describe Dry::Core::Extensions do
     expect(cnt).to be 1
   end
 
-  it 'raise ArgumentError on loading unknown extension' do
+  it "raise ArgumentError on loading unknown extension" do
     subject.register_extension(:foo) { fail }
     expect {
       subject.load_extensions(:bar)
-    }.to raise_error ArgumentError, 'Unknown extension: :bar'
+    }.to raise_error ArgumentError, "Unknown extension: :bar"
   end
 
-  it 'allows to query if an extension is available' do
+  it "allows to query if an extension is available" do
     subject.register_extension(:foo) {}
     expect(subject.available_extension?(:foo)).to be true
     expect(subject.available_extension?(:bar)).to be false

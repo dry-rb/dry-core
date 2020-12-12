@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'dry/core/constants'
-require 'dry/core/errors'
+require "dry/core/constants"
+require "dry/core/errors"
 
 module Dry
   module Core

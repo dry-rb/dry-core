@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'dry/core/class_attributes'
-require 'dry-types'
+require "dry/core/class_attributes"
+require "dry-types"
 
-RSpec.describe 'Class Macros' do
+RSpec.describe "Class Macros" do
   before do
     module Test
       class MyClass
@@ -17,30 +17,30 @@ RSpec.describe 'Class Macros' do
       end
 
       class OtherClass < Test::MyClass
-        two 'two'
+        two "two"
         three nil
       end
     end
   end
 
-  it 'defines accessor like methods on the class and subclasses' do
+  it "defines accessor like methods on the class and subclasses" do
     %i(one two three).each do |method_name|
       expect(Test::MyClass).to respond_to(method_name)
       expect(Test::OtherClass).to respond_to(method_name)
     end
   end
 
-  it 'allows storage of values on the class' do
+  it "allows storage of values on the class" do
     expect(Test::MyClass.one).to eq(1)
     expect(Test::MyClass.two).to eq(2)
     expect(Test::MyClass.three).to eq(3)
   end
 
-  it 'allows overwriting of inherited values with nil' do
+  it "allows overwriting of inherited values with nil" do
     expect(Test::OtherClass.three).to eq(nil)
   end
 
-  context 'type option' do
+  context "type option" do
     let(:klass) do
       module Test
         class NewClass
@@ -51,27 +51,27 @@ RSpec.describe 'Class Macros' do
       Test::NewClass
     end
 
-    context 'using classes' do
+    context "using classes" do
       before do
         klass.defines :one, type: String
       end
 
-      it 'allows to pass type option' do
-        klass.one '1'
-        expect(Test::NewClass.one).to eq '1'
+      it "allows to pass type option" do
+        klass.one "1"
+        expect(Test::NewClass.one).to eq "1"
       end
 
-      it 'raises InvalidClassAttributeValue when invalid value is pass' do
+      it "raises InvalidClassAttributeValue when invalid value is pass" do
         expect {
           klass.one 1
         }.to raise_error(
           Dry::Core::InvalidClassAttributeValue,
-          'Value 1 is invalid for class attribute :one'
+          "Value 1 is invalid for class attribute :one"
         )
       end
     end
 
-    context 'using dry-types' do
+    context "using dry-types" do
       before do
         module Test
           class Types
@@ -82,12 +82,12 @@ RSpec.describe 'Class Macros' do
         klass.defines :one, type: Test::Types::String
       end
 
-      it 'allows to pass type option' do
-        klass.one '1'
-        expect(Test::NewClass.one).to eq '1'
+      it "allows to pass type option" do
+        klass.one "1"
+        expect(Test::NewClass.one).to eq "1"
       end
 
-      it 'raises InvalidClassAttributeValue when invalid value is pass' do
+      it "raises InvalidClassAttributeValue when invalid value is pass" do
         expect {
           klass.one 1
         }.to raise_error(Dry::Core::InvalidClassAttributeValue)
@@ -146,15 +146,15 @@ RSpec.describe 'Class Macros' do
     end
   end
 
-  it 'allows inheritance of values' do
+  it "allows inheritance of values" do
     expect(Test::OtherClass.one).to eq(1)
   end
 
-  it 'allows overwriting of inherited values' do
-    expect(Test::OtherClass.two).to eq('two')
+  it "allows overwriting of inherited values" do
+    expect(Test::OtherClass.two).to eq("two")
   end
 
-  it 'copies values from the parent before running hooks' do
+  it "copies values from the parent before running hooks" do
     subclass_value = nil
 
     module_with_hook = Module.new do
@@ -178,7 +178,7 @@ RSpec.describe 'Class Macros' do
     expect(subclass_value).to be 1
   end
 
-  it 'works with private setters/getters and inheritance' do
+  it "works with private setters/getters and inheritance" do
     base_class = Class.new do
       extend Dry::Core::ClassAttributes
 
@@ -192,9 +192,9 @@ RSpec.describe 'Class Macros' do
     child = Class.new(base_class) do |chld|
       spec.instance_exec { expect(chld.send(:one)).to spec.eql(1) }
 
-      one 'one'
+      one "one"
     end
 
-    expect(child.send(:one)).to eql('one')
+    expect(child.send(:one)).to eql("one")
   end
 end

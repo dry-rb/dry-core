@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'concurrent/array'
+require "concurrent/array"
 
 module Dry
   module Core
