@@ -68,6 +68,22 @@ RSpec.describe Dry::Core::Memoizable do
   describe "Memoizer#klass" do
     let(:spy) { double("spy") }
 
+    describe "non-existing methods" do
+      let(:object) do
+        Class.new do
+          include Dry::Core::Memoizable
+          memoize :does_not_exist
+        end.new
+      end
+
+      it "raises an error" do
+        expect { object.does_not_exist }.to raise_error do |error|
+          expect(error).to be_a(NoMethodError)
+          expect(error.message).to include("does_not_exist", "memoized")
+        end
+      end
+    end
+
     describe "falsy return values" do
       let(:object) do
         Class.new(Struct.new(:spy)) do

@@ -18,7 +18,7 @@ module Dry
         extend KeywordArguments
 
         def memoize(*names)
-          prepend(Memoizer.new(names))
+          prepend(Memoizer.new(self, names))
         end
 
         def new(*)
@@ -40,16 +40,20 @@ module Dry
         include KeywordArguments
 
         # @api private
-        def initialize(names)
+        def initialize(klass, names)
           names.each do |name|
             define_method(name) do |*args, &block|
               id = [name, args, block]
 
               if __memoized__.key?(id)
-                __memoized__[id]
-              else
-                __memoized__[id] = super(*args, &block)
+                next __memoized__[id]
               end
+
+              if !defined?(super) && !respond_to_missing?(name, true)
+                raise NoMethodError, "Undefined memoized method [#{klass}##{name}]"
+              end
+
+              __memoized__[id] = super(*args, &block)
             end
           end
         end
