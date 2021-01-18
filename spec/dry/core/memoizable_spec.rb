@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "dry/core/memoizable"
+require "forwardable"
 
 RSpec.describe Dry::Core::Memoizable do
   extend(Module.new {
@@ -66,6 +67,53 @@ RSpec.describe Dry::Core::Memoizable do
 
   describe "Memoizer#klass" do
     let(:spy) { double("spy") }
+
+    describe "falsy return values" do
+      let(:object) do
+        Class.new(Struct.new(:spy)) do
+          include Dry::Core::Memoizable
+          extend Forwardable
+          delegate call: :spy
+          memoize :call
+        end.new(spy)
+      end
+
+      let(:output) { [described_class] * results.count }
+
+      before do
+        expect(spy).to receive(:call).and_return(described_class).once
+      end
+
+      subject(:results) { 2.times.map { object.call } }
+
+      describe false do
+        it { is_expected.to eq(output) }
+      end
+
+      describe nil do
+        it { is_expected.to eq(output) }
+      end
+
+      describe 0 do
+        it { is_expected.to eq(output) }
+      end
+
+      describe "\n" do
+        it { is_expected.to eq(output) }
+      end
+
+      describe Dry::Core::Constants::EMPTY_HASH do
+        it { is_expected.to eq(output) }
+      end
+
+      describe Dry::Core::Constants::EMPTY_STRING do
+        it { is_expected.to eq(output) }
+      end
+
+      describe Dry::Core::Constants::EMPTY_ARRAY do
+        it { is_expected.to eq(output) }
+      end
+    end
 
     context "given a base class including [Memoizable]" do
       context "given a superclass [BasicObject]" do
