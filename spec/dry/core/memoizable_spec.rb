@@ -107,7 +107,13 @@ RSpec.describe Dry::Core::Memoizable do
                 memoize :call1, :call2, :call
 
                 def method_missing(method, *args, **kwargs, &block)
+                  super unless respond_to_missing?(method)
+
                   spy.public_send(method, {args: args, kwargs: kwargs, block: block&.call})
+                end
+
+                def respond_to_missing?(method, *)
+                  [:call1, :call2, :call].include?(method)
                 end
               end.new(spy)
             end
