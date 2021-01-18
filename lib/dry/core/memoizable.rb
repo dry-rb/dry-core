@@ -1,19 +1,25 @@
 # frozen_string_literal: true
 
+require_relative "constants"
+
 module Dry
   module Core
     module Memoizable
-      MEMOIZED_HASH = {}.freeze
-
       module ClassInterface
+        include Core::Constants
+
         def memoize(*names)
-          prepend(Memoizer.new(self, names))
+          prepend(Memoizer.new(names))
         end
 
         def new(*)
           obj = super
-          obj.instance_variable_set(:'@__memoized__', MEMOIZED_HASH.dup)
+          obj.instance_eval { @__memoized__ = EMPTY_HASH.dup }
           obj
+        end
+
+        if respond_to?(:ruby2_keywords, true)
+          ruby2_keywords(:new)
         end
       end
 
@@ -26,41 +32,21 @@ module Dry
 
       # @api private
       class Memoizer < Module
-        attr_reader :klass
-        attr_reader :names
-
         # @api private
-        def initialize(klass, names)
-          @names = names
-          @klass = klass
-          define_memoizable_names!
-        end
-
-        private
-
-        # @api private
-        def define_memoizable_names!
+        def initialize(names)
           names.each do |name|
-            meth = klass.instance_method(name)
+            define_method(name) do |*args, &block|
+              id = [name, args, block]
 
-            if meth.parameters.size > 0
-              define_method(name) do |*args|
-                name_with_args = :"#{name}_#{args.hash}"
+              if __memoized__.key?(id)
+                __memoized__[id]
+              else
+                __memoized__[id] = super(*args, &block)
+              end
+            end
 
-                if __memoized__.key?(name_with_args)
-                  __memoized__[name_with_args]
-                else
-                  __memoized__[name_with_args] = super(*args)
-                end
-              end
-            else
-              define_method(name) do
-                if __memoized__.key?(name)
-                  __memoized__[name]
-                else
-                  __memoized__[name] = super()
-                end
-              end
+            if respond_to?(:ruby2_keywords, true)
+              ruby2_keywords(name)
             end
           end
         end
