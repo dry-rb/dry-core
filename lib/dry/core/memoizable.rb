@@ -5,8 +5,17 @@ require_relative "constants"
 module Dry
   module Core
     module Memoizable
+      module KeywordArguments
+        if respond_to?(:ruby2_keywords, true)
+          def method_added(method)
+            ruby2_keywords(method)
+          end
+        end
+      end
+
       module ClassInterface
         include Core::Constants
+        extend KeywordArguments
 
         def memoize(*names)
           prepend(Memoizer.new(names))
@@ -16,10 +25,6 @@ module Dry
           obj = super
           obj.instance_eval { @__memoized__ = EMPTY_HASH.dup }
           obj
-        end
-
-        if respond_to?(:ruby2_keywords, true)
-          ruby2_keywords(:new)
         end
       end
 
@@ -32,6 +37,8 @@ module Dry
 
       # @api private
       class Memoizer < Module
+        include KeywordArguments
+
         # @api private
         def initialize(names)
           names.each do |name|
@@ -43,10 +50,6 @@ module Dry
               else
                 __memoized__[id] = super(*args, &block)
               end
-            end
-
-            if respond_to?(:ruby2_keywords, true)
-              ruby2_keywords(name)
             end
           end
         end
