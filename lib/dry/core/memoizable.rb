@@ -33,8 +33,6 @@ module Dry
         klass.extend(ClassInterface)
       end
 
-      attr_reader :__memoized__
-
       # @api private
       class Memoizer < Module
         include KeywordArguments
@@ -45,15 +43,15 @@ module Dry
             define_method(name) do |*args, &block|
               id = [name, args, block]
 
-              if __memoized__.key?(id)
-                next __memoized__[id]
+              if @__memoized__.key?(id)
+                next @__memoized__[id]
               end
 
               if !defined?(super) && !respond_to_missing?(name, true)
                 raise NoMethodError, "Undefined memoized method [#{klass}##{name}]"
               end
 
-              __memoized__[id] = super(*args, &block)
+              @__memoized__[id] = super(*args, &block)
             end
           end
         end
