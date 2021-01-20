@@ -6,20 +6,41 @@ module Dry
       MEMOIZED_HASH = {}.freeze
 
       module ClassInterface
-        def memoize(*names)
-          prepend(Memoizer.new(self, names))
+        module Base
+          def memoize(*names)
+            prepend(Memoizer.new(self, names))
+          end
         end
 
-        def new(*)
-          obj = super
-          obj.instance_variable_set(:'@__memoized__', MEMOIZED_HASH.dup)
-          obj
+        module BasicObject
+          include Base
+
+          def new(*)
+            obj = super
+            obj.instance_eval { @__memoized__ = MEMOIZED_HASH.dup }
+            obj
+          end
+        end
+
+        module Object
+          include Base
+
+          def new(*)
+            obj = super
+            obj.instance_variable_set(:'@__memoized__', MEMOIZED_HASH.dup)
+            obj
+          end
         end
       end
 
       def self.included(klass)
         super
-        klass.extend(ClassInterface)
+
+        if klass <= Object
+          klass.extend(ClassInterface::Object)
+        else
+          klass.extend(ClassInterface::BasicObject)
+        end
       end
 
       attr_reader :__memoized__
