@@ -65,13 +65,13 @@ module Dry
             meth = klass.instance_method(name)
 
             if meth.parameters.size > 0
-              define_method(name) do |*args|
-                name_with_args = :"#{name}_#{args.hash}"
+              define_method(name) do |*args, &block|
+                name_with_args = :"#{name}_#{args.hash}_#{block.hash}"
 
                 if __memoized__.key?(name_with_args)
                   __memoized__[name_with_args]
                 else
-                  __memoized__[name_with_args] = super(*args)
+                  __memoized__[name_with_args] = super(*args, &block)
                 end
               end
             else

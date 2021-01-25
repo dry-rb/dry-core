@@ -21,6 +21,11 @@ RSpec.shared_examples "a memoizable class" do
       end
       memoize :bar
 
+      def bar_with_block(&block)
+        block.call
+      end
+      memoize :bar_with_block
+
       def falsey
         @falsey_call_count += 1
         false
@@ -41,5 +46,41 @@ RSpec.shared_examples "a memoizable class" do
   it "memoizes falsey values" do
     expect(object.falsey).to be(object.falsey)
     expect(object.falsey_call_count).to eq 1
+  end
+
+  describe "with block" do
+    let(:spy1) { double(:spy1) }
+    let(:spy2) { double(:spy2) }
+    let(:block1) { -> { spy1.call } }
+    let(:block2) { -> { spy2.call } }
+    let(:returns1) { :return_value1 }
+    let(:returns2) { :return_value2 }
+
+    before do
+      expect(spy1).to receive(:call).and_return(returns1).once
+      expect(spy2).to receive(:call).and_return(returns2).once
+    end
+
+    let(:results1) do
+      2.times.map do
+        object.bar_with_block(&block1)
+      end
+    end
+
+    let(:results2) do
+      2.times.map do
+        object.bar_with_block(&block2)
+      end
+    end
+
+    let(:returns) do
+      [returns1, returns2] * 2
+    end
+
+    subject do
+      results1 + results2
+    end
+
+    it { is_expected.to match_array(returns) }
   end
 end
