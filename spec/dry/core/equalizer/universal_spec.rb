@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Dry::Equalizer do
+RSpec.describe Dry::Core::Equalizer do
   let(:name)   { "User"          }
   let(:klass)  { ::Class.new     }
 

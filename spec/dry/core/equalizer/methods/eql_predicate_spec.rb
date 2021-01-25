@@ -2,14 +2,14 @@
 
 require "spec_helper"
 
-RSpec.describe Dry::Equalizer::Methods, "#eql?" do
+RSpec.describe Dry::Core::Equalizer::Methods, "#eql?" do
   subject { object.eql?(other) }
 
   let(:object) { described_class.new(true) }
 
   let(:described_class) do
     Class.new do
-      include Dry::Equalizer::Methods
+      include Dry::Core::Equalizer::Methods
 
       attr_reader :boolean
 

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Dry::Equalizer, "#included" do
+RSpec.describe Dry::Core::Equalizer, "#included" do
   subject { descendant.instance_exec(object) { |mod| include mod } }
 
   let(:object)     { described_class.new        }
@@ -36,7 +36,7 @@ RSpec.describe Dry::Equalizer, "#included" do
         # Otherwise, other module includes (which get triggered internally
         # in RSpec when `change` is used for the first time, since it uses
         # autoloading for its matchers) will wrongly set this flag.
-        included = true if is_a?(Dry::Equalizer)
+        included = true if is_a?(Dry::Core::Equalizer)
       end
     end
 
