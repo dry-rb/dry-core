@@ -84,3 +84,24 @@ RSpec.shared_examples "a memoizable class" do
     it { is_expected.to match_array(returns) }
   end
 end
+
+
+RSpec.shared_examples 'a memoized method' do
+  let(:new_meth) { described_class }
+  let(:old_meth) { new_meth.super_method }
+
+  describe "new != old" do
+    subject { new_meth }
+    it { is_expected.not_to eq(old_meth) }
+  end
+
+  describe "new.arity == old.arity" do
+    subject { new_meth.arity }
+    it { is_expected.to eq(old_meth.arity) }
+  end
+
+  describe "new.name == old.name" do
+    subject { new_meth.name }
+    it { is_expected.to eq(old_meth.name) }
+  end
+end
