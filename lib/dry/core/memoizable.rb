@@ -60,7 +60,7 @@ module Dry
         def define_memoizable(method:)
           module_eval <<~RUBY, __FILE__, __LINE__ + 1
             def #{method.name}(#{to_declaration(method.parameters)})
-              key = [__method__] + local_variables.map { |var| eval(var.to_s) }
+              key = [Kernel.__method__] + Kernel.local_variables.map { |var| Kernel.eval(var.to_s) }
 
               if @__memoized__.key?(key)
                 @__memoized__[key]
