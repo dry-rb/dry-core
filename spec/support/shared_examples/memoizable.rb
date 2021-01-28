@@ -12,12 +12,12 @@ RSpec.shared_examples "a memoizable class" do
       end
 
       def foo
-        ["a", "ab", "abc"].max
+        %w[a ab abc].max
       end
       memoize :foo
 
-      def bar(arg)
-        { a: "1", b: "2" }
+      def bar(_arg)
+        {a: "1", b: "2"}
       end
       memoize :bar
 
@@ -85,8 +85,7 @@ RSpec.shared_examples "a memoizable class" do
   end
 end
 
-
-RSpec.shared_examples 'a memoized method' do
+RSpec.shared_examples "a memoized method" do
   let(:new_meth) { described_class }
   let(:old_meth) { new_meth.super_method }
 

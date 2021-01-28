@@ -25,7 +25,7 @@ module Dry
       # An empty set
       EMPTY_SET = ::Set.new.freeze
       # An empty string
-      EMPTY_STRING = "".freeze
+      EMPTY_STRING = ""
       # Identity function
       IDENTITY = (-> x { x }).freeze
 

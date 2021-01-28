@@ -80,8 +80,6 @@ module Dry
               if Undefined.equal?(value)
                 if instance_variable_defined?(ivar)
                   instance_variable_get(ivar)
-                else
-                  nil
                 end
               elsif type === value
                 instance_variable_set(ivar, coerce.call(value))
