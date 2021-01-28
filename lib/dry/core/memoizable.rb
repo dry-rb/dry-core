@@ -30,6 +30,10 @@ module Dry
             obj.instance_variable_set(:'@__memoized__', MEMOIZED_HASH.dup)
             obj
           end
+
+          if respond_to?(:ruby2_keywords, true)
+            ruby2_keywords(:new)
+          end
         end
       end
 
@@ -69,6 +73,10 @@ module Dry
               end
             end
           RUBY
+
+          if respond_to?(:ruby2_keywords, true)
+            ruby2_keywords(method.name)
+          end
         end
 
         # @api private
