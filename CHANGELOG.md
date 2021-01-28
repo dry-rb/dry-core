@@ -6,6 +6,7 @@
 ### Added
 
 - [memoizable] support for `BasicObject` (@oleander)
+- [memoizable] support for methods that accept blocks (@oleander)
 
 
 [Compare v0.5.0...master](https://github.com/dry-rb/dry-core/compare/v0.5.0...master)
