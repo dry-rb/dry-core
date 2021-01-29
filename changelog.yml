@@ -2,7 +2,8 @@
 - version: unreleased
   summary: 
   date: 
-  fixed: 
+  fixed:
+  - "[memoizable] works with MRI 2.7+ keyword arguments now (@oleander)"
   added:
   - "[memoizable] support for `BasicObject` (@oleander)"
   - "[memoizable] support for methods that accept blocks (@oleander)"
