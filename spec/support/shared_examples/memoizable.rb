@@ -26,6 +26,11 @@ RSpec.shared_examples "a memoizable class" do
       end
       memoize :bar_with_block
 
+      def bar_with_kwargs(*args, **kwargs)
+        {args: args, kwargs: kwargs}
+      end
+      memoize :bar_with_kwargs
+
       def falsey
         @falsey_call_count += 1
         false
@@ -46,6 +51,15 @@ RSpec.shared_examples "a memoizable class" do
   it "memoizes falsey values" do
     expect(object.falsey).to be(object.falsey)
     expect(object.falsey_call_count).to eq 1
+  end
+
+  describe "keyword arguments" do
+    let(:kwargs) { {key: "value"} }
+    let(:args) { [1] }
+
+    it "memoizes keyword arguments" do
+      expect(object.bar_with_kwargs(*args, **kwargs)).to eq({args: args, kwargs: kwargs})
+    end
   end
 
   describe "with block" do
@@ -85,8 +99,7 @@ RSpec.shared_examples "a memoizable class" do
   end
 end
 
-
-RSpec.shared_examples 'a memoized method' do
+RSpec.shared_examples "a memoized method" do
   let(:new_meth) { described_class }
   let(:old_meth) { new_meth.super_method }
 

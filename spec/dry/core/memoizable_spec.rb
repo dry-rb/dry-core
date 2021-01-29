@@ -67,4 +67,41 @@ RSpec.describe Dry::Core::Memoizable do
       end
     end
   end
+
+  describe ".new" do
+    let(:args) { [double("arg")] }
+    let(:kwargs) { {key: double("value")} }
+    let(:block) { -> { double("block") } }
+
+    let(:object) do
+      Class.new do
+        include Dry::Core::Memoizable
+        attr_reader :args, :kwargs, :block
+
+        def initialize(*args, **kwargs, &block)
+          @args = args
+          @kwargs = kwargs
+          @block = block
+        end
+      end.new(*args, **kwargs, &block)
+    end
+
+    describe "#args" do
+      subject { object.args }
+
+      it { is_expected.to eq(args) }
+    end
+
+    describe "#kwargs" do
+      subject { object.kwargs }
+
+      it { is_expected.to eq(kwargs) }
+    end
+
+    describe "#block" do
+      subject { object.block }
+
+      it { is_expected.to eq(block) }
+    end
+  end
 end
