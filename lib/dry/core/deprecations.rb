@@ -33,17 +33,24 @@ module Dry
         # Prints a warning
         #
         # @param [String] msg Warning string
-        def warn(msg, tag: nil)
-          tagged = "[#{tag || 'deprecated'}] #{msg.gsub(/^\s+/, '')}"
-          logger.warn(tagged)
+        # @param [String] tag Tag to help identify the source of the warning.
+        #   Defaults to "deprecated"
+        # @param [Integer] Caller frame to add to the message
+        def warn(msg, tag: nil, uplevel: nil)
+          caller_info = uplevel.nil? ? nil : caller[uplevel]
+          tag = "[#{tag || "deprecated"}]"
+          hint = msg.gsub(/^\s+/, "")
+          logger.warn(
+            [caller_info, tag, hint].compact.join(" ")
+          )
         end
 
         # Wraps arguments with a standard message format and prints a warning
         #
         # @param [Object] name what is deprecated
         # @param [String] msg additional message usually containing upgrade instructions
-        def announce(name, msg, tag: nil)
-          warn(deprecation_message(name, msg), tag: tag)
+        def announce(name, msg, tag: nil, uplevel: nil)
+          warn(deprecation_message(name, msg), tag: tag, uplevel: uplevel)
         end
 
         # @api private
