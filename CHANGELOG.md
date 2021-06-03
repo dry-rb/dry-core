@@ -7,6 +7,7 @@
 
 - [memoizable] support for `BasicObject` (@oleander)
 - [memoizable] support for methods that accept blocks (@oleander)
+- Allow printing frame info on warn when setting up Deprecation module (via #52) (@waiting-for-dev)
 
 ### Fixed
 
