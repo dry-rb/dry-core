@@ -27,13 +27,19 @@ RSpec.describe Dry::Core::Deprecations do
       Dry::Core::Deprecations.warn("hello world", tag: :spec)
       expect(log_output).to include("[spec] hello world")
     end
+
+    it "prints information about the caller frame if uplevel is given" do
+      Dry::Core::Deprecations.warn("hello world", uplevel: 0)
+      expect(log_output).to include(FileUtils.pwd)
+    end
   end
 
   describe ".announce" do
     it "warns about a deprecated method" do
-      Dry::Core::Deprecations.announce(:foo, "hello world", tag: :spec)
+      Dry::Core::Deprecations.announce(:foo, "hello world", tag: :spec, uplevel: 0)
       expect(log_output).to include("[spec] foo is deprecated and will be removed")
       expect(log_output).to include("hello world")
+      expect(log_output).to include(FileUtils.pwd)
     end
   end
 
