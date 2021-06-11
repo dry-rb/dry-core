@@ -33,7 +33,7 @@ RSpec.describe Dry::Core::Extensions do
   end
 
   it "raise ArgumentError on loading unknown extension" do
-    subject.register_extension(:foo) { fail }
+    subject.register_extension(:foo) { raise }
     expect {
       subject.load_extensions(:bar)
     }.to raise_error ArgumentError, "Unknown extension: :bar"

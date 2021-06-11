@@ -46,6 +46,10 @@ Lint/ConstantDefinitionInBlock:
   Exclude:
     - "spec/**/*.rb"
 
+Lint/EmptyBlock:
+  Exclude:
+    - "spec/**/*_spec.rb"
+
 Lint/RaiseException:
   Enabled: false
 
@@ -55,6 +59,11 @@ Lint/StructNewOverride:
 Lint/SuppressedException:
   Exclude:
     - "spec/spec_helper.rb"
+
+Naming/ConstantName:
+  Enabled: true
+  Exclude:
+    - "spec/**/*.rb"
 
 Naming/PredicateName:
   Enabled: false
@@ -89,6 +98,11 @@ Metrics/AbcSize:
 Metrics/CyclomaticComplexity:
   Enabled: true
   Max: 12
+
+Metrics/ParameterLists:
+  Enabled: true
+  Exclude:
+    - "spec/**/*.rb"
 
 Style/ExponentialNotation:
   Enabled: false

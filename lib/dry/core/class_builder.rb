@@ -6,9 +6,7 @@ module Dry
     class ClassBuilder
       ParentClassMismatch = Class.new(TypeError)
 
-      attr_reader :name
-      attr_reader :parent
-      attr_reader :namespace
+      attr_reader :name, :parent, :namespace
 
       def initialize(name:, parent: nil, namespace: nil)
         @name = name
@@ -83,7 +81,7 @@ module Dry
       def create_base(namespace, name, parent)
         begin
           namespace.const_get(name)
-        rescue NameError
+        rescue NameError # rubocop:disable Lint/SuppressedException
         end
 
         if namespace.const_defined?(name, false)

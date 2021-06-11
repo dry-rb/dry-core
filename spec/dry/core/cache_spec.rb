@@ -42,19 +42,19 @@ RSpec.describe Dry::Core::Cache do
     it "uses the same values in child and parent" do
       value = Object.new
       expect(base_class.fetch_or_store(1, 2) { value }).to be(value)
-      expect(base_class.fetch_or_store(1, 2) { fail }).to be(value)
+      expect(base_class.fetch_or_store(1, 2) { raise }).to be(value)
 
-      expect(child_class.fetch_or_store(1, 2) { fail }).to be(value)
-      expect(child_class.new.fetch_or_store(1, 2) { fail }).to be(value)
+      expect(child_class.fetch_or_store(1, 2) { raise }).to be(value)
+      expect(child_class.new.fetch_or_store(1, 2) { raise }).to be(value)
     end
 
     it "does not depend on fetch order" do
       value = Object.new
       expect(child_class.fetch_or_store(1, 2) { value }).to be(value)
-      expect(child_class.fetch_or_store(1, 2) { fail }).to be(value)
+      expect(child_class.fetch_or_store(1, 2) { raise }).to be(value)
 
-      expect(base_class.fetch_or_store(1, 2) { fail }).to be(value)
-      expect(base_class.new.fetch_or_store(1, 2) { fail }).to be(value)
+      expect(base_class.fetch_or_store(1, 2) { raise }).to be(value)
+      expect(base_class.new.fetch_or_store(1, 2) { raise }).to be(value)
     end
   end
 end

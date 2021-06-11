@@ -10,7 +10,7 @@ RSpec.describe Dry::Core::ClassBuilder do
   describe "#call" do
     context "anonymous" do
       let(:options) do
-        { name: "Test", parent: parent }
+        {name: "Test", parent: parent}
       end
 
       let(:parent) { Class.new }
@@ -46,7 +46,7 @@ RSpec.describe Dry::Core::ClassBuilder do
     context "namespaced" do
       context "without parent" do
         let(:options) do
-          { name: "User", namespace: Test }
+          {name: "User", namespace: Test}
         end
 
         it "creates a class within the given namespace" do
@@ -62,7 +62,7 @@ RSpec.describe Dry::Core::ClassBuilder do
         end
 
         let(:options) do
-          { name: "User", parent: parent, namespace: Test }
+          {name: "User", parent: parent, namespace: Test}
         end
 
         it "creates a class with the given parent" do
@@ -84,7 +84,7 @@ RSpec.describe Dry::Core::ClassBuilder do
         end
 
         let(:options) do
-          { name: "User", namespace: Test, parent: parent }
+          {name: "User", namespace: Test, parent: parent}
         end
 
         it "raises meaningful error on mismatched parent class" do
@@ -101,7 +101,7 @@ RSpec.describe Dry::Core::ClassBuilder do
         end
 
         let(:options) do
-          { name: "File", namespace: Test, parent: parent }
+          {name: "File", namespace: Test, parent: parent}
         end
 
         it "does not search for parent class through inheritance" do
@@ -129,7 +129,7 @@ RSpec.describe Dry::Core::ClassBuilder do
         end
 
         let(:options) do
-          { name: "Project", namespace: Test, parent: parent }
+          {name: "Project", namespace: Test, parent: parent}
         end
 
         it "autoloads the specified class" do

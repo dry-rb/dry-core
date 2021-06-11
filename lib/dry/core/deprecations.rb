@@ -97,7 +97,7 @@ module Dry
         #   @param [#warn] logger
         #
         # @api public
-        def set_logger!(output = $stderr)
+        def set_logger!(output = $stderr) # rubocop:disable Naming/AccessorMethodName
           if output.respond_to?(:warn)
             @logger = output
           else
@@ -151,8 +151,8 @@ module Dry
         # @option [String] message optional deprecation message
         def deprecate(old_name, new_name = nil, message: nil)
           full_msg = Deprecations.deprecated_name_message(
-            "#{self.name}##{old_name}",
-            new_name ? "#{self.name}##{new_name}" : nil,
+            "#{name}##{old_name}",
+            new_name ? "#{name}##{new_name}" : nil,
             message
           )
           mod = self
@@ -184,8 +184,8 @@ module Dry
         # @option [String] message optional deprecation message
         def deprecate_class_method(old_name, new_name = nil, message: nil)
           full_msg = Deprecations.deprecated_name_message(
-            "#{self.name}.#{old_name}",
-            new_name ? "#{self.name}.#{new_name}" : nil,
+            "#{name}.#{old_name}",
+            new_name ? "#{name}.#{new_name}" : nil,
             message
           )
 
@@ -209,7 +209,7 @@ module Dry
           remove_const(constant_name)
 
           full_msg = Deprecations.deprecated_name_message(
-            "#{self.name}::#{constant_name}",
+            "#{name}::#{constant_name}",
             message
           )
 

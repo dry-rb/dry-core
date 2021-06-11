@@ -80,10 +80,8 @@ module Dry
               if Undefined.equal?(value)
                 if instance_variable_defined?(ivar)
                   instance_variable_get(ivar)
-                else
-                  nil
                 end
-              elsif type === value
+              elsif type === value # rubocop:disable Style/CaseEquality
                 instance_variable_set(ivar, coerce.call(value))
               else
                 raise InvalidClassAttributeValue.new(name, value)

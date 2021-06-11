@@ -24,7 +24,7 @@ RSpec.describe "Class Macros" do
   end
 
   it "defines accessor like methods on the class and subclasses" do
-    %i(one two three).each do |method_name|
+    %i[one two three].each do |method_name|
       expect(Test::MyClass).to respond_to(method_name)
       expect(Test::OtherClass).to respond_to(method_name)
     end
