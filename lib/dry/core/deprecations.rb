@@ -37,12 +37,10 @@ module Dry
         #   Defaults to "deprecated"
         # @param [Integer] Caller frame to add to the message
         def warn(msg, tag: nil, uplevel: nil)
-          caller_info = uplevel.nil? ? nil : caller[uplevel]
-          tag = "[#{tag || "deprecated"}]"
+          caller_info = uplevel.nil? ? nil : "#{caller_locations(uplevel + 1, 1)[0]} "
+          tag = "[#{tag || "deprecated"}] "
           hint = msg.gsub(/^\s+/, "")
-          logger.warn(
-            [caller_info, tag, hint].compact.join(" ")
-          )
+          logger.warn("#{caller_info}#{tag}#{hint}")
         end
 
         # Wraps arguments with a standard message format and prints a warning
