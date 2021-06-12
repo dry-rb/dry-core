@@ -80,8 +80,8 @@ module Dry
             params, binds = declaration(parameters, mapping)
 
             module_eval <<~RUBY, __FILE__, __LINE__ + 1
-              def #{method.name}(#{params.join(', ')})
-                key = [:"#{method.name}", #{binds.join(', ')}].hash
+              def #{method.name}(#{params.join(", ")})
+                key = [:"#{method.name}", #{binds.join(", ")}].hash
 
                 if @__memoized__.key?(key)
                   @__memoized__[key]
