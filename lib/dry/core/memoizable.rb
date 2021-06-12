@@ -48,9 +48,10 @@ module Dry
       end
 
       # @api private
-      class Memoizer < Module
+      class Memoizer < ::Module
         # @api private
         def initialize(klass, names)
+          super()
           names.each do |name|
             define_memoizable(
               method: klass.instance_method(name)
