@@ -67,7 +67,7 @@ module Dry
       #    defines :one, coerce: Dry::Types['coercible.string']
       #  end
       #
-      def defines(*args, type: ::Object, coerce: IDENTITY)
+      def defines(*args, type: ::Object, coerce: IDENTITY) # rubocop:disable Metrics/PerceivedComplexity
         unless coerce.respond_to?(:call)
           raise ::ArgumentError, "Non-callable coerce option: #{coerce.inspect}"
         end
@@ -80,10 +80,10 @@ module Dry
               if Undefined.equal?(value)
                 if instance_variable_defined?(ivar)
                   instance_variable_get(ivar)
-                else
+                else # rubocop:disable Style/EmptyElse
                   nil
                 end
-              elsif type === value
+              elsif type === value # rubocop:disable Style/CaseEquality
                 instance_variable_set(ivar, coerce.call(value))
               else
                 raise InvalidClassAttributeValue.new(name, value)

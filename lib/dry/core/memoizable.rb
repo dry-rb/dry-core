@@ -27,7 +27,7 @@ module Dry
 
           def new(*)
             obj = super
-            obj.instance_variable_set(:'@__memoized__', MEMOIZED_HASH.dup)
+            obj.instance_variable_set(:@__memoized__, MEMOIZED_HASH.dup)
             obj
           end
 
