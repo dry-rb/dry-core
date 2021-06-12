@@ -76,7 +76,7 @@ module Dry
               end
             RUBY
           else
-            mapping = parameters.to_h
+            mapping = parameters.to_h { |k, v = nil| [k, v] }
             params, binds = declaration(parameters, mapping)
 
             module_eval <<~RUBY, __FILE__, __LINE__ + 1
@@ -99,40 +99,62 @@ module Dry
 
         # @api private
         def declaration(definition, lookup)
-          definition.each_with_object([[], []]) do |(type, name), (params, binds)|
-            param =
+          params = []
+          binds = []
+          defined = {}
+
+          definition.each do |type, name|
+            mapped_type =
               case type
               when :req
-                name
-              when :rest
-                "*#{name}"
-              when :keyreq
-                "#{name}:"
-              when :keyrest
-                "**#{name}"
-              when :block
-                "&#{name}"
+                :reqular
+              when :rest, :keyreq, :keyrest, :block
+                type
               when :opt
-                if lookup.key?(:rest)
+                if lookup.key?(:rest) || defined[:rest]
                   nil
                 else
-                  "*args"
+                  :rest
                 end
               when :key
-                if lookup.key?(:keyrest)
+                if lookup.key?(:keyrest) || defined[:keyrest]
                   nil
                 else
-                  "**kwargs"
+                  :keyrest
                 end
               else
                 raise ::NotImplementedError, "type: #{type}, name: #{name}"
               end
 
-            if param
+            if mapped_type
+              defined[mapped_type] = true
+
+              bind = name || make_bind_name(binds.size)
+
+              param =
+                case mapped_type
+                when :reqular
+                  bind
+                when :rest
+                  "*#{bind}"
+                when :keyreq
+                  "#{bind}:"
+                when :keyrest
+                  "**#{bind}"
+                when :block
+                  "&#{bind}"
+                end
+
               params << param
-              binds << name
+              binds << bind
             end
           end
+
+          [params, binds]
+        end
+
+        def make_bind_name(idx)
+          :"__lv_#{idx}__"
         end
       end
     end
