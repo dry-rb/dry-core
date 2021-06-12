@@ -62,45 +62,77 @@ module Dry
 
         # @api private
         def define_memoizable(method:)
-          module_eval <<~RUBY, __FILE__, __LINE__ + 1
-            def #{method.name}(#{to_declaration(method.parameters)})
-              key = [Kernel.__method__] + Kernel.local_variables.map { |var| Kernel.eval(var.to_s) }
+          parameters = method.parameters
 
-              if @__memoized__.key?(key)
-                @__memoized__[key]
-              else
-                @__memoized__[key] = super
+          if parameters.empty?
+            key = method.name.hash
+            module_eval <<~RUBY, __FILE__, __LINE__ + 1
+              def #{method.name}
+                if @__memoized__.key?(#{key})
+                  @__memoized__[#{key}]
+                else
+                  @__memoized__[#{key}] = super
+                end
               end
-            end
-          RUBY
+            RUBY
+          else
+            mapping = parameters.to_h
+            params, binds = declaration(parameters, mapping)
 
-          if respond_to?(:ruby2_keywords, true)
-            ruby2_keywords(method.name)
+            module_eval <<~RUBY, __FILE__, __LINE__ + 1
+              def #{method.name}(#{params.join(', ')})
+                key = [:"#{method.name}", #{binds.join(', ')}].hash
+
+                if @__memoized__.key?(key)
+                  @__memoized__[key]
+                else
+                  @__memoized__[key] = super
+                end
+              end
+            RUBY
+
+            if respond_to?(:ruby2_keywords, true) && mapping.key?(:reyrest)
+              ruby2_keywords(method.name)
+            end
           end
         end
 
         # @api private
-        def to_declaration(params, lookup = params.to_h)
-          params.map do |type, name|
-            case type
-            when :req
-              name
-            when :rest
-              "*#{name}"
-            when :keyreq
-              "#{name}:"
-            when :keyrest
-              "**#{name}"
-            when :block
-              "&#{name}"
-            when :opt
-              lookup.key?(:rest) ? nil : "*args"
-            when :key
-              lookup.key?(:keyrest) ? nil : "**kwargs"
-            else
-              raise NotImplementedError, "type: #{type}, name: #{name}"
+        def declaration(definition, lookup)
+          definition.each_with_object([[], []]) do |(type, name), (params, binds)|
+            param =
+              case type
+              when :req
+                name
+              when :rest
+                "*#{name}"
+              when :keyreq
+                "#{name}:"
+              when :keyrest
+                "**#{name}"
+              when :block
+                "&#{name}"
+              when :opt
+                if lookup.key?(:rest)
+                  nil
+                else
+                  "*args"
+                end
+              when :key
+                if lookup.key?(:keyrest)
+                  nil
+                else
+                  "**kwargs"
+                end
+              else
+                raise ::NotImplementedError, "type: #{type}, name: #{name}"
+              end
+
+            if param
+              params << param
+              binds << name
             end
-          end.compact.join(", ")
+          end
         end
       end
     end
