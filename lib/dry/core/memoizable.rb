@@ -126,7 +126,7 @@ module Dry
         end
 
         # @api private
-        def map_bind_type(type, original_params, defined_types)
+        def map_bind_type(type, original_params, defined_types) # rubocop:disable Metrics/PerceivedComplexity
           case type
           when :req
             :reqular
