@@ -48,9 +48,10 @@ module Dry
       end
 
       # @api private
-      class Memoizer < Module
+      class Memoizer < ::Module
         # @api private
         def initialize(klass, names)
+          super()
           names.each do |name|
             define_memoizable(
               method: klass.instance_method(name)
@@ -62,45 +63,107 @@ module Dry
 
         # @api private
         def define_memoizable(method:)
-          module_eval <<~RUBY, __FILE__, __LINE__ + 1
-            def #{method.name}(#{to_declaration(method.parameters)})
-              key = [Kernel.__method__] + Kernel.local_variables.map { |var| Kernel.eval(var.to_s) }
+          parameters = method.parameters
 
-              if @__memoized__.key?(key)
-                @__memoized__[key]
-              else
-                @__memoized__[key] = super
+          if parameters.empty?
+            key = method.name.hash
+            module_eval <<~RUBY, __FILE__, __LINE__ + 1
+              def #{method.name}
+                if @__memoized__.key?(#{key})
+                  @__memoized__[#{key}]
+                else
+                  @__memoized__[#{key}] = super
+                end
               end
-            end
-          RUBY
+            RUBY
+          else
+            mapping = parameters.to_h { |k, v = nil| [k, v] }
+            params, binds = declaration(parameters, mapping)
 
-          if respond_to?(:ruby2_keywords, true)
-            ruby2_keywords(method.name)
+            module_eval <<~RUBY, __FILE__, __LINE__ + 1
+              def #{method.name}(#{params.join(", ")})
+                key = [:"#{method.name}", #{binds.join(", ")}].hash
+
+                if @__memoized__.key?(key)
+                  @__memoized__[key]
+                else
+                  @__memoized__[key] = super
+                end
+              end
+            RUBY
+
+            if respond_to?(:ruby2_keywords, true) && mapping.key?(:reyrest)
+              ruby2_keywords(method.name)
+            end
           end
         end
 
         # @api private
-        def to_declaration(params, lookup = params.to_h)
-          params.map do |type, name|
-            case type
-            when :req
-              name
-            when :rest
-              "*#{name}"
-            when :keyreq
-              "#{name}:"
-            when :keyrest
-              "**#{name}"
-            when :block
-              "&#{name}"
-            when :opt
-              lookup.key?(:rest) ? nil : "*args"
-            when :key
-              lookup.key?(:keyrest) ? nil : "**kwargs"
-            else
-              raise NotImplementedError, "type: #{type}, name: #{name}"
+        def declaration(definition, lookup)
+          params = []
+          binds = []
+          defined = {}
+
+          definition.each do |type, name|
+            mapped_type = map_bind_type(type, lookup, defined) do
+              raise ::NotImplementedError, "type: #{type}, name: #{name}"
             end
-          end.compact.join(", ")
+
+            if mapped_type
+              defined[mapped_type] = true
+              bind = name || make_bind_name(binds.size)
+
+              binds << bind
+              params << param(bind, mapped_type)
+            end
+          end
+
+          [params, binds]
+        end
+
+        # @api private
+        def make_bind_name(idx)
+          :"__lv_#{idx}__"
+        end
+
+        # @api private
+        def map_bind_type(type, original_params, defined_types) # rubocop:disable Metrics/PerceivedComplexity
+          case type
+          when :req
+            :reqular
+          when :rest, :keyreq, :keyrest, :block
+            type
+          when :opt
+            if original_params.key?(:rest) || defined_types[:rest]
+              nil
+            else
+              :rest
+            end
+          when :key
+            if original_params.key?(:keyrest) || defined_types[:keyrest]
+              nil
+            else
+              :keyrest
+            end
+          else
+            yield
+          end
+        end
+
+        # @api private
+        def param(name, type)
+          case type
+          when :reqular
+            name
+          when :rest
+            "*#{name}"
+          when :keyreq
+            "#{name}:"
+          when :keyrest
+            "**#{name}"
+          when :block
+            "&#{name}"
+          end
         end
       end
     end

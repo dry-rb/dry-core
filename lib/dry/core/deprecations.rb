@@ -113,8 +113,9 @@ module Dry
       end
 
       # @api private
-      class Tagged < Module
+      class Tagged < ::Module
         def initialize(tag)
+          super()
           @tag = tag
         end
 

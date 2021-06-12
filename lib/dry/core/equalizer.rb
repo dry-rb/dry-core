@@ -14,7 +14,7 @@ module Dry
 
   module Core
     # Define equality, equivalence and inspection methods
-    class Equalizer < Module
+    class Equalizer < ::Module
       # Initialize an Equalizer with the given keys
       #
       # Will use the keys with which it is initialized to define #cmp?,
@@ -29,6 +29,7 @@ module Dry
       #
       # @api private
       def initialize(*keys, **options)
+        super()
         @keys = keys.uniq
         define_methods(**options)
         freeze
