@@ -104,57 +104,65 @@ module Dry
           defined = {}
 
           definition.each do |type, name|
-            mapped_type =
-              case type
-              when :req
-                :reqular
-              when :rest, :keyreq, :keyrest, :block
-                type
-              when :opt
-                if lookup.key?(:rest) || defined[:rest]
-                  nil
-                else
-                  :rest
-                end
-              when :key
-                if lookup.key?(:keyrest) || defined[:keyrest]
-                  nil
-                else
-                  :keyrest
-                end
-              else
-                raise ::NotImplementedError, "type: #{type}, name: #{name}"
-              end
+            mapped_type = map_bind_type(type, lookup, defined) do
+              raise ::NotImplementedError, "type: #{type}, name: #{name}"
+            end
 
             if mapped_type
               defined[mapped_type] = true
-
               bind = name || make_bind_name(binds.size)
 
-              param =
-                case mapped_type
-                when :reqular
-                  bind
-                when :rest
-                  "*#{bind}"
-                when :keyreq
-                  "#{bind}:"
-                when :keyrest
-                  "**#{bind}"
-                when :block
-                  "&#{bind}"
-                end
-
-              params << param
               binds << bind
+              params << param(bind, mapped_type)
             end
           end
 
           [params, binds]
         end
 
+        # @api private
         def make_bind_name(idx)
           :"__lv_#{idx}__"
+        end
+
+        # @api private
+        def map_bind_type(type, original_params, defined_types)
+          case type
+          when :req
+            :reqular
+          when :rest, :keyreq, :keyrest, :block
+            type
+          when :opt
+            if original_params.key?(:rest) || defined_types[:rest]
+              nil
+            else
+              :rest
+            end
+          when :key
+            if original_params.key?(:keyrest) || defined_types[:keyrest]
+              nil
+            else
+              :keyrest
+            end
+          else
+            yield
+          end
+        end
+
+        # @api private
+        def param(name, type)
+          case type
+          when :reqular
+            name
+          when :rest
+            "*#{name}"
+          when :keyreq
+            "#{name}:"
+          when :keyrest
+            "**#{name}"
+          when :block
+            "&#{name}"
+          end
         end
       end
     end
