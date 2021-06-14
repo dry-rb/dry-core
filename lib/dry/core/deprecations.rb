@@ -37,9 +37,10 @@ module Dry
         #   Defaults to "deprecated"
         # @param [Integer] Caller frame to add to the message
         def warn(msg, tag: nil, uplevel: nil)
-          caller_info = uplevel.nil? ? nil : "#{caller_locations(uplevel + 1, 1)[0]} "
+          caller_info = uplevel.nil? ? nil : "#{caller_locations(uplevel + 2, 1)[0]} "
           tag = "[#{tag || "deprecated"}] "
           hint = msg.gsub(/^\s+/, "")
+
           logger.warn("#{caller_info}#{tag}#{hint}")
         end
 
@@ -48,6 +49,10 @@ module Dry
         # @param [Object] name what is deprecated
         # @param [String] msg additional message usually containing upgrade instructions
         def announce(name, msg, tag: nil, uplevel: nil)
+          # Bump the uplevel (if provided) by one to account for the uplevel calculation
+          # taking place one frame deeper in `.warn`
+          uplevel += 1 if uplevel
+
           warn(deprecation_message(name, msg), tag: tag, uplevel: uplevel)
         end
 
