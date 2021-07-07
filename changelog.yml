@@ -1,4 +1,11 @@
 ---
+- version: 0.7.0
+  date: 2021-07-07
+  fixed:
+  - "[memoizable] warnings when using keyword arguments (@flash-gordon)"
+  - "[deprecations] warnings show more relevant information about caller by default (@timriley)"
+  changed:
+  - Minimal Ruby version is 2.6
 - version: 0.6.0
   summary:
   date: 2021-06-03
