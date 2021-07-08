@@ -11,6 +11,7 @@
 ### Changed
 
 - Minimal Ruby version is 2.6
+- [memoizable] memoization of block-accepting methods is deprecated (@flash-gordon)
 
 [Compare v0.6.0...v0.7.0](https://github.com/dry-rb/dry-core/compare/v0.6.0...v0.7.0)
 
