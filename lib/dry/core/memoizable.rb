@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "dry/core/deprecations"
+
 module Dry
   module Core
     module Memoizable
@@ -79,6 +81,15 @@ module Dry
           else
             mapping = parameters.to_h { |k, v = nil| [k, v] }
             params, binds = declaration(parameters, mapping)
+
+            if parameters.last[0].eql?(:block)
+              Deprecations.warn(<<~WARN)
+                Memoization for block-accepting methods isn't safe.
+                Every call creates a new block instance bloating cached results.
+                In the future, blocks will still be allowed but won't participate in
+                cache key calculation.
+              WARN
+            end
 
             module_eval <<~RUBY, __FILE__, __LINE__ + 1
               def #{method.name}(#{params.join(", ")})
