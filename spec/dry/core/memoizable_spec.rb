@@ -2,9 +2,16 @@
 
 require "concurrent/atomic/atomic_fixnum"
 require "dry/core/memoizable"
+require "tempfile"
 require_relative "../../support/memoized"
 
 RSpec.describe Dry::Core::Memoizable do
+  before do
+    Dry::Core::Deprecations.set_logger!(Tempfile.new("dry_deprecations"))
+  end
+
+  before { Memoized.memoize_methods }
+
   describe ".memoize" do
     describe Object do
       it_behaves_like "a memoizable class" do
@@ -34,37 +41,45 @@ RSpec.describe Dry::Core::Memoizable do
   describe Memoized.new do
     let(:block) { -> {} }
 
-    describe described_class.method(:test1) do
-      it_behaves_like "a memoized method"
+    describe "test1" do
+      it_behaves_like "a memoized method" do
+        let(:new_meth) { described_class.method(:test1) }
 
-      it "does not raise an error" do
-        2.times do
-          described_class.call("a", kwarg1: "world", other: "test", &block)
+        it "does not raise an error" do
+          2.times do
+            new_meth.("a", kwarg1: "world", other: "test", &block)
+          end
         end
       end
     end
 
-    describe described_class.method(:test2) do
-      it_behaves_like "a memoized method"
+    describe "test2" do
+      it_behaves_like "a memoized method" do
+        let(:new_meth) { described_class.method(:test2) }
 
-      it "does not raise an error" do
-        2.times { described_class.call("a", &block) }
+        it "does not raise an error" do
+          2.times { new_meth.("a", &block) }
+        end
       end
     end
 
-    describe described_class.method(:test3) do
-      it_behaves_like "a memoized method"
+    describe "test3" do
+      it_behaves_like "a memoized method" do
+        let(:new_meth) { described_class.method(:test3) }
 
-      it "does not raise an error" do
-        2.times { described_class.call(&block) }
+        it "does not raise an error" do
+          2.times { new_meth.(&block) }
+        end
       end
     end
 
-    describe described_class.method(:test4) do
-      it_behaves_like "a memoized method"
+    describe "test4" do
+      it_behaves_like "a memoized method" do
+        let(:new_meth) { described_class.method(:test4) }
 
-      it "does not raise an error" do
-        2.times { described_class.call }
+        it "does not raise an error" do
+          2.times { new_meth.call }
+        end
       end
     end
   end
