@@ -1,4 +1,11 @@
 ---
+- version: 0.7.1
+  date: 2021-07-10
+  fixed:
+  - |
+    [memoizable] memoizable correctly handles cases where a method
+    has unnamed params (e.g. happens when the new `...` syntax is used) (@flash-gordon)
+
 - version: 0.7.0
   date: 2021-07-08
   fixed:
