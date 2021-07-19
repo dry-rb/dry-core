@@ -8,7 +8,7 @@
 # dry-core [![Join the chat at https://dry-rb.zulipchat.com](https://img.shields.io/badge/dry--rb-join%20chat-%23346b7a.svg)][chat]
 
 [![Gem Version](https://badge.fury.io/rb/dry-core.svg)][gem]
-[![CI Status](https://github.com/dry-rb/dry-core/workflows/ci/badge.svg)][actions]
+[![CI Status](https://github.com/dry-rb/dry-core/workflows/CI/badge.svg)][actions]
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/40946292b9094624beec604a149a6023)][codacy]
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/40946292b9094624beec604a149a6023)][codacy]
 [![Inline docs](http://inch-ci.org/github/dry-rb/dry-core.svg?branch=master)][inchpages]
