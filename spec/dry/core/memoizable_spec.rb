@@ -75,6 +75,8 @@ RSpec.describe Dry::Core::Memoizable do
 
     describe "test4" do
       it_behaves_like "a memoized method" do
+        before { described_class.test4 }
+
         let(:new_meth) { described_class.method(:test4) }
 
         it "does not raise an error" do
