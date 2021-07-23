@@ -52,6 +52,12 @@ module Dry
 
       # @api private
       class Memoizer < ::Module
+        KERNEL = {
+          signleton: ::Kernel.instance_method(:singleton_class),
+          ivar_set: ::Kernel.instance_method(:instance_variable_set),
+          frozen: ::Kernel.instance_method(:frozen?)
+        }.freeze
+
         # @api private
         def initialize(klass, names)
           super()
@@ -65,20 +71,44 @@ module Dry
         private
 
         # @api private
-        def define_memoizable(method:) # rubocop:disable Metrics/AbcSize
+        # rubocop:disable Metrics/AbcSize
+        # rubocop:disable Metrics/PerceivedComplexity
+        def define_memoizable(method:)
           parameters = method.parameters
+          mod = self
+          kernel = KERNEL
 
           if parameters.empty?
-            key = method.name.hash
-            module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
-              def #{method.name}                    # def slow_fetch
-                if @__memoized__.key?(#{key})       #   if @__memoized__.key?(12345678)
-                  @__memoized__[#{key}]             #     @__memoized__[12345678]
-                else                                #   else
-                  @__memoized__[#{key}] = super     #     @__memoized__[12345678] = super
-                end                                 #   end
-              end                                   # end
-            RUBY
+            key = method.name.hash.abs
+
+            define_method(method.name) do
+              value = super()
+
+              if kernel[:frozen].bind(self).call
+                mod.remove_method(method.name)
+                mod.module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
+                  def #{method.name}                          # def slow_calc
+                    cached = @__memoized__[#{key}]            #   cached = @__memoized__[12345678]
+                                                              #
+                    if cached || @__memoized__.key?(#{key})   #   if cached || @__memoized__.key?(12345678)
+                      cached                                  #     cached
+                    else                                      #   else
+                      @__memoized__[#{key}] = super           #     @__memoized__[12345678] = super
+                    end                                       #   end
+                  end                                         # end
+                RUBY
+              else
+                attr_name = :"__memozed_#{key}__"
+                ivar_name = :"@#{attr_name}"
+                kernel[:ivar_set].bind(self).(ivar_name, value)
+                eigenclass = kernel[:signleton].bind(self).call
+                eigenclass.attr_reader(attr_name)
+                eigenclass.alias_method(method.name, attr_name)
+                eigenclass.remove_method(attr_name)
+              end
+
+              value
+            end
           else
             mapping = parameters.to_h { |k, v = nil| [k, v] }
             params, binds = declaration(parameters, mapping)
@@ -112,6 +142,8 @@ module Dry
             m
           end
         end
+        # rubocop:enable Metrics/AbcSize
+        # rubocop:enable Metrics/PerceivedComplexity
 
         # @api private
         def declaration(definition, lookup)

@@ -62,7 +62,7 @@ module Dry
         #     1 + Undefined.default(val, 2)
         #   end
         #
-        def undefined.default(x, y = self) # rubocop:disable Naming/MethodParameterName
+        def undefined.default(x, y = self)
           if equal?(x)
             if equal?(y)
               yield

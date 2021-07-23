@@ -100,7 +100,7 @@ RSpec.shared_examples "a memoizable class" do
 end
 
 RSpec.shared_examples "a memoized method" do
-  let(:old_meth) { new_meth.super_method }
+  let(:old_meth) { described_class.class.instance_method(new_meth.name) }
 
   describe "new != old" do
     subject { new_meth }

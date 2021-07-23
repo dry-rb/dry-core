@@ -80,7 +80,7 @@ module Dry
               if Undefined.equal?(value)
                 if instance_variable_defined?(ivar)
                   instance_variable_get(ivar)
-                else # rubocop:disable Style/EmptyElse
+                else
                   nil
                 end
               elsif type === value # rubocop:disable Style/CaseEquality
