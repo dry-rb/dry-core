@@ -95,7 +95,7 @@ module Dry
 
             m = module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
               def #{method.name}(#{params.join(", ")})                 # def slow_calc(arg1, arg2, arg3)
-                key = [:"#{method.name}", #{binds.join(", ")}].hash    #   [:slow_calc, arg1, arg2, arg3].hash
+                key = [:"#{method.name}", #{binds.join(", ")}].hash    #   key = [:slow_calc, arg1, arg2, arg3].hash
                                                                        #
                 if @__memoized__.key?(key)                             #   if @__memoized__.key?(key)
                   @__memoized__[key]                                   #     @__memoized__[key]
