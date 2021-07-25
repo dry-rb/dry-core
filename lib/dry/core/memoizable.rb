@@ -85,6 +85,8 @@ module Dry
               value = super()
 
               if kernel[:frozen].bind(self).call
+                # It's not possible to modify singleton classes
+                # of frozen objects
                 mod.remove_method(method.name)
                 mod.module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
                   def #{method.name}                          # def slow_calc
@@ -98,6 +100,10 @@ module Dry
                   end                                         # end
                 RUBY
               else
+                # We make an attr_reader for computed value.
+                # Readers are "special-cased" in ruby so such
+                # access will be the fastest way, faster than you'd
+                # expect :)
                 attr_name = :"__memozed_#{key}__"
                 ivar_name = :"@#{attr_name}"
                 kernel[:ivar_set].bind(self).(ivar_name, value)
