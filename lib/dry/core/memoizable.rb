@@ -40,13 +40,30 @@ module Dry
         end
       end
 
-      def self.included(klass)
+      def self.included(base)
         super
 
-        if klass <= Object
-          klass.extend(ClassInterface::Object)
+        setup_base(base)
+      end
+
+      # @api private
+      def self.setup_base(base)
+        if base <= Object
+          base.extend(ClassInterface::Object)
         else
-          klass.extend(ClassInterface::BasicObject)
+          base.extend(ClassInterface::BasicObject)
+        end
+
+        # Ensures a module included by another class/module still works
+        # e.g. rails concern module pattern
+        if base.is_a?(Module) && !base.is_a?(Class)
+          # Use `append_featured` to avoid commonly used `included` overriding
+          # Causing the setup to be skipped
+          def base.append_features(base)
+            super
+
+            Dry::Core::Memoizable.setup_base(base)
+          end
         end
       end
 

@@ -124,86 +124,184 @@ RSpec.describe Dry::Core::Memoizable do
   end
 
   context "test calls" do
-    let(:klass) { Class.new.include(Dry::Core::Memoizable) }
+    context "a class including memoizable directly" do
+      let(:klass) { Class.new.include(Dry::Core::Memoizable) }
 
-    let(:instance) { klass.new }
+      let(:instance) { klass.new }
 
-    let(:counter) { Concurrent::AtomicFixnum.new }
+      let(:counter) { Concurrent::AtomicFixnum.new }
 
-    context "no args" do
-      before do
-        counter = self.counter
-        klass.define_method(:meth) { counter.increment }
-        klass.memoize(:meth)
+      context "no args" do
+        before do
+          counter = self.counter
+          klass.define_method(:meth) { counter.increment }
+          klass.memoize(:meth)
+        end
+
+        it "gets called only once" do
+          instance.meth
+          instance.meth
+          instance.meth
+
+          expect(counter.value).to eql(1)
+        end
       end
 
-      it "gets called only once" do
-        instance.meth
-        instance.meth
-        instance.meth
+      context "pos arg" do
+        before do
+          counter = self.counter
+          klass.define_method(:meth) { |req| counter.increment }
+          klass.memoize(:meth)
+        end
 
-        expect(counter.value).to eql(1)
+        it "memoizes results" do
+          instance.meth(1)
+          instance.meth(1)
+          instance.meth(2)
+          instance.meth(2)
+
+          expect(counter.value).to eql(2)
+        end
+      end
+
+      context "splat" do
+        before do
+          counter = self.counter
+          klass.define_method(:meth) { |v, *args| counter.increment }
+          klass.memoize(:meth)
+        end
+
+        it "memoizes results" do
+          instance.meth(1)
+          instance.meth(1)
+          expect(counter.value).to eql(1)
+
+          instance.meth(1, 2)
+          instance.meth(1, 2)
+          expect(counter.value).to eql(2)
+
+          instance.meth(1, 2, 3)
+          instance.meth(1, 2, 3)
+          expect(counter.value).to eql(3)
+        end
+      end
+
+      context "**kwargs" do
+        before do
+          counter = self.counter
+          klass.define_method(:meth) { |foo:, **kwargs| counter.increment }
+          klass.memoize(:meth)
+        end
+
+        it "memoizes results" do
+          instance.meth(foo: 1)
+          instance.meth(foo: 1)
+          expect(counter.value).to eql(1)
+
+          instance.meth(foo: 1, bar: 2)
+          instance.meth(foo: 1, bar: 2)
+          expect(counter.value).to eql(2)
+
+          instance.meth(foo: 1, baz: 2)
+          instance.meth(foo: 1, baz: 2)
+          expect(counter.value).to eql(3)
+        end
       end
     end
 
-    context "pos arg" do
-      before do
-        counter = self.counter
-        klass.define_method(:meth) { |req| counter.increment }
-        klass.memoize(:meth)
+    context "a class including a module including memoizable" do
+      let(:m0dule) do
+        Module.new.tap do |module_in_tap|
+          module_in_tap.include(Dry::Core::Memoizable)
+
+          # This will potentially prevent class/module including this module
+          # from setting up memoizable properly
+          def module_in_tap.included(_base)
+            super
+          end
+        end
+      end
+      let(:klass) { Class.new.include(m0dule) }
+
+      let(:instance) { klass.new }
+
+      let(:counter) { Concurrent::AtomicFixnum.new }
+
+      context "no args" do
+        before do
+          counter = self.counter
+          m0dule.define_method(:meth) { counter.increment }
+          m0dule.memoize(:meth)
+        end
+
+        it "gets called only once" do
+          instance.meth
+          instance.meth
+          instance.meth
+
+          expect(counter.value).to eql(1)
+        end
       end
 
-      it "memoizes results" do
-        instance.meth(1)
-        instance.meth(1)
-        instance.meth(2)
-        instance.meth(2)
+      context "pos arg" do
+        before do
+          counter = self.counter
+          m0dule.define_method(:meth) { |req| counter.increment }
+          m0dule.memoize(:meth)
+        end
 
-        expect(counter.value).to eql(2)
-      end
-    end
+        it "memoizes results" do
+          instance.meth(1)
+          instance.meth(1)
+          instance.meth(2)
+          instance.meth(2)
 
-    context "splat" do
-      before do
-        counter = self.counter
-        klass.define_method(:meth) { |v, *args| counter.increment }
-        klass.memoize(:meth)
-      end
-
-      it "memoizes results" do
-        instance.meth(1)
-        instance.meth(1)
-        expect(counter.value).to eql(1)
-
-        instance.meth(1, 2)
-        instance.meth(1, 2)
-        expect(counter.value).to eql(2)
-
-        instance.meth(1, 2, 3)
-        instance.meth(1, 2, 3)
-        expect(counter.value).to eql(3)
-      end
-    end
-
-    context "**kwargs" do
-      before do
-        counter = self.counter
-        klass.define_method(:meth) { |foo:, **kwargs| counter.increment }
-        klass.memoize(:meth)
+          expect(counter.value).to eql(2)
+        end
       end
 
-      it "memoizes results" do
-        instance.meth(foo: 1)
-        instance.meth(foo: 1)
-        expect(counter.value).to eql(1)
+      context "splat" do
+        before do
+          counter = self.counter
+          m0dule.define_method(:meth) { |v, *args| counter.increment }
+          m0dule.memoize(:meth)
+        end
 
-        instance.meth(foo: 1, bar: 2)
-        instance.meth(foo: 1, bar: 2)
-        expect(counter.value).to eql(2)
+        it "memoizes results" do
+          instance.meth(1)
+          instance.meth(1)
+          expect(counter.value).to eql(1)
 
-        instance.meth(foo: 1, baz: 2)
-        instance.meth(foo: 1, baz: 2)
-        expect(counter.value).to eql(3)
+          instance.meth(1, 2)
+          instance.meth(1, 2)
+          expect(counter.value).to eql(2)
+
+          instance.meth(1, 2, 3)
+          instance.meth(1, 2, 3)
+          expect(counter.value).to eql(3)
+        end
+      end
+
+      context "**kwargs" do
+        before do
+          counter = self.counter
+          m0dule.define_method(:meth) { |foo:, **kwargs| counter.increment }
+          m0dule.memoize(:meth)
+        end
+
+        it "memoizes results" do
+          instance.meth(foo: 1)
+          instance.meth(foo: 1)
+          expect(counter.value).to eql(1)
+
+          instance.meth(foo: 1, bar: 2)
+          instance.meth(foo: 1, bar: 2)
+          expect(counter.value).to eql(2)
+
+          instance.meth(foo: 1, baz: 2)
+          instance.meth(foo: 1, baz: 2)
+          expect(counter.value).to eql(3)
+        end
       end
     end
   end
