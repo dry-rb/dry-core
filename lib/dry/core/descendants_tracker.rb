@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "concurrent/array"
-
 module Dry
   module Core
     # An implementation of descendants tracker, heavily inspired
@@ -27,51 +25,68 @@ module Dry
     #   B.descendants # => []
     #
     module DescendantsTracker
-      class << self
+      if RUBY_VERSION < "3.1"
+        require "concurrent/array"
+
+        class << self
+          # @api private
+          def setup(target)
+            target.instance_variable_set(:@descendants, Concurrent::Array.new)
+          end
+
+          private
+
+          # @api private
+          def extended(base)
+            super
+
+            DescendantsTracker.setup(base)
+          end
+        end
+
+        # Return the descendants of this class
+        #
+        # @example
+        #   descendants = Parent.descendants
+        #
+        # @return [Array<Class>]
+        #
+        # @api public
+        attr_reader :descendants
+
+        protected
+
         # @api private
-        def setup(target)
-          target.instance_variable_set(:@descendants, Concurrent::Array.new)
+        def add_descendant(descendant)
+          ancestor = superclass
+          if ancestor.respond_to?(:add_descendant, true)
+            ancestor.add_descendant(descendant)
+          end
+          descendants.push(descendant)
         end
 
         private
 
         # @api private
-        def extended(base)
+        def inherited(descendant)
           super
 
-          DescendantsTracker.setup(base)
+          DescendantsTracker.setup(descendant)
+          add_descendant(descendant)
         end
-      end
+      else
 
-      # Return the descendants of this class
-      #
-      # @example
-      #   descendants = Parent.descendants
-      #
-      # @return [Array<Class>]
-      #
-      # @api public
-      attr_reader :descendants
-
-      protected
-
-      # @api private
-      def add_descendant(descendant)
-        ancestor = superclass
-        if ancestor.respond_to?(:add_descendant, true)
-          ancestor.add_descendant(descendant)
+        # Return the descendants of this class
+        #
+        # @example
+        #   descendants = Parent.descendants
+        #
+        # @return [Array<Class>]
+        #
+        # @api public
+        def descendants
+          subclasses.concat(subclasses.flat_map(&:subclasses))
         end
-        descendants.push(descendant)
-      end
-
-      private
-
-      # @api private
-      def inherited(descendant)
-        super
-
-        DescendantsTracker.setup(descendant)
-        add_descendant(descendant)
       end
     end
   end
