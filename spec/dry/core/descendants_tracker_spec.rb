@@ -18,6 +18,6 @@ RSpec.describe Dry::Core::DescendantsTracker do
   end
 
   it "tracks descendants" do
-    expect(Test::Parent.descendants).to eql([Test::Grandchild, Test::Child])
+    expect(Test::Parent.descendants).to eql([Test::Child, Test::Grandchild])
   end
 end

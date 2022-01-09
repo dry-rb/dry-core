@@ -61,7 +61,7 @@ module Dry
         if ancestor.respond_to?(:add_descendant, true)
           ancestor.add_descendant(descendant)
         end
-        descendants.unshift(descendant)
+        descendants.push(descendant)
       end
 
       private
