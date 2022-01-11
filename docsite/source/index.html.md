@@ -22,4 +22,5 @@ sections:
 - [Class Builder](docs::classes/class-builder)
 - [Constants](docs::constants) - a list of constants you can use to avoid memory allocations or identity checks.
 - [Deprecations](docs::deprecations)
+- [Equalizer](docs::equalizer)
 - [Extensions](docs::extensions)
