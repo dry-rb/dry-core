@@ -1,6 +1,5 @@
 ---
 title: Equalizer
-description: Simple mixin providing equality, equivalence and inspection methods
 layout: gem-single
 name: dry-core
 ---
