@@ -60,8 +60,8 @@ module Dry
         # @yield An arbitrary block
         #
         # @return [Object] block's return value
-        def fetch_or_store(*args, &block)
-          self.class.fetch_or_store(*args, &block)
+        def fetch_or_store(...)
+          self.class.fetch_or_store(...)
         end
       end
     end
