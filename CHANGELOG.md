@@ -54,7 +54,7 @@ has unnamed params (e.g. happens when the new `...` syntax is used) (@flash-gord
 
 [Compare v0.5.0...v0.6.0](https://github.com/dry-rb/dry-core/compare/v0.5.0...v0.6.0)
 
-## 0.5.0 2012-12-12
+## 0.5.0 2020-12-12
 
 
 ### Added
