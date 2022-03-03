@@ -47,11 +47,6 @@ Lint/ConstantDefinitionInBlock:
   Exclude:
     - "spec/**/*.rb"
 
-Lint/EmptyClass:
-  Enabled: true
-  Exclude:
-    - "spec/**/*_spec.rb"
-
 Lint/RaiseException:
   Enabled: false
 

@@ -43,7 +43,7 @@ RSpec.describe Dry::Core::BasicObject do
 
     it "returns true given respond_to? method was implemented" do
       TestCase = Class.new(TestClass) do
-        def respond_to?(_method_name, _include_all = false)
+        def respond_to?(_method_name, _include_all = false) # rubocop:disable Style/OptionalBooleanParameter
           true
         end
       end
