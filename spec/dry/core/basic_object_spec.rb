@@ -19,6 +19,12 @@ class TestClass < Dry::Core::BasicObject
   end
 end
 
+class InspectTestClass < TestClass
+  def __inspect
+    " hello"
+  end
+end
+
 RSpec.describe Dry::Core::BasicObject do
   describe ".const_missing" do
     subject { TestClass.new }
@@ -53,9 +59,14 @@ RSpec.describe Dry::Core::BasicObject do
   end
 
   describe "#inspect" do
-    it "returns the inspect message" do
-      inspect_msg = TestClass.new.inspect
-      expect(inspect_msg).to match(/\A#<TestClass:\w+>\z/)
+    it "returns object inspection" do
+      actual = TestClass.new.inspect
+      expect(actual).to match(/\A#<TestClass:\w+>\z/)
+    end
+
+    it "returns custom object inspection" do
+      actual = InspectTestClass.new.inspect
+      expect(actual).to match(/\A#<InspectTestClass:\w+\shello>\z/)
     end
   end
 
