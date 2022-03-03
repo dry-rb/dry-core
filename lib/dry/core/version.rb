@@ -2,6 +2,6 @@
 
 module Dry
   module Core
-    VERSION = "0.6.0".freeze
+    VERSION = "0.7.1"
   end
 end

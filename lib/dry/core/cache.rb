@@ -46,7 +46,8 @@ module Dry
       #       this means you shouldn't pass Procs in args unless you're sure
       #       they are always the same instances, otherwise you introduce a memory leak
       #
-      # @return [Object] block's return value (cached for subsequent calls with the same argument values)
+      # @return [Object] block's return value (cached for subsequent calls with
+      #   the same argument values)
       def fetch_or_store(*args, &block)
         cache.fetch_or_store(args.hash, &block)
       end
@@ -59,8 +60,8 @@ module Dry
         # @yield An arbitrary block
         #
         # @return [Object] block's return value
-        def fetch_or_store(*args, &block)
-          self.class.fetch_or_store(*args, &block)
+        def fetch_or_store(...)
+          self.class.fetch_or_store(...)
         end
       end
     end

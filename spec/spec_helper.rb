@@ -3,7 +3,7 @@
 require_relative "support/coverage"
 require_relative "support/shared_examples/memoizable"
 
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "rspec/version"
 
 begin

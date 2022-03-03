@@ -25,7 +25,7 @@ module Dry
       # An empty set
       EMPTY_SET = ::Set.new.freeze
       # An empty string
-      EMPTY_STRING = "".freeze
+      EMPTY_STRING = ""
       # Identity function
       IDENTITY = (-> x { x }).freeze
 
@@ -42,7 +42,7 @@ module Dry
       #   end
       Undefined = Object.new.tap do |undefined|
         # @api private
-        Self = -> { Undefined }
+        Self = -> { Undefined } # rubocop:disable Lint/ConstantDefinitionInBlock
 
         # @api public
         def undefined.to_s

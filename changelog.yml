@@ -1,4 +1,24 @@
 ---
+- version: unreleased
+  changed:
+  - |
+    [BREAKING] [descendants tracker] switch to using `Class#subclasses` on Ruby 3.1+.
+    This changes the order of returned subclasses (immediate subclasses now go first) (@flash-gordon)
+- version: 0.7.1
+  date: 2021-07-10
+  fixed:
+  - |
+    [memoizable] memoizable correctly handles cases where a method
+    has unnamed params (e.g. happens when the new `...` syntax is used) (@flash-gordon)
+
+- version: 0.7.0
+  date: 2021-07-08
+  fixed:
+  - "[memoizable] warnings when using keyword arguments (@flash-gordon)"
+  - "[deprecations] warnings show more relevant information about caller by default (@timriley)"
+  changed:
+  - Minimal Ruby version is 2.6
+  - "[memoizable] memoization of block-accepting methods is deprecated (@flash-gordon)"
 - version: 0.6.0
   summary:
   date: 2021-06-03
@@ -12,7 +32,7 @@
   changed:
 - version: 0.5.0
   summary:
-  date: '2012-12-12'
+  date: '2020-12-12'
   fixed:
   added:
   - dry-equalizer has been imported into dry-core as `Dry::Core::Equalizer` but the

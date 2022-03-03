@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "dry/core/equalizer"
 
 RSpec.describe Dry::Core::Equalizer::Methods, "#==" do
   subject { object == other }

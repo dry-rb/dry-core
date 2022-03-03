@@ -8,12 +8,12 @@ gemspec
 
 group :test do
   gem "activesupport"
-  gem "inflecto", "~> 0.0", ">= 0.0.2"
-  gem "dry-types", "~> 1.0"
   gem "dry-inflector"
+  gem "dry-types", "~> 1.0"
+  gem "inflecto", "~> 0.0", ">= 0.0.2"
 end
 
 group :tools do
-  gem "pry-byebug", platform: :mri
   gem "pry", platform: :jruby
+  gem "pry-byebug", platform: :mri
 end

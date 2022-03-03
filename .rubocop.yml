@@ -1,9 +1,10 @@
 # This is a config synced from dry-rb/template-gem repo
 
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7
   NewCops: enable
   Exclude:
+    - benchmarks/*.rb
     - spec/support/coverage.rb
     - spec/support/warnings.rb
     - spec/support/rspec_options.rb
@@ -31,7 +32,7 @@ Layout/SpaceInsideHashLiteralBraces:
 Layout/LineLength:
   Max: 100
   Exclude:
-    - "spec/**/*_spec.rb"
+    - "spec/**/*.rb"
 
 Lint/AmbiguousBlockAssociation:
   Enabled: true
@@ -44,7 +45,7 @@ Lint/BooleanSymbol:
 
 Lint/ConstantDefinitionInBlock:
   Exclude:
-    - "spec/**/*_spec.rb"
+    - "spec/**/*.rb"
 
 Lint/EmptyClass:
   Enabled: true
@@ -61,6 +62,10 @@ Lint/SuppressedException:
   Exclude:
     - "spec/spec_helper.rb"
 
+Lint/LiteralAsCondition:
+  Exclude:
+    - "spec/**/*.rb"
+
 Naming/PredicateName:
   Enabled: false
 
@@ -72,9 +77,7 @@ Naming/MethodName:
   Enabled: false
 
 Naming/MethodParameterName:
-  Enabled: true
-  Exclude:
-    - "spec/**/*.rb"
+  Enabled: false
 
 Naming/MemoizedInstanceVariableName:
   Enabled: false
@@ -122,7 +125,7 @@ Style/BlockDelimiters:
 
 Style/ClassAndModuleChildren:
   Exclude:
-    - "spec/**/*_spec.rb"
+    - "spec/**/*.rb"
 
 Style/ConditionalAssignment:
   Enabled: false
@@ -137,6 +140,9 @@ Style/EachWithObject:
   Enabled: false
 
 Style/FormatString:
+  Enabled: false
+
+Style/FormatStringToken:
   Enabled: false
 
 Style/GuardClause:
@@ -168,10 +174,94 @@ Style/StringLiteralsInInterpolation:
 
 Style/SymbolArray:
   Exclude:
-    - "spec/**/*_spec.rb"
+    - "spec/**/*.rb"
 
 Style/TrailingUnderscoreVariable:
   Enabled: false
 
 Style/MultipleComparison:
+  Enabled: false
+
+Style/Next:
+  Enabled: false
+
+Style/AccessorGrouping:
+  Enabled: false
+
+Style/EmptyLiteral:
+  Enabled: false
+
+Style/Semicolon:
+  Exclude:
+    - "spec/**/*.rb"
+
+Style/HashAsLastArrayItem:
+  Exclude:
+    - "spec/**/*.rb"
+
+Style/CaseEquality:
+  Exclude:
+    - "lib/dry/monads/**/*.rb"
+    - "lib/dry/struct/**/*.rb"
+    - "lib/dry/types/**/*.rb"
+    - "spec/**/*.rb"
+
+Style/ExplicitBlockArgument:
+  Exclude:
+    - "lib/dry/types/**/*.rb"
+
+Style/CombinableLoops:
+  Enabled: false
+
+Style/EmptyElse:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/NumberedParametersLimit:
+  Max: 2
+
+Lint/UnusedBlockArgument:
+  Exclude:
+    - "spec/**/*.rb"
+
+Lint/Debugger:
+  Exclude:
+    - "bin/console"
+
+Lint/BinaryOperatorWithIdenticalOperands:
+  Exclude:
+    - "spec/**/*.rb"
+
+Metrics/ParameterLists:
+  Exclude:
+    - "spec/**/*.rb"
+
+Lint/EmptyBlock:
+  Exclude:
+    - "spec/**/*.rb"
+
+Lint/UselessMethodDefinition:
+  Exclude:
+    - "spec/**/*.rb"
+
+Lint/SelfAssignment:
+  Enabled: false
+
+Lint/EmptyClass:
+  Enabled: false
+
+Naming/ConstantName:
+  Exclude:
+    - "spec/**/*.rb"
+
+Naming/VariableNumber:
+  Exclude:
+    - "spec/**/*.rb"
+
+Naming/BinaryOperatorParameterName:
   Enabled: false

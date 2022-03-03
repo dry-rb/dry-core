@@ -1,9 +1,17 @@
 # frozen_string_literal: true
 
+require "concurrent/atomic/atomic_fixnum"
 require "dry/core/memoizable"
+require "tempfile"
 require_relative "../../support/memoized"
 
 RSpec.describe Dry::Core::Memoizable do
+  before do
+    Dry::Core::Deprecations.set_logger!(Tempfile.new("dry_deprecations"))
+  end
+
+  before { Memoized.memoize_methods }
+
   describe ".memoize" do
     describe Object do
       it_behaves_like "a memoizable class" do
@@ -33,37 +41,47 @@ RSpec.describe Dry::Core::Memoizable do
   describe Memoized.new do
     let(:block) { -> {} }
 
-    describe described_class.method(:test1) do
-      it_behaves_like "a memoized method"
+    describe "test1" do
+      it_behaves_like "a memoized method" do
+        let(:new_meth) { described_class.method(:test1) }
 
-      it "does not raise an error" do
-        2.times do
-          described_class.call("a", kwarg1: "world", other: "test", &block)
+        it "does not raise an error" do
+          2.times do
+            new_meth.("a", kwarg1: "world", other: "test", &block)
+          end
         end
       end
     end
 
-    describe described_class.method(:test2) do
-      it_behaves_like "a memoized method"
+    describe "test2" do
+      it_behaves_like "a memoized method" do
+        let(:new_meth) { described_class.method(:test2) }
 
-      it "does not raise an error" do
-        2.times { described_class.call("a", &block) }
+        it "does not raise an error" do
+          2.times { new_meth.("a", &block) }
+        end
       end
     end
 
-    describe described_class.method(:test3) do
-      it_behaves_like "a memoized method"
+    describe "test3" do
+      it_behaves_like "a memoized method" do
+        let(:new_meth) { described_class.method(:test3) }
 
-      it "does not raise an error" do
-        2.times { described_class.call(&block) }
+        it "does not raise an error" do
+          2.times { new_meth.(&block) }
+        end
       end
     end
 
-    describe described_class.method(:test4) do
-      it_behaves_like "a memoized method"
+    describe "test4" do
+      it_behaves_like "a memoized method" do
+        before { described_class.test4 }
 
-      it "does not raise an error" do
-        2.times { described_class.call }
+        let(:new_meth) { described_class.method(:test4) }
+
+        it "does not raise an error" do
+          2.times { new_meth.call }
+        end
       end
     end
   end
@@ -102,6 +120,91 @@ RSpec.describe Dry::Core::Memoizable do
       subject { object.block }
 
       it { is_expected.to eq(block) }
+    end
+  end
+
+  context "test calls" do
+    let(:klass) { Class.new.include(Dry::Core::Memoizable) }
+
+    let(:instance) { klass.new }
+
+    let(:counter) { Concurrent::AtomicFixnum.new }
+
+    context "no args" do
+      before do
+        counter = self.counter
+        klass.define_method(:meth) { counter.increment }
+        klass.memoize(:meth)
+      end
+
+      it "gets called only once" do
+        instance.meth
+        instance.meth
+        instance.meth
+
+        expect(counter.value).to eql(1)
+      end
+    end
+
+    context "pos arg" do
+      before do
+        counter = self.counter
+        klass.define_method(:meth) { |req| counter.increment }
+        klass.memoize(:meth)
+      end
+
+      it "memoizes results" do
+        instance.meth(1)
+        instance.meth(1)
+        instance.meth(2)
+        instance.meth(2)
+
+        expect(counter.value).to eql(2)
+      end
+    end
+
+    context "splat" do
+      before do
+        counter = self.counter
+        klass.define_method(:meth) { |v, *args| counter.increment }
+        klass.memoize(:meth)
+      end
+
+      it "memoizes results" do
+        instance.meth(1)
+        instance.meth(1)
+        expect(counter.value).to eql(1)
+
+        instance.meth(1, 2)
+        instance.meth(1, 2)
+        expect(counter.value).to eql(2)
+
+        instance.meth(1, 2, 3)
+        instance.meth(1, 2, 3)
+        expect(counter.value).to eql(3)
+      end
+    end
+
+    context "**kwargs" do
+      before do
+        counter = self.counter
+        klass.define_method(:meth) { |foo:, **kwargs| counter.increment }
+        klass.memoize(:meth)
+      end
+
+      it "memoizes results" do
+        instance.meth(foo: 1)
+        instance.meth(foo: 1)
+        expect(counter.value).to eql(1)
+
+        instance.meth(foo: 1, bar: 2)
+        instance.meth(foo: 1, bar: 2)
+        expect(counter.value).to eql(2)
+
+        instance.meth(foo: 1, baz: 2)
+        instance.meth(foo: 1, baz: 2)
+        expect(counter.value).to eql(3)
+      end
     end
   end
 end
