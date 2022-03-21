@@ -191,7 +191,7 @@ RSpec.describe Dry::Core::Deprecations do
       Dry::Core::Deprecations.set_logger!(logger)
       Dry::Core::Deprecations.warn("Don't!")
 
-      expect(logger.messages).to eql(%w([deprecated]\ Don't!))
+      expect(logger.messages).to eql(["[deprecated] Don't!"])
     end
   end
 
