@@ -4,7 +4,7 @@ require 'logger'
 
 module Dry
   module Core
-    # An extension for issueing warnings on using deprecated methods.
+    # An extension for issuing warnings on using deprecated methods.
     #
     # @example
     #
