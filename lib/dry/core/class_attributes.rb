@@ -1,16 +1,11 @@
 # frozen_string_literal: true
 
-require "dry/core/constants"
-require "dry/core/errors"
-
 module Dry
   module Core
     # Internal support module for class-level settings
     #
     # @api public
     module ClassAttributes
-      include Constants
-
       # Specify what attributes a class will use
       #
       # @example
