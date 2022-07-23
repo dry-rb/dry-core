@@ -13,6 +13,13 @@ module Dry
           def memoize(*names)
             prepend(Memoizer.new(self, names))
           end
+
+          def inherited(base)
+            super
+
+            memoizer = base.ancestors.find { _1.is_a?(Memoizer) }
+            base.prepend(memoizer.dup)
+          end
         end
 
         module BasicObject
@@ -79,7 +86,7 @@ module Dry
           kernel = KERNEL
 
           if parameters.empty?
-            key = method.name.hash.abs
+            key = "#{object_id}:#{method.name}".hash.abs
 
             define_method(method.name) do
               value = super()
