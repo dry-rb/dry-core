@@ -82,7 +82,7 @@ module Dry
             define_method(method.name) do
               value = super()
 
-              if kernel[:frozen].bind(self).call
+              if kernel[:frozen].bind_call(self)
                 # It's not possible to modify singleton classes
                 # of frozen objects
                 mod.remove_method(method.name)
@@ -104,8 +104,8 @@ module Dry
                 # expect :)
                 attr_name = :"__memozed_#{key}__"
                 ivar_name = :"@#{attr_name}"
-                kernel[:ivar_set].bind(self).(ivar_name, value)
-                eigenclass = kernel[:singleton].bind(self).call
+                kernel[:ivar_set].bind_call(self, ivar_name, value)
+                eigenclass = kernel[:singleton].bind_call(self)
                 eigenclass.attr_reader(attr_name)
                 eigenclass.alias_method(method.name, attr_name)
                 eigenclass.remove_method(attr_name)
