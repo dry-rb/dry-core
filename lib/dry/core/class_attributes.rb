@@ -81,7 +81,7 @@ module Dry
               elsif type === value # rubocop:disable Style/CaseEquality
                 instance_variable_set(ivar, coerce.call(value))
               else
-                raise Errors::InvalidClassAttributeValueError.new(name, value)
+                raise InvalidClassAttributeValueError.new(name, value)
               end
             end
           end
