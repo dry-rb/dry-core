@@ -1,4 +1,10 @@
 ---
+- version: 0.8.1
+  date: 2022-07-26
+  fixed:
+    - |
+      [memoizable] plays better with inheritance.
+      There were cases when cached values from base claesses were used, see #70 (@flash-gordon)
 - version: 0.8.0
   date: 2022-07-15
   added:
