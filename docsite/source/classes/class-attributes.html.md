@@ -16,7 +16,7 @@ class ExtraClass
 end
 
 # example with inheritance and type checking
-# setting up an invalid value will raise Dry::Core::InvalidClassAttributeValue
+# setting up an invalid value will raise Dry::Core::Errors::InvalidClassAttributeValueError
 
 class MyClass
   extend Dry::Core::ClassAttributes
