@@ -18,7 +18,10 @@ module Dry
         loader.tag = "dry-core"
         loader.inflector = Zeitwerk::GemInflector.new("#{root}/dry-core.rb")
         loader.push_dir(root)
-        loader.ignore("#{root}/dry-core.rb")
+        loader.ignore(
+          "#{root}/dry-core.rb",
+          "#{root}/dry/core/{constants,errors,version}.rb"
+        )
       end
     end
 
