@@ -1,8 +1,14 @@
 ---
+- version: 0.8.1
+  date: 2022-07-27
+  fixed:
+    - |
+      [memoizable] plays better with inheritance.
+      There were cases when cached values from base claesses were used, see #70 (@flash-gordon)
 - version: 0.8.0
   date: 2022-07-15
   added:
-    - `Dry::Core::BasicObject` ported from hanami-utils (@jodosha)
+    - "`Dry::Core::BasicObject` ported from hanami-utils (@jodosha)"
   changed:
     - |
       [BREAKING] [descendants tracker] switch to using `Class#subclasses` on Ruby 3.1+.
