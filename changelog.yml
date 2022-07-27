@@ -1,12 +1,14 @@
 ---
 - version: 0.9.0
   date: unreleased
+  changed:
+    - "dry-core now uses zeitwerk for autoloading (@solnic)"
+- version: 0.8.1
+  date: 2022-07-27
   fixed:
     - |
       [memoizable] plays better with inheritance.
       There were cases when cached values from base claesses were used, see #70 (@flash-gordon)
-  changed:
-    - "dry-core now uses zeitwerk for autoloading (@solnic)"
 - version: 0.8.0
   date: 2022-07-15
   added:
