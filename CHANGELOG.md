@@ -3,17 +3,23 @@
 ## 0.9.0 unreleased
 
 
+### Changed
+
+- dry-core now uses zeitwerk for autoloading (@solnic)
+
+[Compare v0.8.1...v0.9.0](https://github.com/dry-rb/dry-core/compare/v0.8.1...v0.9.0)
+
+## 0.8.1 2022-07-27
+
+
 ### Fixed
 
 - [memoizable] plays better with inheritance.
 There were cases when cached values from base claesses were used, see #70 (@flash-gordon)
 
 
-### Changed
 
-- dry-core now uses zeitwerk for autoloading (@solnic)
-
-[Compare v0.8.0...v0.9.0](https://github.com/dry-rb/dry-core/compare/v0.8.0...v0.9.0)
+[Compare v0.8.0...v0.8.1](https://github.com/dry-rb/dry-core/compare/v0.8.0...v0.8.1)
 
 ## 0.8.0 2022-07-15
 
