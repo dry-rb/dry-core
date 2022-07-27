@@ -9,7 +9,8 @@ gemspec
 group :test do
   gem "activesupport"
   gem "dry-inflector"
-  gem "dry-types", "~> 1.0"
+  gem "dry-types", github: "dry-rb/dry-types", branch: "main"
+  gem "dry-logic", github: "dry-rb/dry-logic", branch: "main"
   gem "inflecto", "~> 0.0", ">= 0.0.2"
 end
 
