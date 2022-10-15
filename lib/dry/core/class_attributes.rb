@@ -62,7 +62,7 @@ module Dry
       #    defines :one, coerce: Dry::Types['coercible.string']
       #  end
       #
-      def defines(*args, type: ::Object, coerce: IDENTITY) # rubocop:disable Metrics/PerceivedComplexity
+      def defines(*args, type: ::Object, coerce: Dry::Core::Constants::IDENTITY) # rubocop:disable Metrics/PerceivedComplexity
         unless coerce.respond_to?(:call)
           raise ::ArgumentError, "Non-callable coerce option: #{coerce.inspect}"
         end
@@ -71,8 +71,8 @@ module Dry
           args.each do |name|
             ivar = :"@#{name}"
 
-            define_method(name) do |value = Undefined|
-              if Undefined.equal?(value)
+            define_method(name) do |value = Dry::Core::Constants::Undefined|
+              if Dry::Core::Constants::Undefined.equal?(value)
                 if instance_variable_defined?(ivar)
                   instance_variable_get(ivar)
                 else
