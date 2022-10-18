@@ -1,4 +1,8 @@
 ---
+- version: 0.9.1
+  date: 2022-10-18
+  changed:
+    - "Correct missing constant for IDENTITY (issue #75 fixed via #76) (@poloka)"
 - version: 0.9.0
   date: 2022-10-15
   changed:
