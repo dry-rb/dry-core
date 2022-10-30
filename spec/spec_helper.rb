@@ -2,6 +2,7 @@
 
 require_relative "support/coverage"
 require_relative "support/shared_examples/memoizable"
+require_relative "support/shared_examples/container"
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "rspec/version"

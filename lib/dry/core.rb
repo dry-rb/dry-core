@@ -22,6 +22,7 @@ module Dry
           "#{root}/dry-core.rb",
           "#{root}/dry/core/{constants,errors,version}.rb"
         )
+        loader.inflector.inflect("namespace_dsl" => "NamespaceDSL")
       end
     end
 
