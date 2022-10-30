@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
-require "dry/container/stub"
-
-RSpec.describe Dry::Container::Mixin do
+RSpec.describe Dry::Core::Container::Mixin do
   describe "extended" do
     let(:klass) do
-      Class.new { extend Dry::Container::Mixin }
+      Class.new { extend Dry::Core::Container::Mixin }
     end
 
     let(:container) do
@@ -17,7 +15,7 @@ RSpec.describe Dry::Container::Mixin do
 
   describe "included" do
     let(:klass) do
-      Class.new { include Dry::Container::Mixin }
+      Class.new { include Dry::Core::Container::Mixin }
     end
 
     let(:container) do
@@ -31,7 +29,7 @@ RSpec.describe Dry::Container::Mixin do
         Class.new do
           attr_reader :test
 
-          include Dry::Container::Mixin
+          include Dry::Core::Container::Mixin
 
           def initialize
             @test = true
@@ -53,7 +51,7 @@ RSpec.describe Dry::Container::Mixin do
     context "using custom settings via Dry::Configurable with a class" do
       let(:klass) do
         Class.new do
-          extend Dry::Container::Mixin
+          extend Dry::Core::Container::Mixin
 
           setting :root, default: "/tmp"
         end
@@ -71,7 +69,7 @@ RSpec.describe Dry::Container::Mixin do
     context "using custom settings via Dry::Configurable with an object" do
       let(:klass) do
         Class.new do
-          include Dry::Container::Mixin
+          include Dry::Core::Container::Mixin
 
           setting :root, default: "/tmp"
         end
