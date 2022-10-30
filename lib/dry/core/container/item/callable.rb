@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/container/item"
-
 module Dry
   module Core
     class Container
