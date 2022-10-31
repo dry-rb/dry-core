@@ -8,7 +8,7 @@
 - Import dry-container as `Dry::Core::Container` (via #77) (@solnic)
 
 
-[Compare v0.9.1...master](https://github.com/dry-rb/dry-core/compare/v0.9.1...master)
+[Compare v0.9.1...master](https://github.com/dry-rb/dry-core/compare/v0.9.1...main)
 
 ## 0.9.1 2022-10-18
 
