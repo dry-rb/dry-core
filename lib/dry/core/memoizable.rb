@@ -16,7 +16,7 @@ module Dry
             super
 
             memoizer = base.ancestors.find { _1.is_a?(Memoizer) }
-            base.prepend(memoizer.dup)
+            base.prepend(memoizer.dup) if memoizer
           end
         end
 

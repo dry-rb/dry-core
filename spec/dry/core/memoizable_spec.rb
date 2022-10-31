@@ -210,24 +210,40 @@ RSpec.describe Dry::Core::Memoizable do
     context "inheritance" do
       let(:subclass) { Class.new(klass) }
 
-      before do
-        klass.define_method(:nodes) { [:root] }
-        klass.define_method(:path) { [*nodes, :leaf] }
-        klass.memoize(:nodes, :path)
+      context "with memoisation" do
+        before do
+          klass.define_method(:nodes) { [:root] }
+          klass.define_method(:path) { [*nodes, :leaf] }
+          klass.memoize(:nodes, :path)
 
-        subclass.define_method(:nodes) { [*super(), :node] }
+          subclass.define_method(:nodes) { [*super(), :node] }
+        end
+
+        let(:subclass_instance) do
+          subclass.new
+        end
+
+        it "memoizes results separately" do
+          expect(instance.nodes).to eql([:root])
+          expect(instance.path).to eql([:root, :leaf])
+
+          expect(subclass_instance.nodes).to eql([:root, :node])
+          expect(subclass_instance.path).to eql([:root, :node, :leaf])
+        end
       end
 
-      let(:subclass_instance) do
-        subclass.new
-      end
+      context "inheritance w/o module" do
+        before do
+          klass.define_method(:nodes) { [:root] }
+        end
 
-      it "memoizes results separately" do
-        expect(instance.nodes).to eql([:root])
-        expect(instance.path).to eql([:root, :leaf])
+        let(:subclass_instance) do
+          subclass.new
+        end
 
-        expect(subclass_instance.nodes).to eql([:root, :node])
-        expect(subclass_instance.path).to eql([:root, :node, :leaf])
+        it "doesn't throw an error" do
+          expect(subclass_instance.nodes).to eql([:root])
+        end
       end
     end
   end
