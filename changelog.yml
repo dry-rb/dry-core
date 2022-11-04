@@ -1,11 +1,11 @@
 ---
-- version: unreleased
-  summary: 
-  date: 
-  fixed: 
+- version: 1.0.0
+  summary:
+  date: 2022-11-04
+  fixed:
   added:
   - 'Import dry-container as `Dry::Core::Container` (via #77) (@solnic)'
-  changed: 
+  changed:
 - version: 0.9.1
   date: 2022-10-18
   changed:
@@ -44,7 +44,7 @@
   - Minimal Ruby version is 2.6
   - "[memoizable] memoization of block-accepting methods is deprecated (@flash-gordon)"
 - version: 0.6.0
-  summary: 
+  summary:
   date: 2021-06-03
   fixed:
   - "[memoizable] works with MRI 2.7+ keyword arguments now (@oleander)"
@@ -53,18 +53,18 @@
   - "[memoizable] support for methods that accept blocks (@oleander)"
   - "[deprecations] allow printing frame info on warn when setting up Deprecation
     module (via #52) (@waiting-for-dev)"
-  changed: 
+  changed:
 - version: 0.5.0
-  summary: 
+  summary:
   date: '2020-12-12'
-  fixed: 
+  fixed:
   added:
   - dry-equalizer has been imported into dry-core as `Dry::Core::Equalizer` but the
     interface remains the same, which is `include Dry.Equalizer(...)` - we'll be porting
     all other gems that depend on dry-equalizer to the latest dry-core with equalizer
     included *gradually*. Eventually dry-equalizer usage will be gone completely in
     rom-rb/dry-rb/hanami projects (@solnic)
-  changed: 
+  changed:
 - version: 0.4.10
   date: '2020-11-19'
   added:
