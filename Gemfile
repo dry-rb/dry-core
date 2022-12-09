@@ -15,6 +15,5 @@ group :test do
 end
 
 group :tools do
-  gem "pry", platform: :jruby
-  gem "pry-byebug", platform: :mri
+  gem "byebug", platform: :mri
 end
