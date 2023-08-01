@@ -137,6 +137,17 @@ module Dry
         end
       end
     end
+
+    # Build an equalizer module for the inclusion in other class
+    #
+    # ## Credits
+    #
+    # Equalizer has been originally imported from the equalizer gem created by Dan Kubb
+    #
+    # @api public
+    def self.Equalizer(*keys, **options)
+      Dry::Core::Equalizer.new(*keys, **options)
+    end
   end
 
   # Old modules that depend on dry/core/equalizer may miss

@@ -9,7 +9,7 @@ A simple mixin that can be used to add instance variable based equality, equival
 ### Usage
 
 ```ruby
-require 'dry/core/equalizer'
+require "dry/core"
 
 class GeoLocation
   include Dry::Core::Equalizer(:latitude, :longitude)
