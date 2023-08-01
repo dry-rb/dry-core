@@ -10,6 +10,7 @@ sections:
  - constants
  - classes
  - deprecations
+ - equalizer
  - extensions
 ---
 
