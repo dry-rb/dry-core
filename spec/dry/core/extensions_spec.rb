@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/core/extensions"
-
 RSpec.describe Dry::Core::Extensions do
   subject do
     Class.new do

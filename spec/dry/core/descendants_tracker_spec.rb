@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/core/descendants_tracker"
-
 RSpec.describe Dry::Core::DescendantsTracker do
   before do
     module Test

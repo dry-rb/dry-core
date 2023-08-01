@@ -7,7 +7,7 @@ name: dry-core
 Allows you to cache call results that are solely determined by arguments.
 
 ```ruby
-require 'dry/core/cache'
+require "dry/core"
 
 class Foo
   extend Dry::Core::Cache

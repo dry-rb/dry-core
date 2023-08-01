@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/core/class_attributes"
 require "dry-types"
 
 RSpec.describe "Class Macros" do
