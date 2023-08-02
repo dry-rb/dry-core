@@ -27,6 +27,17 @@ module Dry
     end
 
     loader.setup
+
+    # Build an equalizer module for the inclusion in other class
+    #
+    # ## Credits
+    #
+    # Equalizer has been originally imported from the equalizer gem created by Dan Kubb
+    #
+    # @api public
+    def self.Equalizer(*keys, **options)
+      Equalizer.new(*keys, **options)
+    end
   end
 
   # See dry/core/equalizer.rb
