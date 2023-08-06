@@ -102,7 +102,7 @@ module Dry
         #   @param [#warn] logger
         #
         # @api public
-        def set_logger!(output = $stderr) # rubocop:disable Naming/AccessorMethodName
+        def set_logger!(output = $stderr)
           if output.respond_to?(:warn)
             @logger = output
           else
@@ -194,7 +194,7 @@ module Dry
             message
           )
 
-          meth = new_name ? method(new_name) : method(old_name)
+          meth = method(new_name || old_name)
 
           singleton_class.instance_exec do
             undef_method old_name if method_defined?(old_name)

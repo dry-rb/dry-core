@@ -8,6 +8,7 @@ RSpec.shared_examples "a memoizable class" do
       attr_reader :falsey_call_count
 
       def initialize
+        super
         @falsey_call_count = 0
       end
 

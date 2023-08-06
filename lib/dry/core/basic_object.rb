@@ -137,8 +137,7 @@ module Dry
 
       # @since 0.8.0
       # @api private
-      def __inspect # rubocop:disable Style/EmptyMethod
-      end
+      def __inspect; end
     end
   end
 end
