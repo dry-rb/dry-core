@@ -17,9 +17,9 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GH_PAT }}
     steps:
       - name: Checkout ${{github.repository}}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Checkout devtools
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: dry-rb/devtools
           path: tmp/devtools
@@ -28,9 +28,9 @@ jobs:
           git config --local user.email "dry-bot@dry-rb.org"
           git config --local user.name "dry-bot"
       - name: Set up Ruby
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "2.7"
+          ruby-version: "3.1"
       - name: Install dependencies
         run: gem install ossy --no-document
       - name: Update changelog.yml from commit

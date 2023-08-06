@@ -7,7 +7,7 @@ name: dry-core
 Define extensions that can be later enabled by the user.
 
 ```ruby
-require 'dry/core/extensions'
+require "dry/core"
 
 class Foo
   extend Dry::Core::Extensions

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require "dry/core/equalizer"
 
 RSpec.describe Dry::Core::Equalizer, "#included" do
   subject { descendant.instance_exec(object) { |mod| include mod } }
@@ -33,7 +32,7 @@ RSpec.describe Dry::Core::Equalizer, "#included" do
 
     superclass.class_eval do
       define_method(:included) do |_|
-        # Only set the flag when an Dry::Equalizer instance is included.
+        # Only set the flag when an Dry::Core::Equalizer instance is included.
         # Otherwise, other module includes (which get triggered internally
         # in RSpec when `change` is used for the first time, since it uses
         # autoloading for its matchers) will wrongly set this flag.

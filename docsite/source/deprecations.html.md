@@ -7,7 +7,7 @@ name: dry-core
 To deprecate ruby methods you need to extend the `Dry::Core::Deprecations` module with a tag that will be displayed in the output. For example:
 
 ```ruby
-require 'dry/core/deprecations'
+require "dry/core"
 
 class Foo
   extend Dry::Core::Deprecations[:tag]
