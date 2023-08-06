@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/core/cache"
-
 RSpec.describe Dry::Core::Cache do
   shared_examples_for "class with cache" do
     describe "#fetch_or_store" do

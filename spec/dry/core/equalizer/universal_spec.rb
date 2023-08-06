@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require "dry/core/equalizer"
 
 RSpec.describe Dry::Core::Equalizer do
   let(:name)   { "User"          }
   let(:klass)  { ::Class.new     }
 
   context "with no keys" do
-    subject { Dry::Equalizer() }
+    subject { Dry::Core::Equalizer() }
 
     before do
       # specify the class #name method
@@ -73,7 +72,7 @@ RSpec.describe Dry::Core::Equalizer do
   end
 
   context "with keys" do
-    subject { Dry::Equalizer(*keys) }
+    subject { Dry::Core::Equalizer(*keys) }
 
     let(:keys)       { %i[firstname lastname].freeze  }
     let(:firstname)  { "John"                         }
@@ -158,7 +157,7 @@ RSpec.describe Dry::Core::Equalizer do
 
     context "when immutable" do
       describe "#hash" do
-        subject { Dry::Equalizer(*keys, immutable: true) }
+        subject { Dry::Core::Equalizer(*keys, immutable: true) }
 
         it "returns memoized hash" do
           expect { instance.firstname = "Changed" }.not_to(change { instance.hash })
@@ -177,7 +176,7 @@ RSpec.describe Dry::Core::Equalizer do
   end
 
   context "with duplicate keys" do
-    subject { Dry::Equalizer(*keys) }
+    subject { Dry::Core::Equalizer(*keys) }
 
     let(:keys)       { %i[firstname firstname lastname].freeze  }
     let(:firstname)  { "John"                                   }
@@ -216,7 +215,7 @@ RSpec.describe Dry::Core::Equalizer do
 
   context "with options" do
     context "w/o inspect" do
-      subject { Dry::Equalizer(*keys, inspect: false) }
+      subject { Dry::Core::Equalizer(*keys, inspect: false) }
 
       let(:keys)       { %i[firstname lastname].freeze  }
       let(:firstname)  { "John"                         }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "dry/core/inflector"
-
 RSpec.describe Dry::Core::Inflector do
   shared_examples "an inflector" do
     it "singularises" do

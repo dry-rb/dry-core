@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "concurrent/atomic/atomic_fixnum"
-require "dry/core/memoizable"
 require "tempfile"
 require_relative "../../support/memoized"
 
