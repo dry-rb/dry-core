@@ -2,6 +2,8 @@
 - version: 1.0.1
   summary:
   date: 2023-08-06
+  changed:
+  - Minimal Ruby version is 3.0
   fixed:
   - |
     [equalizer] Add `Dry::Core.Equalizer` method to make `include Dry::Core.Equalizer(...)` work as documented (via #79) (@timriley)
