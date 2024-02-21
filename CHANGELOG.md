@@ -10,6 +10,9 @@
   Users of Equalizer should now only need to `require "dry/core"` first.
 
 
+### Changed
+
+- Minimal Ruby version is 3.0
 
 [Compare v1.0.0...v1.0.1](https://github.com/dry-rb/dry-core/compare/v1.0.0...v1.0.1)
 
