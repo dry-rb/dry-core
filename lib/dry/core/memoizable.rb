@@ -84,7 +84,7 @@ module Dry
           kernel = KERNEL
 
           if parameters.empty?
-            key = "#{object_id}:#{method.name}".hash.abs
+            key = "#{__id__}:#{method.name}".hash.abs
 
             define_method(method.name) do
               value = super()
