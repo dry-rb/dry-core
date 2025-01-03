@@ -4,14 +4,14 @@ module Dry
   module Core
     # Class for generating more classes
     class ClassBuilder
-      ParentClassMismatch = Class.new(TypeError)
+      ParentClassMismatch = ::Class.new(::TypeError)
 
       attr_reader :name, :parent, :namespace
 
       def initialize(name:, parent: nil, namespace: nil)
         @name = name
         @namespace = namespace
-        @parent = parent || Object
+        @parent = parent || ::Object
       end
 
       # Generate a class based on options
@@ -48,7 +48,7 @@ module Dry
 
       # @api private
       def create_anonymous
-        klass = Class.new(parent)
+        klass = ::Class.new(parent)
         name = self.name
 
         klass.singleton_class.class_eval do
@@ -64,7 +64,7 @@ module Dry
       def create_named
         name = self.name
         base = create_base(namespace, name, parent)
-        klass = Class.new(base)
+        klass = ::Class.new(base)
 
         namespace.module_eval do
           remove_const(name)
@@ -93,7 +93,7 @@ module Dry
 
           existing
         else
-          klass = Class.new(parent || Object)
+          klass = ::Class.new(parent || ::Object)
           namespace.const_set(name, klass)
           klass
         end

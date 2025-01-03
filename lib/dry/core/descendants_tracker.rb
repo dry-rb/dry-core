@@ -30,7 +30,7 @@ module Dry
       class << self
         # @api private
         def setup(target)
-          target.instance_variable_set(:@descendants, Concurrent::Array.new)
+          target.instance_variable_set(:@descendants, ::Concurrent::Array.new)
         end
 
         private

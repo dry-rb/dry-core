@@ -23,7 +23,7 @@ module Dry
       def self.extended(klass)
         super
         klass.include(Methods)
-        klass.instance_variable_set(:@__cache__, Concurrent::Map.new)
+        klass.instance_variable_set(:@__cache__, ::Concurrent::Map.new)
       end
 
       # @api private

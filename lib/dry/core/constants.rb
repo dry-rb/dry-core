@@ -40,7 +40,7 @@ module Dry
       #       puts value
       #     end
       #   end
-      Undefined = Object.new.tap do |undefined|
+      Undefined = ::Object.new.tap do |undefined|
         # @api private
         Self = -> { Undefined } # rubocop:disable Lint/ConstantDefinitionInBlock
 

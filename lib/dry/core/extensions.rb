@@ -25,7 +25,7 @@ module Dry
       def self.extended(obj)
         super
         obj.instance_variable_set(:@__available_extensions__, {})
-        obj.instance_variable_set(:@__loaded_extensions__, Set.new)
+        obj.instance_variable_set(:@__loaded_extensions__, ::Set.new)
       end
 
       # Register an extension
@@ -50,7 +50,7 @@ module Dry
       def load_extensions(*extensions)
         extensions.each do |ext|
           block = @__available_extensions__.fetch(ext) do
-            raise ArgumentError, "Unknown extension: #{ext.inspect}"
+            raise ::ArgumentError, "Unknown extension: #{ext.inspect}"
           end
           unless @__loaded_extensions__.include?(ext)
             block.call

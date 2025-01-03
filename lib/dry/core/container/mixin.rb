@@ -6,18 +6,18 @@ require "dry/core/constants"
 module Dry
   module Core
     class Container
-      include Dry::Core::Constants
+      include ::Dry::Core::Constants
 
       # @api public
-      Error = Class.new(StandardError)
+      Error = ::Class.new(::StandardError)
 
       # Error raised when key is not defined in the registry
       #
       # @api public
-      KeyError = Class.new(::KeyError)
+      KeyError = ::Class.new(::KeyError)
 
-      if defined?(DidYouMean::KeyErrorChecker)
-        DidYouMean.correct_error(KeyError, DidYouMean::KeyErrorChecker)
+      if defined?(::DidYouMean::KeyErrorChecker)
+        ::DidYouMean.correct_error(KeyError, ::DidYouMean::KeyErrorChecker)
       end
 
       # Mixin to expose Inversion of Control (IoC) container behaviour

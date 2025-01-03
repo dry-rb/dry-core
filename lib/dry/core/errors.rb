@@ -2,7 +2,7 @@
 
 module Dry
   module Core
-    class InvalidClassAttributeValueError < StandardError
+    class InvalidClassAttributeValueError < ::StandardError
       def initialize(name, value)
         super(
           "Value #{value.inspect} is invalid for class attribute #{name.inspect}"

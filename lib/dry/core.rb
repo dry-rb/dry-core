@@ -13,10 +13,10 @@ module Dry
     include Constants
 
     def self.loader
-      @loader ||= Zeitwerk::Loader.new.tap do |loader|
-        root = File.expand_path("..", __dir__)
+      @loader ||= ::Zeitwerk::Loader.new.tap do |loader|
+        root = ::File.expand_path("..", __dir__)
         loader.tag = "dry-core"
-        loader.inflector = Zeitwerk::GemInflector.new("#{root}/dry-core.rb")
+        loader.inflector = ::Zeitwerk::GemInflector.new("#{root}/dry-core.rb")
         loader.push_dir(root)
         loader.ignore(
           "#{root}/dry-core.rb",
@@ -50,7 +50,7 @@ module Dry
     #
     # @api public
     def self.Equalizer(*keys, **options)
-      Dry::Core::Equalizer.new(*keys, **options)
+      ::Dry::Core::Equalizer.new(*keys, **options)
     end
   end
 end

@@ -8,6 +8,8 @@ module Dry
       # @api abstract
       #
       class Item
+        NO_OPTIONS = {}.freeze
+
         # @return [Mixed] the item to be solved later
         attr_reader :item
 
@@ -15,16 +17,17 @@ module Dry
         attr_reader :options
 
         # @api abstract
-        def initialize(item, options = {})
+        def initialize(item, options = NO_OPTIONS)
           @item = item
           @options = {
-            call: item.is_a?(::Proc) && item.parameters.empty?
-          }.merge(options)
+            call: item.is_a?(::Proc) && item.parameters.empty?,
+            **options
+          }
         end
 
         # @api abstract
         def call
-          raise NotImplementedError
+          raise ::NotImplementedError
         end
 
         # @private

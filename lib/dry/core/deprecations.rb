@@ -218,7 +218,7 @@ module Dry
             message
           )
 
-          mod = Module.new do
+          mod = ::Module.new do
             define_method(:const_missing) do |missing|
               if missing == constant_name
                 warn("#{full_msg}\n#{STACK.()}")

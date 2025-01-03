@@ -12,7 +12,7 @@ module Dry
         ],
         dry_inflector: [
           "dry/inflector",
-          proc { Dry::Inflector.new }
+          proc { ::Dry::Inflector.new }
         ],
         inflecto: [
           "inflecto",
@@ -25,7 +25,7 @@ module Dry
       # @api private
       def self.realize_backend(path, backend_factory)
         require path
-      rescue LoadError
+      rescue ::LoadError
         nil
       else
         backend_factory.call
@@ -49,7 +49,7 @@ module Dry
       # @param [Symbol] name backend name (:activesupport or :inflecto)
       def self.select_backend(name = nil)
         if name && !BACKENDS.key?(name)
-          raise NameError, "Invalid inflector library selection: '#{name}'"
+          raise ::NameError, "Invalid inflector library selection: '#{name}'"
         end
 
         @inflector = name ? realize_backend(*BACKENDS[name]) : detect_backend

@@ -150,7 +150,7 @@ module Dry
     #
     # @api public
     def self.Equalizer(*keys, **options)
-      Dry::Core::Equalizer.new(*keys, **options)
+      ::Dry::Core::Equalizer.new(*keys, **options)
     end
   end
 end
