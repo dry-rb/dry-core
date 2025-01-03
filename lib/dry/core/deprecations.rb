@@ -106,7 +106,7 @@ module Dry
           if output.respond_to?(:warn)
             @logger = output
           else
-            @logger = Logger.new(output).tap do |logger|
+            @logger = ::Logger.new(output).tap do |logger|
               logger.formatter = proc { |_, _, _, msg| "#{msg}\n" }
             end
           end
