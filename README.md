@@ -2,7 +2,7 @@
 [gem]: https://rubygems.org/gems/dry-core
 [actions]: https://github.com/dry-rb/dry-core/actions
 
-# dry-core [![Gem Version](https://badge.fury.io/rb/dry-core.svg)][gem] [![CI Status](https://github.com/dry-rb/dry-core/workflows/ci/badge.svg)][actions]
+# dry-core [![Gem Version](https://badge.fury.io/rb/dry-core.svg)][gem] [![CI Status](https://github.com/dry-rb/dry-core/workflows/CI/badge.svg)][actions]
 
 ## Links
 
