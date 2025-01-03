@@ -4,6 +4,7 @@
   date: 2025-01-03
   changed:
   - Minimal Ruby version is 3.1 (@flash-gordon)
+  - 'Fixed clash with `dry-logger` (see #80) (@flash-gordon)'
 - version: 1.0.1
   summary:
   date: 2023-08-06
