@@ -105,7 +105,7 @@ RSpec.describe Dry::Core::ClassBuilder do
         it "does not search for parent class through inheritance" do
           expect(klass.name).to eql("Test::File")
           expect(klass.superclass).to be(Test::File)
-          expect(Test::File).not_to be(::File)
+          expect(Test::File).not_to be(File)
         end
       end
 

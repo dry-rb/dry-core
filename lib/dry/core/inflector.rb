@@ -37,9 +37,11 @@ module Dry
       def self.detect_backend
         BACKENDS.inject(nil) do |backend, (_, (path, factory))|
           backend || realize_backend(path, factory)
-        end || raise(LoadError,
-                     "No inflector library could be found: "\
-                     "please install either the `inflecto` or `activesupport` gem.")
+        end || raise(
+          LoadError,
+          "No inflector library could be found: " \
+          "please install either the `inflecto` or `activesupport` gem."
+        )
       end
 
       # Set preferred backend

@@ -27,7 +27,7 @@ module Dry
       # An empty string
       EMPTY_STRING = ""
       # Identity function
-      IDENTITY = (-> x { x }).freeze
+      IDENTITY = ->(x) { x }.freeze
 
       # A special value you can use as a default to know if no arguments
       # were passed to the method

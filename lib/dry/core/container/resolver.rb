@@ -66,8 +66,8 @@ module Dry
         # @return Hash
         #
         # @api public
-        def each_key(container, &block)
-          container.each_key(&block)
+        def each_key(container, &)
+          container.each_key(&)
         end
 
         # Calls block once for each key in container, passing the key and
@@ -81,8 +81,8 @@ module Dry
         # @note In discussions with other developers, it was felt that being able
         #       to iterate over not just the registered keys, but to see what was
         #       registered would be very helpful. This is a step toward doing that.
-        def each(container, &block)
-          container.map { |key, value| [key, value.call] }.each(&block)
+        def each(container, &)
+          container.map { |key, value| [key, value.call] }.each(&)
         end
       end
     end

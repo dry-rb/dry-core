@@ -95,7 +95,7 @@ RSpec.describe Dry::Core::BasicObject do
 
     context "when object is not instance of the given class" do
       it "returns false" do
-        expect(subject.instance_of?(::String)).to be(false)
+        expect(subject.instance_of?(String)).to be(false)
       end
     end
 
@@ -118,7 +118,7 @@ RSpec.describe Dry::Core::BasicObject do
 
     context "when object is not instance of the given class" do
       it "returns false" do
-        expect(subject.is_a?(::String)).to be(false)
+        expect(subject.is_a?(String)).to be(false)
       end
     end
 
@@ -170,7 +170,7 @@ RSpec.describe Dry::Core::BasicObject do
 
     context "when object is not instance of the given class" do
       it "returns false" do
-        expect(subject.kind_of?(::String)).to be(false)
+        expect(subject.kind_of?(String)).to be(false)
       end
     end
 

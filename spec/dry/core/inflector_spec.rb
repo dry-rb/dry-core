@@ -43,7 +43,7 @@ RSpec.describe Dry::Core::Inflector do
     end
 
     it "prefers ActiveSupport::Inflector" do
-      expect(api.inflector).to be ::ActiveSupport::Inflector
+      expect(api.inflector).to be ActiveSupport::Inflector
     end
   end
 
@@ -65,7 +65,7 @@ RSpec.describe Dry::Core::Inflector do
     end
 
     it "is ActiveSupport::Inflector" do
-      expect(api.inflector).to be(::ActiveSupport::Inflector)
+      expect(api.inflector).to be(ActiveSupport::Inflector)
     end
 
     it_behaves_like "an inflector"
@@ -78,7 +78,7 @@ RSpec.describe Dry::Core::Inflector do
     end
 
     it "is Inflecto" do
-      expect(api.inflector).to be(::Inflecto)
+      expect(api.inflector).to be(Inflecto)
     end
 
     it_behaves_like "an inflector"

@@ -34,12 +34,12 @@ module Dry
           end
         end
 
-        def register(key, *args, &block)
-          super(namespaced(key), *args, &block)
+        def register(key, ...)
+          super(namespaced(key), ...)
         end
 
-        def namespace(namespace, &block)
-          super(namespaced(namespace), &block)
+        def namespace(namespace, &)
+          super(namespaced(namespace), &)
         end
 
         def import(namespace)

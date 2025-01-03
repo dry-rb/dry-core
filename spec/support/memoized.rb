@@ -8,15 +8,15 @@ class Memoized
   }
   include Dry::Core::Memoizable
 
-  def test1(arg1, *args, kwarg1:, kwarg2: "default", **kwargs, &block)
+  def test1(arg1, *args, kwarg1:, kwarg2: "default", **kwargs, &)
     # NOP
   end
 
-  def test2(arg1, arg2 = "default", *args, &block)
+  def test2(arg1, arg2 = "default", *args, &)
     # NOP
   end
 
-  def test3(&block)
+  def test3(&)
     # NOP
   end
 
@@ -40,22 +40,13 @@ class Memoized
     # NOP
   end
 
-  if RUBY_VERSION >= "2.7"
-    module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
-      def test9(...)
-        super
-      end
-    RUBY
+  def test9(...)
+    super
   end
 
   def self.memoize_methods
     @memoized ||= begin
-      if RUBY_VERSION >= "2.7"
-        memoize :test1, :test2, :test3, :test4, :test5, :test6, :test7, :test8, :test9
-      else
-        memoize :test1, :test2, :test3, :test4, :test5, :test6, :test7, :test8
-      end
-
+      memoize :test1, :test2, :test3, :test4, :test5, :test6, :test7, :test8, :test9
       true
     end
   end

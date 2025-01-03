@@ -68,7 +68,7 @@ module Dry
 
         # @private
         module Initializer
-          def initialize(*args, &block)
+          def initialize(...)
             @_container = ::Concurrent::Hash.new
             super
           end
@@ -112,8 +112,8 @@ module Dry
           config.registry.call(_container, key, item, options)
 
           self
-        rescue FrozenError
-          raise FrozenError,
+        rescue ::FrozenError
+          raise ::FrozenError,
                 "can't modify frozen #{self.class} (when attempting to register '#{key}')"
         end
 
@@ -128,8 +128,8 @@ module Dry
         # @return [Mixed]
         #
         # @api public
-        def resolve(key, &block)
-          config.resolver.call(_container, key, &block)
+        def resolve(key, &)
+          config.resolver.call(_container, key, &)
         end
 
         # Resolve an item from the container
@@ -198,8 +198,8 @@ module Dry
         # @return [Dry::Core::Container::Mixin] self
         #
         # @api public
-        def each_key(&block)
-          config.resolver.each_key(_container, &block)
+        def each_key(&)
+          config.resolver.each_key(_container, &)
           self
         end
 
@@ -215,8 +215,8 @@ module Dry
         # @note In discussions with other developers, it was felt that being able to iterate
         #       over not just the registered keys, but to see what was registered would be
         #       very helpful. This is a step toward doing that.
-        def each(&block)
-          config.resolver.each(_container, &block)
+        def each(&)
+          config.resolver.each(_container, &)
         end
 
         # Decorates an item from the container with specified decorator
@@ -250,12 +250,12 @@ module Dry
         # @return [Dry::Core::Container::Mixin] self
         #
         # @api public
-        def namespace(namespace, &block)
+        def namespace(namespace, &)
           ::Dry::Core::Container::NamespaceDSL.new(
             self,
             namespace,
             config.namespace_separator,
-            &block
+            &
           )
 
           self

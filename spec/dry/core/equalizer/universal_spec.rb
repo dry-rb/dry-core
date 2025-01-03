@@ -3,8 +3,8 @@
 require "spec_helper"
 
 RSpec.describe Dry::Core::Equalizer do
-  let(:name)   { "User"          }
-  let(:klass)  { ::Class.new     }
+  let(:name)   { "User" }
+  let(:klass)  { Class.new }
 
   context "with no keys" do
     subject { Dry::Core::Equalizer() }
@@ -59,7 +59,7 @@ RSpec.describe Dry::Core::Equalizer do
         expect(klass.instance_method(:hash).arity).to be(0)
       end
 
-      it { expect(instance.hash).to eql([klass].hash) }
+      it { expect(instance.hash).to eql([klass].hash) } # rubocop:disable Security/CompoundHash
     end
 
     describe "#inspect" do
@@ -80,7 +80,7 @@ RSpec.describe Dry::Core::Equalizer do
     let(:instance)   { klass.new(firstname, lastname) }
 
     let(:klass) do
-      ::Class.new do
+      Class.new do
         attr_reader :firstname, :lastname
         attr_writer :firstname
         private :firstname, :lastname
@@ -184,7 +184,7 @@ RSpec.describe Dry::Core::Equalizer do
     let(:instance)   { klass.new(firstname, lastname)           }
 
     let(:klass) do
-      ::Class.new do
+      Class.new do
         attr_reader :firstname, :lastname
         private :firstname, :lastname
 
@@ -223,7 +223,7 @@ RSpec.describe Dry::Core::Equalizer do
       let(:instance)   { klass.new(firstname, lastname) }
 
       let(:klass) do
-        ::Struct.new(:firstname, :lastname)
+        Struct.new(:firstname, :lastname)
       end
 
       before { klass.include(subject) }

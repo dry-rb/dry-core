@@ -48,8 +48,8 @@ module Dry
       #
       # @return [Object] block's return value (cached for subsequent calls with
       #   the same argument values)
-      def fetch_or_store(*args, &block)
-        cache.fetch_or_store(args.hash, &block)
+      def fetch_or_store(*args, &)
+        cache.fetch_or_store(args.hash, &)
       end
 
       # Instance methods
