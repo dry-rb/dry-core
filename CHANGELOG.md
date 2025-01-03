@@ -6,6 +6,7 @@
 ### Changed
 
 - Minimal Ruby version is 3.1 (@flash-gordon)
+- Fixed clash with `dry-logger` (see #80) (@flash-gordon)
 
 [Compare v1.0.1...v1.1.0](https://github.com/dry-rb/dry-core/compare/v1.0.1...v1.1.0)
 
