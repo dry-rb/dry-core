@@ -23,7 +23,7 @@ module Dry
         module BasicObject
           include Base
 
-          def new(*)
+          def new(*, **)
             obj = super
             obj.instance_eval { @__memoized__ = MEMOIZED_HASH.dup }
             obj
@@ -33,14 +33,10 @@ module Dry
         module Object
           include Base
 
-          def new(*)
+          def new(*, **)
             obj = super
             obj.instance_variable_set(:@__memoized__, MEMOIZED_HASH.dup)
             obj
-          end
-
-          if respond_to?(:ruby2_keywords, true)
-            ruby2_keywords(:new)
           end
         end
       end
@@ -77,7 +73,6 @@ module Dry
 
         # @api private
         # rubocop:disable Metrics/AbcSize
-        # rubocop:disable Metrics/PerceivedComplexity
         def define_memoizable(method:)
           parameters = method.parameters
           mod = self
@@ -134,7 +129,7 @@ module Dry
               WARN
             end
 
-            m = module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
+            module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
               def #{method.name}(#{params.join(", ")})                 # def slow_calc(arg1, arg2, arg3)
                 key = [:"#{method.name}", #{binds.join(", ")}].hash    #   key = [:slow_calc, arg1, arg2, arg3].hash
                                                                        #
@@ -146,16 +141,10 @@ module Dry
               end                                                      # end
             RUBY
 
-            if respond_to?(:ruby2_keywords, true) && mapping.key?(:reyrest)
-              ruby2_keywords(method.name)
-            end
-
-            m
           end
         end
-        # rubocop:enable Metrics/AbcSize
-        # rubocop:enable Metrics/PerceivedComplexity
 
+        # rubocop:enable Metrics/AbcSize
         # @api private
         def declaration(definition, lookup)
           params = []
