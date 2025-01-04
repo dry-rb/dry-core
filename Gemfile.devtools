@@ -10,6 +10,7 @@ group :test do
   gem "rexml", require: false
 
   gem "warning"
+  gem "rspec"
 end
 
 group :tools do
