@@ -352,7 +352,7 @@ RSpec.shared_examples "a container" do
     end
 
     describe "#keys" do
-      let(:keys) { [:key_1, :key_2] }
+      let(:keys) { %i[key_1 key_2] }
       let(:expected_keys) { %w[key_1 key_2] }
 
       before do
@@ -369,7 +369,7 @@ RSpec.shared_examples "a container" do
     end
 
     describe "#each_key" do
-      let(:keys) { [:key_1, :key_2] }
+      let(:keys) { %i[key_1 key_2] }
       let(:expected_keys) { %w[key_1 key_2] }
       let!(:yielded_keys) { [] }
 
@@ -393,7 +393,7 @@ RSpec.shared_examples "a container" do
     end
 
     describe "#each" do
-      let(:keys) { [:key_1, :key_2] }
+      let(:keys) { %i[key_1 key_2] }
       let(:expected_key_value_pairs) { [%w[key_1 value_for_key_1], %w[key_2 value_for_key_2]] }
       let!(:yielded_key_value_pairs) { [] }
 

@@ -121,7 +121,7 @@ module Dry
       # @since 0.8.0
       #
       # @see http://ruby-doc.org/core/Object.html#method-i-respond_to-3F
-      def respond_to?(method_name, include_all = false) # rubocop:disable Style/OptionalBooleanParameter
+      def respond_to?(method_name, include_all = false)
         respond_to_missing?(method_name, include_all)
       end
 

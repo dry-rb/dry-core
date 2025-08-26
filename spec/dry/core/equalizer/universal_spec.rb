@@ -59,7 +59,7 @@ RSpec.describe Dry::Core::Equalizer do
         expect(klass.instance_method(:hash).arity).to be(0)
       end
 
-      it { expect(instance.hash).to eql([klass].hash) } # rubocop:disable Security/CompoundHash
+      it { expect(instance.hash).to eql([klass].hash) }
     end
 
     describe "#inspect" do
