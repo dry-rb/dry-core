@@ -1,0 +1,18 @@
+name:
+  gem: dry-core
+  constant: Dry::Core
+github_org: dry-rb
+gemspec:
+  authors: ["Hanakai team"]
+  email: ["info@hanakai.org"]
+  summary: "A toolset of small support modules used throughout the dry-rb ecosystem"
+  homepage: "https://dry-rb.org/gems/dry-core"
+  required_ruby_version: ">= 3.1"
+  development_dependencies:
+    - bundler
+    - rake
+    - rspec
+  runtime_dependencies:
+    - [concurrent-ruby, "~> 1.0"]
+    - [logger]
+    - [zeitwerk, "~> 2.6"]
