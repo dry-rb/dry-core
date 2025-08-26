@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# This file is synced from dry-rb/template-gem repo
+# This file is synced from hanakai-rb/repo-sync
 
 gem "rake", ">= 12.3.3"
 
@@ -10,10 +10,9 @@ group :test do
   gem "rexml", require: false
 
   gem "warning"
-  gem "rspec"
 end
 
 group :tools do
-  gem "rubocop", "~> 1.69.2"
+  gem "rubocop", "~> 1.72.0"
   gem "byebug"
 end
