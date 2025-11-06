@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "set"
-
 module Dry
   module Core
     # A list of constants you can use to avoid memory allocations or identity checks.

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "set"
-
 module Dry
   module Core
     # Define extensions that can be later enabled by the user.

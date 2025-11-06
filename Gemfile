@@ -13,7 +13,3 @@ group :test do
   gem "dry-types", github: "dry-rb/dry-types", branch: "main"
   gem "inflecto", "~> 0.0", ">= 0.0.2"
 end
-
-group :tools do
-  gem "byebug", platform: :mri
-end
