@@ -14,7 +14,7 @@ on:
 
 jobs:
   tests:
-    name: Tests
+    name: Tests (${{ matrix.ruby }})
     permissions:
       pull-requests: write
     runs-on: ubuntu-latest
