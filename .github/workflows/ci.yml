@@ -26,6 +26,7 @@ jobs:
         - "3.4"
         - "3.3"
         - "3.2"
+        optional: [false]
         include:
           - ruby: "3.4"
             coverage: "true"
