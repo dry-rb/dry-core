@@ -7,12 +7,6 @@ require_relative "support/shared_examples/container"
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "rspec/version"
 
-begin
-  require "pry"
-  require "pry-byebug"
-rescue LoadError
-end
-
 require "dry/core"
 
 module Test
