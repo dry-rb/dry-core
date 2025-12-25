@@ -40,10 +40,8 @@ module Dry
       # @since 0.8.0
       #
       # @see http://ruby-doc.org/core/Object.html#method-i-inspect
-      inspect_method = ::Kernel.instance_method(:inspect)
-      define_method(:inspect) do
-        original = inspect_method.bind_call(self)
-        "#{original[0...-1]}#{__inspect}>"
+      def inspect
+        "#<#{self.class}:0x#{"0%x" % (object_id << 1)}#{__inspect}>"
       end
 
       # @!macro [attach] instance_of?(class)
