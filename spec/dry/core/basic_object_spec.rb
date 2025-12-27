@@ -33,19 +33,19 @@ RSpec.describe Dry::Core::BasicObject do
   end
 
   describe "#respond_to_missing?" do
-    it "raises an exception if respond_to? method is not implemented" do
-      expect { TestClass.new.respond_to?(:no_existing_method) }
-        .to raise_error(NotImplementedError)
+    it "returns false for non-existing methods by default" do
+      expect(TestClass.new.respond_to?(:no_existing_method)).to be(false)
     end
 
-    it "returns true given respond_to? method was implemented" do
+    it "can be overridden to return true for custom methods" do
       TestCase = Class.new(TestClass) do
-        def respond_to?(_method_name, _include_all = false)
-          true
+        def respond_to_missing?(method_name, _include_all = false)
+          method_name == :custom_method || super
         end
       end
 
-      expect(TestCase.new).to respond_to(:no_existing_method)
+      expect(TestCase.new.respond_to?(:custom_method)).to be(true)
+      expect(TestCase.new.respond_to?(:no_existing_method)).to be(false)
     end
   end
 
