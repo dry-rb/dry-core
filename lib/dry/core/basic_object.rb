@@ -127,12 +127,12 @@ module Dry
 
       private
 
-      # Must be overridden by descendants
+      # Can be overridden by descendants to customize respond_to? behavior
       #
       # @since 0.8.0
       # @api private
       def respond_to_missing?(_method_name, _include_all)
-        ::Kernel.raise ::NotImplementedError
+        false
       end
 
       # @since 0.8.0
