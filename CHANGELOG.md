@@ -11,8 +11,6 @@ and this project adheres to [Break Versioning](https://www.taoensso.com/break-ve
 
 ### Changed
 
-- Set minimum Ruby version to 3.2 (@timriley)
-
 ### Deprecated
 
 ### Removed
@@ -20,6 +18,17 @@ and this project adheres to [Break Versioning](https://www.taoensso.com/break-ve
 ### Fixed
 
 ### Security
+
+[Unreleased]: https://github.com/dry-rb/dry-core/compare/v1.2.0...main
+
+## [1.2.0] - 2025-12-28
+
+### Changed
+
+- Support Ruby 4.0 in `Dry::Core::BasicObject#inspect` and `#pretty_print` (by returning false from its default `#respond_to_missing?`). (@timriley in #87)
+- Set minimum Ruby version to 3.2. (@timriley)
+
+[1.2.0]: https://github.com/dry-rb/dry-core/compare/v1.1.0...v1.2.0
 
 ## [1.1.0] - 2025-01-04
 
