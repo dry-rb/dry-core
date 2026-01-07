@@ -43,7 +43,6 @@ module Dry
       #
       # @api public
       #
-      # rubocop:disable Metrics/ModuleLength
       module Mixin
         PREFIX_NAMESPACE = lambda do |namespace, key, config|
           [namespace, key].join(config.namespace_separator)
