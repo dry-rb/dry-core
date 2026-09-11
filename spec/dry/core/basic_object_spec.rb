@@ -75,7 +75,7 @@ RSpec.describe Dry::Core::BasicObject do
 
     # See https://github.com/hanami/utils/issues/234
     it "outputs the inspection to the given printer" do
-      require "pp" # rubucop:disable Lint/RedundantRequireStatement
+      require "pp"
       printer = PP.new
       subject = TestClass.new
       subject.pretty_print(printer)

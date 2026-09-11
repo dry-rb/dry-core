@@ -113,7 +113,7 @@ module Dry
           self
         rescue ::FrozenError
           raise ::FrozenError,
-                "can't modify frozen #{self.class} (when attempting to register '#{key}')"
+            "can't modify frozen #{self.class} (when attempting to register '#{key}')"
         end
 
         # Resolve an item from the container
