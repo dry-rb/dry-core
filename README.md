@@ -2,7 +2,7 @@
 
 [actions]: https://github.com/dry-rb/dry-core/actions
 [chat]: https://discord.gg/naQApPAsZB
-[forum]: https://discourse.hanamirb.org
+[forum]: https://discourse.hanakai.org
 [rubygem]: https://rubygems.org/gems/dry-core
 
 # dry-core [![Gem Version](https://badge.fury.io/rb/dry-core.svg)][rubygem] [![CI Status](https://github.com/dry-rb/dry-core/workflows/CI/badge.svg)][actions]
